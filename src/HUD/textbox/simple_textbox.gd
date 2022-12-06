@@ -1,8 +1,8 @@
 extends Label
 
 var full_text := ""
-
-
+var current_character_index := 0
+const whitespace_characters = [" ", "\n"]
 
 func say(request:TextRequest):
 	full_text = request.text
@@ -32,15 +32,36 @@ func show_next_bit():
 	if next_character_is_whitespace():
 		add_next_word_to_text_and_hide_it()
 	show_next_character()
+	
 	pass
+
 func add_next_word_to_text_and_hide_it():
+	#add all whitespace between current index and next word
+	var whitespace_count := 0
+	while (
+		current_character_index + whitespace_count != full_text.length() and 
+		(full_text[current_character_index + whitespace_count] in whitespace_characters)
+	):
+		whitespace_count += 1
+		
+	#add all characters from next word
+	var visible_character_count = 0
+	while (
+		current_character_index + visible_character_count != full_text.length() and 
+		!(full_text[current_character_index + visible_character_count] in whitespace_characters)
+	):
+		visible_character_count += 1
+	
+	text += full_text.substr(current_character_index, whitespace_count+visible_character_count)
+	visible_characters = get_total_character_count()-visible_character_count
+	
 	pass
 	
 func show_next_character():
 	pass
 	
-func next_character_is_whitespace():
-	pass
+func next_character_is_whitespace()->bool:
+	return full_text[current_character_index] in whitespace_characters
 
 func _physics_process(delta: float) -> void:
 	pass
