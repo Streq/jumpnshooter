@@ -6,7 +6,8 @@
 
 [node name="textbox_test" type="Node2D"]
 script = ExtResource( 3 )
-text = "Sabes lo que pasa? A nadie le interesa si sos el mejor del mundo ahora, porque te bajan de un tiro entre todos, ya no es un laburo individualista, es un laburo de equipo, de multitud se podria decir, ya no existen idolos, no existen heroes, es masas contra masas, al que le pega la luz se lo comen vivo."
+text = "Individualista Individualista
+Sabes lo que pasa? A nadie le interesa si sos el mejor del mundo ahora, porque te bajan de un tiro entre todos, ya no es un laburo individualista, es un laburo de equipo, de multitud se podria decir, ya no existen idolos, no existen heroes, es masas contra masas, al que le pega la luz se lo comen vivo."
 
 [node name="TextureRect" type="TextureRect" parent="."]
 visible = false
