@@ -11,7 +11,7 @@ var current_character_index := 0
 var characters_skipped_count := 0
 var skip_panel_animation= false
 const whitespace_characters = [" ", "\n"]
-
+const break_character = "<br>"
 onready var continues_icon = $continues_icon
 
 func say(request:TextRequest):
@@ -25,23 +25,26 @@ func show_text():
 	show()
 	emit_signal("text_started")
 	emit_signal("panel_started")
-	while full_text.length() != text.length():
+	while full_text.length() != current_character_index:
 		#add whole next word to prevent line break changes mid display
 		#(further explained below)
 		var word_length = add_next_word_to_text()
 		var line_count = get_line_count()
 		
 		#if panel finished
-		if line_count-lines_skipped > max_lines_visible:
+		if line_count > max_lines_visible:
 			#yield for input to continue
 			emit_signal("panel_finished")
 			yield(self,"next")
 			#change panel
 			skip_panel_animation = false
-			lines_skipped = line_count - (line_count % max_lines_visible)
+			
 			characters_skipped_count = get_total_character_count() - word_length
 			emit_signal("panel_started")
-		var characters_in_panel_count = get_total_character_count() - characters_skipped_count
+			trim_leading_whitespace_for_last_word()
+			
+#		var characters_in_panel_count = get_total_character_count() - characters_skipped_count
+		var characters_in_panel_count = get_total_character_count()
 		
 		#hide last word from display (this is all done to prevent changes in the
 		#character that causes the line break)
@@ -95,12 +98,11 @@ func add_next_word_to_text()->int:
 		word_length += 1
 	var word = full_text.substr(current_character_index, any_character_count)
 	text += word
-	current_character_index = text.length()
+	current_character_index += any_character_count
 	print("word:", word)
 	print("word_length:", word_length)
 	return word_length
 
-	
 func show_next_character():
 	visible_characters+=1
 	
@@ -112,3 +114,25 @@ func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_accept"):
 		skip_panel_animation= true
 		emit_signal("next")
+
+func trim_leading_whitespace_for_last_word():
+	var reached_whitespace = false
+	
+	var whitespace_end := 0
+	var whitespace_start := 0
+	for i in range(text.length()-1, -1, -1):
+		if text[i] in whitespace_characters:
+			reached_whitespace = true
+			whitespace_end = posmod(i,text.length())
+			break
+	if reached_whitespace:
+		for i in range(whitespace_end, -1, -1):
+			if !(text[i] in whitespace_characters):
+				break
+			whitespace_start = i
+	var left_half = text.substr(0,whitespace_start)
+	var right_half = text.substr(whitespace_end+1)
+	print("text:", text)
+	print("left_half:",left_half)
+	print("right_half:",right_half)
+	text = right_half
