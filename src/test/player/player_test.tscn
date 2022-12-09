@@ -1,0 +1,74 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://assets/texture/icon.png" type="Texture" id=1]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 8, 8 )
+
+[node name="Node2D" type="Node2D"]
+
+[node name="player" type="KinematicBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="player"]
+shape = SubResource( 1 )
+
+[node name="pivot" type="Node2D" parent="player"]
+
+[node name="upper_body_sprite" type="Sprite" parent="player/pivot"]
+region_enabled = true
+region_rect = Rect2( 0, 0, 16, 16 )
+__meta__ = {
+"_aseprite_wizard_config_": {
+"layer": "",
+"o_ex_p": "",
+"o_folder": "res://assets/texture",
+"o_name": "",
+"only_visible": false,
+"op_exp": false,
+"player": "player/upper_body_animation",
+"source": "res://assets/aseprite/shooter_body.aseprite"
+}
+}
+
+[node name="lower_body_sprite" type="Sprite" parent="player/pivot"]
+visible = false
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 0, 0, 16, 16 )
+__meta__ = {
+"_aseprite_wizard_config_": {
+"layer": "",
+"o_ex_p": "",
+"o_folder": "res://assets/texture",
+"o_name": "",
+"only_visible": false,
+"op_exp": true,
+"player": "player/lower_body_animation",
+"set_vis_track": true,
+"source": "res://assets/aseprite/shooter_legs.aseprite"
+}
+}
+
+[node name="upper_body_state_machine" type="Node" parent="player"]
+
+[node name="aim_forward" type="Node" parent="player/upper_body_state_machine"]
+
+[node name="aim_up" type="Node" parent="player/upper_body_state_machine"]
+
+[node name="dead" type="Node" parent="player/upper_body_state_machine"]
+
+[node name="lower_body_state_machine2" type="Node" parent="player"]
+
+[node name="idle" type="Node" parent="player/lower_body_state_machine2"]
+
+[node name="air" type="Node" parent="player/lower_body_state_machine2"]
+
+[node name="run" type="Node" parent="player/lower_body_state_machine2"]
+
+[node name="dead" type="Node" parent="player/lower_body_state_machine2"]
+
+[node name="lower_body_animation" type="AnimationPlayer" parent="player"]
+root_node = NodePath("../..")
+
+[node name="upper_body_animation" type="AnimationPlayer" parent="player"]
+root_node = NodePath("../..")

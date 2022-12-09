@@ -2,10 +2,10 @@ class_name TextRequest
 
 
 var text := ""
-var img := ""
-var voice := ""
+var who := ""
+var mood := ""
 
-func _init(text,img,voice) -> void:
+func _init(text, who, mood) -> void:
 	self.text = text
-	self.img = img
-	self.voice = voice
+	self.who = who
+	self.mood = mood

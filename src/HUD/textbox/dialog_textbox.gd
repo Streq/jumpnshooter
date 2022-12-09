@@ -15,12 +15,12 @@ const break_character = "<br>"
 onready var continues_icon = $continues_icon
 
 func say(request:TextRequest):
-	full_text = request.text
+	skip_panel_animation = false
 	current_character_index = 0
 	characters_skipped_count = 0
 	text = ""
+	full_text = request.text
 	show_text()
-
 func show_text():
 	show()
 	emit_signal("text_started")
@@ -99,8 +99,6 @@ func add_next_word_to_text()->int:
 	var word = full_text.substr(current_character_index, any_character_count)
 	text += word
 	current_character_index += any_character_count
-	print("word:", word)
-	print("word_length:", word_length)
 	return word_length
 
 func show_next_character():
@@ -132,7 +130,4 @@ func trim_leading_whitespace_for_last_word():
 			whitespace_start = i
 	var left_half = text.substr(0,whitespace_start)
 	var right_half = text.substr(whitespace_end+1)
-	print("text:", text)
-	print("left_half:",left_half)
-	print("right_half:",right_half)
 	text = right_half

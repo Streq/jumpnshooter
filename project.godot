@@ -148,6 +148,7 @@ config/icon="res://assets/texture/icon.png"
 GlobalInputs="res://src/global/global_inputs.gd"
 Group="*res://src/global/group.gd"
 GlobalPalette="*res://src/util/color/GlobalPalette.tscn"
+DialogProfiles="*res://src/global/DialogProfiles.tscn"
 
 [display]
 
@@ -157,6 +158,10 @@ window/size/resizable=false
 window/size/always_on_top=true
 window/stretch/mode="viewport"
 window/stretch/aspect="keep_height"
+
+[editor_plugins]
+
+enabled=PoolStringArray( "res://addons/AsepriteWizard/plugin.cfg" )
 
 [importer_defaults]
 
@@ -193,7 +198,6 @@ common/enable_pause_aware_picking=true
 
 [rendering]
 
-quality/driver/driver_name="GLES2"
 vram_compression/import_etc=true
 vram_compression/import_etc2=false
 environment/default_environment="res://default_env.tres"
