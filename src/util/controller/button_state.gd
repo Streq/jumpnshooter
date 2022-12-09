@@ -7,6 +7,10 @@ var just_updated := false
 func set_pressed(val:bool):
 	just_updated = pressed!=val
 	pressed = val
+func press():
+	set_pressed(true)
+func release():
+	set_pressed(false)
 
 func is_just_pressed():
 	return pressed and just_updated
