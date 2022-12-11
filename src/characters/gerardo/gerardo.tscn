@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://assets/texture/shooter_body.png" type="Texture" id=1]
 [ext_resource path="res://assets/texture/shooter_legs.png" type="Texture" id=2]
@@ -9,6 +9,10 @@
 
 [sub_resource type="RectangleShape2D" id=13]
 extents = Vector2( 4, 6.5 )
+
+[sub_resource type="CapsuleShape2D" id=14]
+radius = 4.0
+height = 6.0
 
 [sub_resource type="Animation" id=2]
 length = 0.001
@@ -712,6 +716,11 @@ horizontal_acceleration = 400.0
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0, 1.5 )
 shape = SubResource( 13 )
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
+position = Vector2( 0, 1 )
+shape = SubResource( 14 )
+disabled = true
 
 [node name="pivot" type="Node2D" parent="."]
 

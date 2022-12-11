@@ -68,33 +68,16 @@ func _physics_process(delta):
 	else:
 		upper_body_animation.play("point_forward")
 	velocity.x = clamp(velocity.x, -speed, speed)
-	
-#	var aux_slope_velocity_y = 0.0
-#	if !is_on_floor():
+
 	var gravity = soft_gravity if held_jump else hard_gravity
-	velocity.y = min(velocity.y+gravity*delta, fall_speed)
-#	else:
-#		var floor_normal = get_floor_normal()
-#		var floor_tangent = floor_normal.tangent()
-#		if facing_dir>0:
-#			floor_tangent = -floor_tangent
-#		print(floor_tangent)
-#		var projected = (Vector2.RIGHT*velocity.x).project(floor_tangent)
-#		if velocity.x:
-#			var projected = project_and_extend_to_cover(Vector2.RIGHT*velocity.x, floor_tangent)
-#			if projected:
-#				print(projected + Vector2.DOWN*velocity.y)
-#			velocity.x = projected.x 
-#			velocity.y = projected.y + velocity.y
-#		var gravity = soft_gravity if held_jump else hard_gravity
-#		velocity.y += gravity*delta
-#		print(aux_slope_velocity_y)
-#		print((Vector2.RIGHT*velocity.x).project(floor_tangent))
+	var gravity_dir = -get_floor_normal() if is_on_floor() else Vector2.DOWN
+	velocity += gravity_dir*gravity*delta
 	
-#	move_and_slide(Vector2.UP*aux_slope_velocity_y,Vector2.UP)
+	if !is_on_floor():
+		velocity.y = min(fall_speed, velocity.y)
 	
-#	velocity = move_and_slide(velocity, Vector2.UP,true)
-	velocity = move_and_slide_with_snap(velocity,Vector2.DOWN, Vector2.UP, true)
+	update()
+	velocity = move_and_slide_with_snap(velocity,Vector2.DOWN, Vector2.UP, true,4,deg2rad(52))
 	
 func set_gun(gun):
 	emit_signal("change_gun", gun)
@@ -103,11 +86,15 @@ func _ready():
 	set_facing_dir(facing_dir)
 
 func jump():
-	velocity.y -= jump_speed
+	velocity.y = -jump_speed
 
 
-
-
+func _draw():
+	return
+	draw_line(Vector2(),velocity,Color.green)
+	draw_arc(Vector2(),speed,0,PI*2,360,Color.purple)
+	draw_rect(Rect2(-Vector2(speed,speed),Vector2(speed*2,speed*2)),Color.purple,false)
+	pass
 static func project_and_extend_to_cover(covered:Vector2,projected:Vector2):
 	var projection = projected.project(covered)
 	return projected*sqrt(covered.length_squared()/projection.length_squared())
