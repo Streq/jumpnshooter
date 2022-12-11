@@ -7,8 +7,8 @@
 [ext_resource path="res://src/characters/gerardo/gun.tscn" type="PackedScene" id=5]
 [ext_resource path="res://src/bullets/bullet.tscn" type="PackedScene" id=6]
 
-[sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 6, 7 )
+[sub_resource type="RectangleShape2D" id=13]
+extents = Vector2( 4, 6.5 )
 
 [sub_resource type="Animation" id=2]
 length = 0.001
@@ -24,21 +24,9 @@ tracks/0/keys = {
 "update": 0,
 "values": [ Vector2( 0, 0 ) ]
 }
-tracks/1/type = "value"
-tracks/1/path = NodePath("player/pivot/lower_body_pivot/lower_body_sprite:visible")
-tracks/1/interp = 1
-tracks/1/loop_wrap = false
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ false ]
-}
 
 [sub_resource type="Animation" id=3]
-length = 0.2
+length = 0.1
 tracks/0/type = "value"
 tracks/0/path = NodePath("player/pivot/upper_body_pivot:position")
 tracks/0/interp = 1
@@ -113,7 +101,7 @@ tracks/5/keys = {
 }
 
 [sub_resource type="Animation" id=4]
-length = 0.2
+length = 0.1
 tracks/0/type = "value"
 tracks/0/path = NodePath("player/pivot/upper_body_pivot:position")
 tracks/0/interp = 1
@@ -188,7 +176,7 @@ tracks/5/keys = {
 }
 
 [sub_resource type="Animation" id=5]
-length = 0.2
+length = 0.1
 tracks/0/type = "value"
 tracks/0/path = NodePath("player/pivot/lower_body_pivot/lower_body_sprite:texture")
 tracks/0/interp = 1
@@ -251,7 +239,7 @@ tracks/4/keys = {
 }
 
 [sub_resource type="Animation" id=6]
-length = 0.4
+length = 0.2
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("player/pivot/upper_body_pivot:position")
@@ -260,7 +248,7 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.2 ),
+"times": PoolRealArray( 0, 0.1 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
 "values": [ Vector2( 0, -1 ), Vector2( 0, 0 ) ]
@@ -320,14 +308,14 @@ tracks/5/loop_wrap = false
 tracks/5/imported = false
 tracks/5/enabled = true
 tracks/5/keys = {
-"times": PoolRealArray( 0, 0.2 ),
+"times": PoolRealArray( 0, 0.1 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
 "values": [ 0.0, 1.0 ]
 }
 
 [sub_resource type="Animation" id=7]
-length = 0.2
+length = 0.1
 tracks/0/type = "value"
 tracks/0/path = NodePath("player/pivot/lower_body_pivot/lower_body_sprite:texture")
 tracks/0/interp = 1
@@ -718,10 +706,12 @@ tracks/4/keys = {
 
 [node name="player" type="KinematicBody2D"]
 script = ExtResource( 3 )
+speed = 100.0
+horizontal_acceleration = 400.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 0, 1 )
-shape = SubResource( 1 )
+position = Vector2( 0, 1.5 )
+shape = SubResource( 13 )
 
 [node name="pivot" type="Node2D" parent="."]
 
@@ -731,7 +721,6 @@ shape = SubResource( 1 )
 texture = ExtResource( 1 )
 hframes = 2
 vframes = 2
-frame = 1
 __meta__ = {
 "_aseprite_wizard_config_": {
 "layer": "",
@@ -746,8 +735,7 @@ __meta__ = {
 }
 
 [node name="gun_hold" type="Node2D" parent="pivot/upper_body_pivot"]
-position = Vector2( 1, 1 )
-rotation = -1.57079
+position = Vector2( 0, 2 )
 script = ExtResource( 4 )
 
 [node name="gun" parent="pivot/upper_body_pivot/gun_hold" instance=ExtResource( 5 )]
@@ -759,7 +747,7 @@ BULLET = ExtResource( 6 )
 texture = ExtResource( 2 )
 hframes = 2
 vframes = 2
-frame = 2
+frame = 1
 __meta__ = {
 "_aseprite_wizard_config_": {
 "layer": "",
@@ -794,6 +782,7 @@ __meta__ = {
 
 [node name="lower_body_animation" type="AnimationPlayer" parent="."]
 root_node = NodePath("../..")
+playback_process_mode = 0
 anims/RESET = SubResource( 2 )
 anims/air = SubResource( 3 )
 anims/idle = SubResource( 4 )
@@ -803,6 +792,7 @@ anims/sit = SubResource( 7 )
 
 [node name="upper_body_animation" type="AnimationPlayer" parent="."]
 root_node = NodePath("../..")
+playback_process_mode = 0
 anims/RESET = SubResource( 12 )
 anims/knocked = SubResource( 8 )
 anims/point_forward = SubResource( 9 )

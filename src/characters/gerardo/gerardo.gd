@@ -9,7 +9,10 @@ export var hard_gravity = 500.0
 export var fall_speed = 100.0
 
 export var horizontal_acceleration = 500.0
+export var horizontal_air_acceleration = 200.0
 export var horizontal_decceleration = 500.0
+export var horizontal_air_decceleration = 10.0
+
 export var jump_speed = 100.0
 
 export (float, -1.0, 1.0, 2.0) var facing_dir := 1.0 setget set_facing_dir
@@ -51,11 +54,13 @@ func _physics_process(delta):
 			lower_body_animation.play("run")
 		else:
 			lower_body_animation.play("air")
+			velocity.x += sign(direction.x)*horizontal_air_acceleration*delta
 	else:
 		if is_on_floor():
 			velocity.x -= sign(velocity.x)*min(horizontal_decceleration*delta,abs(velocity.x))
 			lower_body_animation.play("idle")
 		else:
+			velocity.x -= sign(velocity.x)*min(horizontal_air_decceleration*delta,abs(velocity.x))
 			lower_body_animation.play("air")
 			
 	if direction.y<0:
@@ -63,12 +68,34 @@ func _physics_process(delta):
 	else:
 		upper_body_animation.play("point_forward")
 	velocity.x = clamp(velocity.x, -speed, speed)
+	
+#	var aux_slope_velocity_y = 0.0
+#	if !is_on_floor():
 	var gravity = soft_gravity if held_jump else hard_gravity
 	velocity.y = min(velocity.y+gravity*delta, fall_speed)
+#	else:
+#		var floor_normal = get_floor_normal()
+#		var floor_tangent = floor_normal.tangent()
+#		if facing_dir>0:
+#			floor_tangent = -floor_tangent
+#		print(floor_tangent)
+#		var projected = (Vector2.RIGHT*velocity.x).project(floor_tangent)
+#		if velocity.x:
+#			var projected = project_and_extend_to_cover(Vector2.RIGHT*velocity.x, floor_tangent)
+#			if projected:
+#				print(projected + Vector2.DOWN*velocity.y)
+#			velocity.x = projected.x 
+#			velocity.y = projected.y + velocity.y
+#		var gravity = soft_gravity if held_jump else hard_gravity
+#		velocity.y += gravity*delta
+#		print(aux_slope_velocity_y)
+#		print((Vector2.RIGHT*velocity.x).project(floor_tangent))
 	
-	velocity = move_and_slide(velocity, Vector2.UP)
-
-
+#	move_and_slide(Vector2.UP*aux_slope_velocity_y,Vector2.UP)
+	
+#	velocity = move_and_slide(velocity, Vector2.UP,true)
+	velocity = move_and_slide_with_snap(velocity,Vector2.DOWN, Vector2.UP, true)
+	
 func set_gun(gun):
 	emit_signal("change_gun", gun)
 	
@@ -77,3 +104,11 @@ func _ready():
 
 func jump():
 	velocity.y -= jump_speed
+
+
+
+
+static func project_and_extend_to_cover(covered:Vector2,projected:Vector2):
+	var projection = projected.project(covered)
+	return projected*sqrt(covered.length_squared()/projection.length_squared())
+
