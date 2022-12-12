@@ -16,6 +16,7 @@ export var horizontal_air_decceleration = 10.0
 export var jump_speed = 100.0
 
 export (float, -1.0, 1.0, 2.0) var facing_dir := 1.0 setget set_facing_dir
+export (float, -1.0, 0.0, 1.0) var look_up_dir := 0.0 setget set_lookup_dir
 
 onready var lower_body_animation = $lower_body_animation
 onready var upper_body_animation = $upper_body_animation
@@ -23,14 +24,21 @@ onready var gun_hold = $pivot/upper_body_pivot/gun_hold
 onready var pivot = $pivot
 
 var held_jump = false
-
+var jumping = false
+var grounded = false
 func set_facing_dir(val):
 	if val:
 		facing_dir = sign(val)
 		if pivot:
 			pivot.scale.x = facing_dir
+func set_lookup_dir(val):
+	if val<0:
+		look_up_dir = -1.0
+	else:
+		look_up_dir = 0.0
 
 func _physics_process(delta):
+	jumping = false
 	var direction = Input.get_vector("ui_left","ui_right","ui_up","ui_down")
 	
 #	velocity.x = lerp(velocity.x, sign(direction.x) * speed, 4.0*delta)
@@ -39,19 +47,25 @@ func _physics_process(delta):
 	else:
 		gun_hold.release_trigger()
 	
+	if !Input.is_action_pressed("A") or is_on_floor():
+		held_jump = false
+	
+	
 	if Input.is_action_just_pressed("A") and is_on_floor():
+		jumping = true
 		jump()
 		held_jump = true
 	
-	if !Input.is_action_pressed("A"):
-		held_jump = false
 	
 	if direction.x:
 		set_facing_dir(direction.x)
-		
+
 		if is_on_floor():
 			velocity.x += sign(direction.x)*horizontal_acceleration*delta
 			lower_body_animation.play("run")
+			if !grounded:
+				#start on second frame
+				lower_body_animation.seek(0.1)
 		else:
 			lower_body_animation.play("air")
 			velocity.x += sign(direction.x)*horizontal_air_acceleration*delta
@@ -62,7 +76,9 @@ func _physics_process(delta):
 		else:
 			velocity.x -= sign(velocity.x)*min(horizontal_air_decceleration*delta,abs(velocity.x))
 			lower_body_animation.play("air")
-			
+	
+	grounded = is_on_floor()
+	
 	if direction.y<0:
 		upper_body_animation.play("point_up")
 	else:
@@ -77,7 +93,8 @@ func _physics_process(delta):
 		velocity.y = min(fall_speed, velocity.y)
 	
 	update()
-	velocity = move_and_slide_with_snap(velocity,Vector2.DOWN, Vector2.UP, true,4,deg2rad(52))
+	var snap = Vector2.DOWN if !jumping else Vector2.ZERO
+	velocity = move_and_slide_with_snap(velocity, snap, Vector2.UP, true,4,deg2rad(52))
 	
 func set_gun(gun):
 	emit_signal("change_gun", gun)
