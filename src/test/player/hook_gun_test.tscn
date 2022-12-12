@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://src/characters/gerardo/gerardo.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/texture/hill_8x8.png" type="Texture" id=2]
@@ -6,7 +6,6 @@
 [ext_resource path="res://assets/shader/palette.gdshader" type="Shader" id=4]
 [ext_resource path="res://src/util/color/palette_client.tscn" type="PackedScene" id=5]
 [ext_resource path="res://assets/texture/hil_bacl_8x8.png" type="Texture" id=6]
-[ext_resource path="res://src/characters/funguy/funguy.tscn" type="PackedScene" id=7]
 
 [sub_resource type="Image" id=13]
 data = {
@@ -250,7 +249,5 @@ horizontal_air_acceleration = 150.0
 [node name="camera" type="Camera2D" parent="player"]
 current = true
 script = ExtResource( 3 )
-
-[node name="funguy" parent="." instance=ExtResource( 7 )]
 
 [connection signal="change_gun" from="player" to="player/pivot/upper_body_pivot/gun_hold" method="change_gun"]

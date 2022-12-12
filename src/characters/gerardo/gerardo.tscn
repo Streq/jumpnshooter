@@ -1,11 +1,14 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://assets/texture/shooter_body.png" type="Texture" id=1]
 [ext_resource path="res://assets/texture/shooter_legs.png" type="Texture" id=2]
 [ext_resource path="res://src/characters/gerardo/gerardo.gd" type="Script" id=3]
 [ext_resource path="res://src/characters/gerardo/gun_hold.gd" type="Script" id=4]
-[ext_resource path="res://src/characters/gerardo/gun.tscn" type="PackedScene" id=5]
+[ext_resource path="res://assets/texture/gun.png" type="Texture" id=5]
 [ext_resource path="res://src/bullets/bullet.tscn" type="PackedScene" id=6]
+[ext_resource path="res://assets/texture/muzzle_pop.png" type="Texture" id=7]
+[ext_resource path="res://src/characters/gerardo/muzzle_pop.gd" type="Script" id=8]
+[ext_resource path="res://src/characters/gerardo/gun.gd" type="Script" id=9]
 
 [sub_resource type="RectangleShape2D" id=13]
 extents = Vector2( 4, 6.5 )
@@ -14,7 +17,39 @@ extents = Vector2( 4, 6.5 )
 radius = 4.0
 height = 6.0
 
+[sub_resource type="Animation" id=1]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+
 [sub_resource type="Animation" id=2]
+resource_name = "pop"
+length = 0.017
+step = 0.0166667
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.0166667 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+
+[sub_resource type="Animation" id=15]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/path = NodePath("player/pivot/upper_body_pivot:position")
@@ -784,8 +819,27 @@ __meta__ = {
 position = Vector2( 0, 2 )
 script = ExtResource( 4 )
 
-[node name="gun" parent="pivot/upper_body_pivot/gun_hold" instance=ExtResource( 5 )]
+[node name="gun" type="Node2D" parent="pivot/upper_body_pivot/gun_hold"]
+script = ExtResource( 9 )
 BULLET = ExtResource( 6 )
+cooldown = 0.1
+
+[node name="Sprite" type="Sprite" parent="pivot/upper_body_pivot/gun_hold/gun"]
+texture = ExtResource( 5 )
+
+[node name="muzzle" type="Node2D" parent="pivot/upper_body_pivot/gun_hold/gun"]
+position = Vector2( 8, 0 )
+
+[node name="muzzle_pop" type="Sprite" parent="pivot/upper_body_pivot/gun_hold/gun/muzzle"]
+visible = false
+z_index = 1
+texture = ExtResource( 7 )
+script = ExtResource( 8 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="pivot/upper_body_pivot/gun_hold/gun/muzzle/muzzle_pop"]
+playback_process_mode = 0
+anims/RESET = SubResource( 1 )
+anims/pop = SubResource( 2 )
 
 [node name="lower_body_pivot" type="Node2D" parent="pivot"]
 
@@ -808,28 +862,10 @@ __meta__ = {
 }
 }
 
-[node name="upper_body_state_machine" type="Node" parent="."]
-
-[node name="aim_forward" type="Node" parent="upper_body_state_machine"]
-
-[node name="aim_up" type="Node" parent="upper_body_state_machine"]
-
-[node name="dead" type="Node" parent="upper_body_state_machine"]
-
-[node name="lower_body_state_machine2" type="Node" parent="."]
-
-[node name="idle" type="Node" parent="lower_body_state_machine2"]
-
-[node name="air" type="Node" parent="lower_body_state_machine2"]
-
-[node name="run" type="Node" parent="lower_body_state_machine2"]
-
-[node name="dead" type="Node" parent="lower_body_state_machine2"]
-
 [node name="lower_body_animation" type="AnimationPlayer" parent="."]
 root_node = NodePath("../..")
 playback_process_mode = 0
-anims/RESET = SubResource( 2 )
+anims/RESET = SubResource( 15 )
 anims/air = SubResource( 3 )
 anims/idle = SubResource( 4 )
 anims/knocked = SubResource( 5 )
@@ -846,3 +882,4 @@ anims/point_up = SubResource( 10 )
 anims/sit = SubResource( 11 )
 
 [connection signal="change_gun" from="." to="pivot/upper_body_pivot/gun_hold" method="change_gun"]
+[connection signal="shoot" from="pivot/upper_body_pivot/gun_hold/gun" to="pivot/upper_body_pivot/gun_hold/gun/muzzle/muzzle_pop" method="_on_gun_shoot"]
