@@ -745,6 +745,7 @@ tracks/4/keys = {
 }
 
 [node name="player" type="KinematicBody2D"]
+collision_mask = 2
 script = ExtResource( 3 )
 speed = 100.0
 horizontal_acceleration = 400.0
