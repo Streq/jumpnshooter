@@ -27,4 +27,13 @@ autostart = true
 [node name="bullet_hit" parent="." instance=ExtResource( 3 )]
 visible = false
 
+[node name="hitbox" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox"]
+position = Vector2( 0.5, 0 )
+shape = SubResource( 1 )
+
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
+[connection signal="area_entered" from="hitbox" to="." method="_on_hitbox_area_entered"]

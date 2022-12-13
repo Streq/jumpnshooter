@@ -167,7 +167,7 @@ shader_param/palette = SubResource( 102 )
 
 [sub_resource type="Image" id=128]
 data = {
-"data": PoolByteArray( 254, 254, 133, 255, 254, 254, 133, 255, 115, 74, 0, 255, 0, 0, 0, 255 ),
+"data": PoolByteArray( 0, 0, 3, 255, 60, 60, 2, 255, 126, 126, 1, 255, 255, 255, 0, 255 ),
 "format": "RGBA8",
 "height": 1,
 "mipmaps": false,
@@ -412,10 +412,10 @@ palette = PoolColorArray( 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1 )
 material = SubResource( 42 )
 string_val = "[\"ffffff00\",\"ffffff00\",\"ffffff00\",\"ffffff00\"]"
 
-[node name="sign_text" parent="Background" instance=ExtResource( 2 )]
-palette = PoolColorArray( 0.996078, 0.996078, 0.521569, 1, 0.996078, 0.996078, 0.521569, 1, 0.45098, 0.290196, 0, 1, 0, 0, 0, 1 )
+[node name="hurt" parent="Background" instance=ExtResource( 2 )]
+palette = PoolColorArray( 0, 0, 0.0117647, 1, 0.235294, 0.235294, 0.00784314, 1, 0.494118, 0.494118, 0.00392157, 1, 1, 1, 0, 1 )
 material = SubResource( 80 )
-string_val = "[\"fffefe85\",\"fffefe85\",\"ff734a00\",\"ff000000\"]"
+string_val = "[\"ff000003\",\"ff3c3c02\",\"ff7e7e01\",\"ffffff00\"]"
 
 [node name="Object" type="Node" parent="."]
 

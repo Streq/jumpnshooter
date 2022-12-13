@@ -22,6 +22,7 @@ onready var lower_body_animation = $lower_body_animation
 onready var upper_body_animation = $upper_body_animation
 onready var gun_hold = $pivot/upper_body_pivot/gun_hold
 onready var pivot = $pivot
+onready var input_state: InputState = $input_state
 
 var held_jump = false
 var jumping = false
@@ -39,19 +40,19 @@ func set_lookup_dir(val):
 
 func _physics_process(delta):
 	jumping = false
-	var direction = Input.get_vector("ui_left","ui_right","ui_up","ui_down")
+	var direction = input_state.dir
 	
 #	velocity.x = lerp(velocity.x, sign(direction.x) * speed, 4.0*delta)
-	if Input.is_action_pressed("B"):
+	if input_state.B.is_pressed():
 		gun_hold.pull_trigger()
 	else:
 		gun_hold.release_trigger()
 	
-	if !Input.is_action_pressed("A") or is_on_floor():
+	if !input_state.A.is_pressed() or is_on_floor():
 		held_jump = false
 	
 	
-	if Input.is_action_just_pressed("A") and is_on_floor():
+	if input_state.A.is_just_pressed() and is_on_floor():
 		jumping = true
 		jump()
 		held_jump = true
