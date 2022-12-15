@@ -18,19 +18,19 @@ data = {
 "width": 4
 }
 
-[sub_resource type="ImageTexture" id=11]
+[sub_resource type="ImageTexture" id=25]
 flags = 0
 flags = 0
 image = SubResource( 24 )
 size = Vector2( 4, 1 )
 
-[sub_resource type="ShaderMaterial" id=12]
+[sub_resource type="ShaderMaterial" id=26]
 resource_local_to_scene = true
 shader = ExtResource( 4 )
 shader_param/palette_size = 4
 shader_param/offset = 0.0
 shader_param/blue_index_offset = 0.0
-shader_param/palette = SubResource( 11 )
+shader_param/palette = SubResource( 25 )
 
 [sub_resource type="ConvexPolygonShape2D" id=2]
 points = PoolVector2Array( 8, 8, 0, 8, 0, 0, 8, 0 )
@@ -223,7 +223,7 @@ points = PoolVector2Array( 8, 8, 0, 8, 0, 4, 8, 0 )
 7/shapes = [  ]
 7/z_index = 0
 
-[sub_resource type="Image" id=25]
+[sub_resource type="Image" id=27]
 data = {
 "data": PoolByteArray( 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255 ),
 "format": "RGBA8",
@@ -235,7 +235,7 @@ data = {
 [sub_resource type="ImageTexture" id=17]
 flags = 0
 flags = 0
-image = SubResource( 25 )
+image = SubResource( 27 )
 size = Vector2( 4, 1 )
 
 [sub_resource type="ShaderMaterial" id=20]
@@ -252,7 +252,7 @@ extents = Vector2( 4, 6.5 )
 [node name="Node2D" type="Node2D"]
 
 [node name="back" type="TileMap" parent="."]
-material = SubResource( 12 )
+material = SubResource( 26 )
 tile_set = SubResource( 5 )
 cell_size = Vector2( 8, 8 )
 collision_layer = 2
@@ -292,28 +292,31 @@ position = Vector2( 0, 1.5 )
 shape = SubResource( 23 )
 
 [node name="funguy" parent="." instance=ExtResource( 7 )]
+material = SubResource( 26 )
 position = Vector2( 564, 95 )
 speed = 30.0
 horizontal_acceleration = 100.0
 
 [node name="funguy2" parent="." instance=ExtResource( 7 )]
+material = SubResource( 26 )
 position = Vector2( 450, 47 )
 speed = 30.0
 horizontal_acceleration = 100.0
 
 [node name="funguy3" parent="." instance=ExtResource( 7 )]
+material = SubResource( 26 )
 position = Vector2( 721, 6 )
 speed = 30.0
 horizontal_acceleration = 100.0
 
 [node name="funguy4" parent="." instance=ExtResource( 7 )]
+material = SubResource( 26 )
 position = Vector2( 1451, 62 )
 speed = 30.0
 horizontal_acceleration = 100.0
 
 [node name="funguy5" parent="." instance=ExtResource( 7 )]
+material = SubResource( 26 )
 position = Vector2( 1761, 61 )
 speed = 30.0
 horizontal_acceleration = 100.0
-
-[connection signal="change_gun" from="player" to="player/pivot/upper_body_pivot/gun_hold" method="change_gun"]

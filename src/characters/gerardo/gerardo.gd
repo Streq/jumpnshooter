@@ -27,6 +27,9 @@ onready var input_state: InputState = $input_state
 var held_jump = false
 var jumping = false
 var grounded = false
+
+var hurt = false
+
 func set_facing_dir(val):
 	if val:
 		facing_dir = sign(val)
