@@ -224,8 +224,9 @@ R={
 2d_physics/layer_1="character"
 2d_physics/layer_2="terrain"
 2d_physics/layer_3="bullet"
-2d_physics/layer_4="hurtbox"
+2d_physics/layer_4="enemy_hurtbox"
 2d_physics/layer_5="player"
+2d_physics/layer_6="player_hurtbox"
 
 [physics]
 

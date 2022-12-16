@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=2]
+[gd_scene load_steps=34 format=2]
 
 [ext_resource path="res://assets/texture/shooter_body.png" type="Texture" id=1]
 [ext_resource path="res://assets/texture/shooter_legs.png" type="Texture" id=2]
@@ -13,33 +13,7 @@
 [ext_resource path="res://assets/shader/palette.gdshader" type="Shader" id=11]
 [ext_resource path="res://src/util/color/palette_client.tscn" type="PackedScene" id=12]
 
-[sub_resource type="Image" id=27]
-data = {
-"data": PoolByteArray( 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255 ),
-"format": "RGBA8",
-"height": 1,
-"mipmaps": false,
-"width": 4
-}
-
-[sub_resource type="ImageTexture" id=17]
-flags = 0
-flags = 0
-image = SubResource( 27 )
-size = Vector2( 4, 1 )
-
-[sub_resource type="ShaderMaterial" id=18]
-resource_local_to_scene = true
-shader = ExtResource( 11 )
-shader_param/palette_size = 4
-shader_param/offset = 0
-shader_param/blue_index_offset = 0.0
-shader_param/palette = SubResource( 17 )
-
-[sub_resource type="RectangleShape2D" id=13]
-extents = Vector2( 4, 6.5 )
-
-[sub_resource type="Image" id=28]
+[sub_resource type="Image" id=34]
 data = {
 "data": PoolByteArray( 255, 255, 0, 255, 126, 126, 1, 255, 60, 60, 2, 255, 0, 0, 3, 255 ),
 "format": "RGBA8",
@@ -51,7 +25,7 @@ data = {
 [sub_resource type="ImageTexture" id=25]
 flags = 0
 flags = 0
-image = SubResource( 28 )
+image = SubResource( 34 )
 size = Vector2( 4, 1 )
 
 [sub_resource type="ShaderMaterial" id=26]
@@ -61,6 +35,9 @@ shader_param/palette_size = 4
 shader_param/offset = 0.0
 shader_param/blue_index_offset = 0.0
 shader_param/palette = SubResource( 25 )
+
+[sub_resource type="RectangleShape2D" id=13]
+extents = Vector2( 4, 6.5 )
 
 [sub_resource type="Animation" id=1]
 length = 0.001
@@ -118,7 +95,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ false ]
+"values": [ true ]
 }
 
 [sub_resource type="Animation" id=3]
@@ -396,6 +373,18 @@ tracks/4/keys = {
 "update": 1,
 "values": [ 3.0 ]
 }
+tracks/5/type = "value"
+tracks/5/path = NodePath("player/pivot/upper_body_pivot:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ) ]
+}
 
 [sub_resource type="Animation" id=6]
 length = 0.2
@@ -574,6 +563,18 @@ tracks/2/keys = {
 "update": 1,
 "values": [ 0.0 ]
 }
+tracks/3/type = "value"
+tracks/3/path = NodePath("player/pivot/upper_body_pivot/gun_hold:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
 
 [sub_resource type="Animation" id=30]
 length = 0.1
@@ -699,6 +700,18 @@ tracks/4/keys = {
 "transitions": PoolRealArray( 1 ),
 "update": 1,
 "values": [ 2.0 ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("player/pivot/upper_body_pivot/gun_hold:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
 }
 
 [sub_resource type="Animation" id=9]
@@ -962,12 +975,63 @@ tracks/4/keys = {
 "values": [ 0.0 ]
 }
 
-[node name="player" type="KinematicBody2D"]
-material = SubResource( 18 )
+[sub_resource type="Animation" id=32]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("normal_palette:trigger")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+
+[sub_resource type="Animation" id=33]
+resource_name = "hurt"
+length = 0.0666667
+loop = true
+step = 0.0166667
+tracks/0/type = "value"
+tracks/0/path = NodePath("normal_palette:trigger")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("hurt_palette:trigger")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.0333333 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+
+[node name="player" type="KinematicBody2D" groups=["player"]]
+material = SubResource( 26 )
 collision_mask = 2
 script = ExtResource( 3 )
 speed = 100.0
 horizontal_acceleration = 400.0
+
+[node name="hurt_palette" parent="." instance=ExtResource( 12 )]
+index = 1
+
+[node name="normal_palette" parent="." instance=ExtResource( 12 )]
+index = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0, 1.5 )
@@ -975,6 +1039,7 @@ shape = SubResource( 13 )
 
 [node name="pivot" type="Node2D" parent="."]
 material = SubResource( 26 )
+use_parent_material = true
 
 [node name="upper_body_pivot" type="Node2D" parent="pivot"]
 use_parent_material = true
@@ -984,6 +1049,7 @@ use_parent_material = true
 texture = ExtResource( 1 )
 hframes = 2
 vframes = 2
+frame = 2
 __meta__ = {
 "_aseprite_wizard_config_": {
 "layer": "",
@@ -1034,7 +1100,7 @@ use_parent_material = true
 texture = ExtResource( 2 )
 hframes = 3
 vframes = 2
-frame = 1
+frame = 3
 __meta__ = {
 "_aseprite_wizard_config_": {
 "layer": "",
@@ -1049,11 +1115,17 @@ __meta__ = {
 }
 }
 
-[node name="palette_client" parent="pivot" instance=ExtResource( 12 )]
-index = 3
+[node name="hurtbox" type="Area2D" parent="pivot"]
+collision_layer = 32
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="pivot/hurtbox"]
+position = Vector2( 0, 1.5 )
+shape = SubResource( 13 )
 
 [node name="lower_body_animation" type="AnimationPlayer" parent="."]
 root_node = NodePath("../..")
+autoplay = "RESET"
 playback_process_mode = 0
 anims/RESET = SubResource( 15 )
 anims/air = SubResource( 3 )
@@ -1075,5 +1147,16 @@ anims/sit = SubResource( 22 )
 
 [node name="input_state" parent="." instance=ExtResource( 10 )]
 
+[node name="hurt_animation" type="AnimationPlayer" parent="."]
+anims/RESET = SubResource( 32 )
+anims/hurt = SubResource( 33 )
+
+[node name="hurt_timer" type="Timer" parent="."]
+process_mode = 0
+wait_time = 2.0
+one_shot = true
+
 [connection signal="change_gun" from="." to="pivot/upper_body_pivot/gun_hold" method="change_gun"]
+[connection signal="hurt_started" from="." to="hurt_timer" method="start"]
 [connection signal="shoot" from="pivot/upper_body_pivot/gun_hold/gun" to="pivot/upper_body_pivot/gun_hold/gun/muzzle/muzzle_pop" method="_on_gun_shoot"]
+[connection signal="timeout" from="hurt_timer" to="." method="end_hurt"]
