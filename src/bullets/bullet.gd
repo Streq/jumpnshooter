@@ -3,6 +3,7 @@ extends KinematicBody2D
 export var damage := 1.0
 export var speed := 200.0
 onready var bullet_hit: Sprite = $bullet_hit
+onready var animation_player: AnimationPlayer = $AnimationPlayer
 
 
 func _physics_process(delta):
@@ -12,6 +13,8 @@ func _physics_process(delta):
 
 
 func _on_Timer_timeout():
+	animation_player.play("disappear")
+	yield(animation_player,"animation_finished")
 	queue_free()
 
 

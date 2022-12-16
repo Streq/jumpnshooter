@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://src/characters/gerardo/gerardo.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/texture/hill_8x8.png" type="Texture" id=2]
@@ -12,7 +12,12 @@
 [ext_resource path="res://src/test/player/health_bar.gd" type="Script" id=10]
 [ext_resource path="res://src/HUD/health/heart.tscn" type="PackedScene" id=11]
 
-[sub_resource type="Image" id=31]
+[sub_resource type="AtlasTexture" id=28]
+resource_local_to_scene = true
+atlas = ExtResource( 9 )
+region = Rect2( 0, 0, 8, 8 )
+
+[sub_resource type="Image" id=29]
 data = {
 "data": PoolByteArray( 255, 255, 0, 255, 126, 126, 1, 255, 60, 60, 2, 255, 0, 0, 3, 255 ),
 "format": "RGBA8",
@@ -24,7 +29,7 @@ data = {
 [sub_resource type="ImageTexture" id=25]
 flags = 0
 flags = 0
-image = SubResource( 31 )
+image = SubResource( 29 )
 size = Vector2( 4, 1 )
 
 [sub_resource type="ShaderMaterial" id=26]
@@ -229,22 +234,25 @@ points = PoolVector2Array( 8, 8, 0, 8, 0, 4, 8, 0 )
 [sub_resource type="RectangleShape2D" id=23]
 extents = Vector2( 4, 6.5 )
 
-[sub_resource type="AtlasTexture" id=28]
-resource_local_to_scene = true
-atlas = ExtResource( 9 )
-region = Rect2( 0, 0, 8, 8 )
-
-[sub_resource type="AtlasTexture" id=29]
-resource_local_to_scene = true
-atlas = ExtResource( 9 )
-region = Rect2( 0, 0, 8, 8 )
-
-[sub_resource type="AtlasTexture" id=30]
-resource_local_to_scene = true
-atlas = ExtResource( 9 )
-region = Rect2( 0, 0, 8, 8 )
-
 [node name="Node2D" type="Node2D"]
+
+[node name="HUD" type="CanvasLayer" parent="."]
+layer = 2
+
+[node name="health_bar" type="MarginContainer" parent="HUD"]
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 24.0
+margin_bottom = 8.0
+script = ExtResource( 10 )
+
+[node name="hearts" type="HBoxContainer" parent="HUD/health_bar"]
+margin_right = 16.0
+margin_bottom = 8.0
+custom_constants/separation = 0
+
+[node name="heart" parent="HUD/health_bar/hearts" instance=ExtResource( 11 )]
+texture = SubResource( 28 )
 
 [node name="back" type="TileMap" parent="."]
 material = SubResource( 26 )
@@ -310,33 +318,6 @@ horizontal_acceleration = 100.0
 position = Vector2( 1761, 61 )
 speed = 30.0
 horizontal_acceleration = 100.0
-
-[node name="HUD" type="CanvasLayer" parent="."]
-
-[node name="health_bar" type="MarginContainer" parent="HUD"]
-margin_left = 8.0
-margin_top = 8.0
-margin_right = 24.0
-margin_bottom = 8.0
-script = ExtResource( 10 )
-
-[node name="hearts" type="HBoxContainer" parent="HUD/health_bar"]
-margin_right = 24.0
-margin_bottom = 8.0
-custom_constants/separation = 0
-
-[node name="heart" parent="HUD/health_bar/hearts" instance=ExtResource( 11 )]
-texture = SubResource( 28 )
-
-[node name="heart2" parent="HUD/health_bar/hearts" instance=ExtResource( 11 )]
-margin_left = 8.0
-margin_right = 16.0
-texture = SubResource( 29 )
-
-[node name="heart3" parent="HUD/health_bar/hearts" instance=ExtResource( 11 )]
-margin_left = 16.0
-margin_right = 24.0
-texture = SubResource( 30 )
 
 [connection signal="change_gun" from="player" to="player/pivot/upper_body_pivot/gun_hold" method="change_gun"]
 [connection signal="health_changed" from="player" to="HUD/health_bar" method="_on_player_health_changed"]

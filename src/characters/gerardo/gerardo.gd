@@ -126,6 +126,7 @@ func set_gun(gun):
 	
 func _ready():
 	set_facing_dir(facing_dir)
+	set_health(health)
 
 func jump():
 	velocity.y = -jump_speed
