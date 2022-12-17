@@ -281,6 +281,8 @@ horizontal_air_acceleration = 150.0
 current = true
 script = ExtResource( 3 )
 lerp_speed = 0.5
+horizontal_extent = 0
+vertical_lerp_target = 80
 
 [node name="player_controller" type="Node" parent="player"]
 process_priority = -1316134912
