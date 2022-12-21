@@ -20,3 +20,7 @@ func is_pressed():
 	return pressed
 func stale():
 	just_updated = false
+
+func copy_from(state: ButtonState):
+	pressed = state.pressed
+	just_updated = state.just_updated

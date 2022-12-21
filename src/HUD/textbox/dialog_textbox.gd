@@ -109,7 +109,7 @@ func next_character_is_whitespace()->bool:
 
 
 func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("ui_accept"):
+	if event.is_action_pressed("A"):
 		skip_panel_animation= true
 		emit_signal("next")
 

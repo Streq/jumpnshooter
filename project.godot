@@ -156,6 +156,7 @@ GlobalInputs="res://src/global/global_inputs.gd"
 Group="*res://src/global/group.gd"
 GlobalPalette="*res://src/util/color/GlobalPalette.tscn"
 DialogProfiles="*res://src/global/DialogProfiles.tscn"
+Controller="*res://src/global/Controller.tscn"
 
 [display]
 
