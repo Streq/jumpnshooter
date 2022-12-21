@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=27 format=2]
 
 [ext_resource path="res://src/characters/gerardo/gerardo.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/texture/hill_8x8.png" type="Texture" id=2]
@@ -11,13 +11,14 @@
 [ext_resource path="res://assets/texture/heart_container.png" type="Texture" id=9]
 [ext_resource path="res://src/test/player/health_bar.gd" type="Script" id=10]
 [ext_resource path="res://src/HUD/health/heart.tscn" type="PackedScene" id=11]
+[ext_resource path="res://src/test/player/target_complete.gd" type="Script" id=12]
 
 [sub_resource type="AtlasTexture" id=28]
 resource_local_to_scene = true
 atlas = ExtResource( 9 )
 region = Rect2( 0, 0, 8, 8 )
 
-[sub_resource type="Image" id=29]
+[sub_resource type="Image" id=31]
 data = {
 "data": PoolByteArray( 255, 255, 0, 255, 126, 126, 1, 255, 60, 60, 2, 255, 0, 0, 3, 255 ),
 "format": "RGBA8",
@@ -29,7 +30,7 @@ data = {
 [sub_resource type="ImageTexture" id=25]
 flags = 0
 flags = 0
-image = SubResource( 29 )
+image = SubResource( 31 )
 size = Vector2( 4, 1 )
 
 [sub_resource type="ShaderMaterial" id=26]
@@ -234,6 +235,8 @@ points = PoolVector2Array( 8, 8, 0, 8, 0, 4, 8, 0 )
 [sub_resource type="RectangleShape2D" id=23]
 extents = Vector2( 4, 6.5 )
 
+[sub_resource type="RectangleShape2D" id=30]
+
 [node name="Node2D" type="Node2D"]
 
 [node name="HUD" type="CanvasLayer" parent="."]
@@ -321,5 +324,13 @@ position = Vector2( 1761, 61 )
 speed = 30.0
 horizontal_acceleration = 100.0
 
+[node name="target_complete" type="Area2D" parent="."]
+position = Vector2( 217, 105 )
+script = ExtResource( 12 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="target_complete"]
+shape = SubResource( 30 )
+
 [connection signal="change_gun" from="player" to="player/pivot/upper_body_pivot/gun_hold" method="change_gun"]
 [connection signal="health_changed" from="player" to="HUD/health_bar" method="_on_player_health_changed"]
+[connection signal="area_entered" from="target_complete" to="target_complete" method="_on_target_complete_area_entered"]

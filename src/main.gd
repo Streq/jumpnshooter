@@ -10,8 +10,11 @@ extends Node
 func _ready() -> void:
 	var B = Vector2.RIGHT.rotated(PI/4)
 	var A = Vector2.RIGHT
-	print(project_and_extend_to_cover(A,B))
+#	print(project_and_extend_to_cover(A,B))
 	
+	
+	print(Vector2.RIGHT.move_toward(Vector2.LEFT,0.5))
+	print(Vector2.RIGHT.limit_length(-1))
 	
 
 func project_and_extend_to_cover(covered:Vector2,projected:Vector2):

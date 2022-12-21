@@ -22,6 +22,7 @@ func shoot():
 	wearer.get_parent().add_child(bullet)
 	bullet.global_transform = muzzle.global_transform
 	current_cooldown = cooldown
+	bullet.initialize()
 	emit_signal("shoot")
 func pull_trigger():
 	trigger.press()
