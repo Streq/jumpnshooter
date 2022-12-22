@@ -352,8 +352,8 @@ shape = SubResource( 16 )
 
 [node name="health" type="Node" parent="."]
 script = ExtResource( 6 )
-value = 10.0
-max_value = 10.0
+value = 5.0
+max_value = 5.0
 
 [node name="normal_palette" parent="." instance=ExtResource( 8 )]
 index = 3

@@ -7,15 +7,14 @@ onready var textbox = $textbox
 onready var profile = $profile
 
 func say(request:TextRequest):
-	if request.pause:
-		get_tree().paused = true
+	pause()
+	
 	show()
 	profile.change_profile(request)
 	textbox.say(request)
 	
-	if request.pause:
-		yield(self,"display_finished")
-		get_tree().paused = false
+	yield(self,"display_finished")
+	unpause()
 func _ready() -> void:
 	hide()
 
@@ -25,3 +24,11 @@ func _on_textbox_text_started():
 func _on_textbox_text_finished():
 	hide()
 	emit_signal("display_finished")
+
+
+func pause():
+	get_tree().paused = true
+func unpause():
+	for i in 2: #prevent jump after dialog end
+		yield(get_tree(),"physics_frame")
+	get_tree().paused = false

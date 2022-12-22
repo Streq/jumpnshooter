@@ -28,5 +28,5 @@ func _process(delta):
 	offset.x = clamp(lerp(offset.x, target_x, delta*lerp_speed), -horizontal_extent, horizontal_extent)
 	offset.y = clamp(lerp(offset.y, target_y, delta*lerp_speed), -vertical_extent, vertical_extent)
 
-	
+#	global_position = get_parent().global_position.floor()
 	

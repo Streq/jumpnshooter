@@ -12,11 +12,8 @@ func _physics_process(delta: float) -> void:
 	input_state.dir = Input.get_vector("ui_left","ui_right","ui_up","ui_down")
 
 
-#func set_enabled(val):
-#	if enabled!=val:
-#		enabled = val
-#		if enabled:
-#			input_state.stale()
-#
-#
-#
+func disable():
+	set_physics_process(false)
+
+func enable():
+	set_physics_process(true)
