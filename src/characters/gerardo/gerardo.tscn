@@ -1,7 +1,5 @@
-[gd_scene load_steps=34 format=2]
+[gd_scene load_steps=37 format=2]
 
-[ext_resource path="res://assets/texture/shooter_body.png" type="Texture" id=1]
-[ext_resource path="res://assets/texture/shooter_legs.png" type="Texture" id=2]
 [ext_resource path="res://src/characters/gerardo/gerardo.gd" type="Script" id=3]
 [ext_resource path="res://src/characters/gerardo/gun_hold.gd" type="Script" id=4]
 [ext_resource path="res://assets/texture/gun.png" type="Texture" id=5]
@@ -12,8 +10,36 @@
 [ext_resource path="res://src/characters/input_state/input_state.tscn" type="PackedScene" id=10]
 [ext_resource path="res://assets/shader/palette.gdshader" type="Shader" id=11]
 [ext_resource path="res://src/util/color/palette_client.tscn" type="PackedScene" id=12]
+[ext_resource path="res://assets/texture/shooter_body.png" type="Texture" id=13]
+[ext_resource path="res://assets/texture/shooter_legs.png" type="Texture" id=14]
 
-[sub_resource type="Image" id=34]
+[sub_resource type="Image" id=43]
+data = {
+"data": PoolByteArray( 255, 255, 255, 0, 126, 126, 1, 255, 60, 60, 2, 255, 0, 0, 3, 255 ),
+"format": "RGBA8",
+"height": 1,
+"mipmaps": false,
+"width": 4
+}
+
+[sub_resource type="ImageTexture" id=41]
+flags = 0
+flags = 0
+image = SubResource( 43 )
+size = Vector2( 4, 1 )
+
+[sub_resource type="ShaderMaterial" id=42]
+resource_local_to_scene = true
+shader = ExtResource( 11 )
+shader_param/palette_size = 4
+shader_param/offset = 0.0
+shader_param/blue_index_offset = 0.0
+shader_param/palette = SubResource( 41 )
+
+[sub_resource type="RectangleShape2D" id=13]
+extents = Vector2( 4, 6.5 )
+
+[sub_resource type="Image" id=44]
 data = {
 "data": PoolByteArray( 255, 255, 0, 255, 126, 126, 1, 255, 60, 60, 2, 255, 0, 0, 3, 255 ),
 "format": "RGBA8",
@@ -25,7 +51,7 @@ data = {
 [sub_resource type="ImageTexture" id=25]
 flags = 0
 flags = 0
-image = SubResource( 34 )
+image = SubResource( 44 )
 size = Vector2( 4, 1 )
 
 [sub_resource type="ShaderMaterial" id=26]
@@ -35,9 +61,6 @@ shader_param/palette_size = 4
 shader_param/offset = 0.0
 shader_param/blue_index_offset = 0.0
 shader_param/palette = SubResource( 25 )
-
-[sub_resource type="RectangleShape2D" id=13]
-extents = Vector2( 4, 6.5 )
 
 [sub_resource type="Animation" id=1]
 length = 0.001
@@ -122,7 +145,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 2 ) ]
+"values": [ ExtResource( 14 ) ]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath("player/pivot/lower_body_pivot/lower_body_sprite:hframes")
@@ -185,7 +208,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 2 ) ]
+"values": [ ExtResource( 14 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("player/pivot/lower_body_pivot/lower_body_sprite:hframes")
@@ -260,7 +283,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 2 ) ]
+"values": [ ExtResource( 14 ) ]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath("player/pivot/lower_body_pivot/lower_body_sprite:hframes")
@@ -314,19 +337,19 @@ tracks/5/keys = {
 [sub_resource type="Animation" id=5]
 length = 0.1
 tracks/0/type = "value"
-tracks/0/path = NodePath("player/pivot/lower_body_pivot/lower_body_sprite:texture")
+tracks/0/path = NodePath("player/pivot/upper_body_pivot:position")
 tracks/0/interp = 1
-tracks/0/loop_wrap = false
+tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ ExtResource( 2 ) ]
+"update": 0,
+"values": [ Vector2( 0, 0 ) ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("player/pivot/lower_body_pivot/lower_body_sprite:hframes")
+tracks/1/path = NodePath("player/pivot/lower_body_pivot/lower_body_sprite:texture")
 tracks/1/interp = 1
 tracks/1/loop_wrap = false
 tracks/1/imported = false
@@ -335,10 +358,10 @@ tracks/1/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ 3 ]
+"values": [ ExtResource( 14 ) ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("player/pivot/lower_body_pivot/lower_body_sprite:vframes")
+tracks/2/path = NodePath("player/pivot/lower_body_pivot/lower_body_sprite:hframes")
 tracks/2/interp = 1
 tracks/2/loop_wrap = false
 tracks/2/imported = false
@@ -347,10 +370,10 @@ tracks/2/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ 2 ]
+"values": [ 3 ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("player/pivot/lower_body_pivot/lower_body_sprite:visible")
+tracks/3/path = NodePath("player/pivot/lower_body_pivot/lower_body_sprite:vframes")
 tracks/3/interp = 1
 tracks/3/loop_wrap = false
 tracks/3/imported = false
@@ -359,10 +382,10 @@ tracks/3/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ true ]
+"values": [ 2 ]
 }
 tracks/4/type = "value"
-tracks/4/path = NodePath("player/pivot/lower_body_pivot/lower_body_sprite:frame")
+tracks/4/path = NodePath("player/pivot/lower_body_pivot/lower_body_sprite:visible")
 tracks/4/interp = 1
 tracks/4/loop_wrap = false
 tracks/4/imported = false
@@ -371,19 +394,19 @@ tracks/4/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ 3.0 ]
+"values": [ true ]
 }
 tracks/5/type = "value"
-tracks/5/path = NodePath("player/pivot/upper_body_pivot:position")
+tracks/5/path = NodePath("player/pivot/lower_body_pivot/lower_body_sprite:frame")
 tracks/5/interp = 1
-tracks/5/loop_wrap = true
+tracks/5/loop_wrap = false
 tracks/5/imported = false
 tracks/5/enabled = true
 tracks/5/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Vector2( 0, 0 ) ]
+"update": 1,
+"values": [ 3.0 ]
 }
 
 [sub_resource type="Animation" id=6]
@@ -411,7 +434,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 2 ) ]
+"values": [ ExtResource( 14 ) ]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath("player/pivot/lower_body_pivot/lower_body_sprite:hframes")
@@ -474,7 +497,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 2 ) ]
+"values": [ ExtResource( 14 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("player/pivot/lower_body_pivot/lower_body_sprite:hframes")
@@ -588,7 +611,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 1 ) ]
+"values": [ ExtResource( 13 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("player/pivot/upper_body_pivot/upper_body_sprite:hframes")
@@ -642,19 +665,19 @@ tracks/4/keys = {
 [sub_resource type="Animation" id=8]
 length = 0.1
 tracks/0/type = "value"
-tracks/0/path = NodePath("player/pivot/upper_body_pivot/upper_body_sprite:texture")
+tracks/0/path = NodePath("player/pivot/upper_body_pivot/gun_hold:visible")
 tracks/0/interp = 1
-tracks/0/loop_wrap = false
+tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 1 ) ]
+"values": [ false ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("player/pivot/upper_body_pivot/upper_body_sprite:hframes")
+tracks/1/path = NodePath("player/pivot/upper_body_pivot/upper_body_sprite:texture")
 tracks/1/interp = 1
 tracks/1/loop_wrap = false
 tracks/1/imported = false
@@ -663,10 +686,10 @@ tracks/1/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ 2 ]
+"values": [ ExtResource( 13 ) ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("player/pivot/upper_body_pivot/upper_body_sprite:vframes")
+tracks/2/path = NodePath("player/pivot/upper_body_pivot/upper_body_sprite:hframes")
 tracks/2/interp = 1
 tracks/2/loop_wrap = false
 tracks/2/imported = false
@@ -678,7 +701,7 @@ tracks/2/keys = {
 "values": [ 2 ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("player/pivot/upper_body_pivot/upper_body_sprite:visible")
+tracks/3/path = NodePath("player/pivot/upper_body_pivot/upper_body_sprite:vframes")
 tracks/3/interp = 1
 tracks/3/loop_wrap = false
 tracks/3/imported = false
@@ -687,10 +710,10 @@ tracks/3/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ true ]
+"values": [ 2 ]
 }
 tracks/4/type = "value"
-tracks/4/path = NodePath("player/pivot/upper_body_pivot/upper_body_sprite:frame")
+tracks/4/path = NodePath("player/pivot/upper_body_pivot/upper_body_sprite:visible")
 tracks/4/interp = 1
 tracks/4/loop_wrap = false
 tracks/4/imported = false
@@ -699,19 +722,19 @@ tracks/4/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ 2.0 ]
+"values": [ true ]
 }
 tracks/5/type = "value"
-tracks/5/path = NodePath("player/pivot/upper_body_pivot/gun_hold:visible")
+tracks/5/path = NodePath("player/pivot/upper_body_pivot/upper_body_sprite:frame")
 tracks/5/interp = 1
-tracks/5/loop_wrap = true
+tracks/5/loop_wrap = false
 tracks/5/imported = false
 tracks/5/enabled = true
 tracks/5/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ false ]
+"values": [ 2.0 ]
 }
 
 [sub_resource type="Animation" id=9]
@@ -762,7 +785,7 @@ tracks/3/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 1 ) ]
+"values": [ ExtResource( 13 ) ]
 }
 tracks/4/type = "value"
 tracks/4/path = NodePath("player/pivot/upper_body_pivot/upper_body_sprite:hframes")
@@ -861,7 +884,7 @@ tracks/3/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 1 ) ]
+"values": [ ExtResource( 13 ) ]
 }
 tracks/4/type = "value"
 tracks/4/path = NodePath("player/pivot/upper_body_pivot/upper_body_sprite:hframes")
@@ -924,7 +947,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 1 ) ]
+"values": [ ExtResource( 13 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("player/pivot/upper_body_pivot/upper_body_sprite:hframes")
@@ -1021,7 +1044,7 @@ tracks/1/keys = {
 }
 
 [node name="player" type="KinematicBody2D" groups=["player"]]
-material = SubResource( 26 )
+material = SubResource( 42 )
 collision_mask = 2
 script = ExtResource( 3 )
 speed = 100.0
@@ -1029,10 +1052,11 @@ horizontal_acceleration = 400.0
 max_health = 8
 
 [node name="hurt_palette" parent="." instance=ExtResource( 12 )]
+type = 1
 index = 1
 
 [node name="normal_palette" parent="." instance=ExtResource( 12 )]
-index = 3
+type = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0, 1.5 )
@@ -1047,7 +1071,7 @@ use_parent_material = true
 
 [node name="upper_body_sprite" type="Sprite" parent="pivot/upper_body_pivot"]
 use_parent_material = true
-texture = ExtResource( 1 )
+texture = ExtResource( 13 )
 hframes = 2
 vframes = 2
 frame = 2
@@ -1098,7 +1122,7 @@ use_parent_material = true
 
 [node name="lower_body_sprite" type="Sprite" parent="pivot/lower_body_pivot"]
 use_parent_material = true
-texture = ExtResource( 2 )
+texture = ExtResource( 14 )
 hframes = 3
 vframes = 2
 frame = 3

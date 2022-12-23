@@ -10,28 +10,28 @@
 [ext_resource path="res://src/util/color/palette_client.tscn" type="PackedScene" id=8]
 [ext_resource path="res://src/characters/funguy/hitbox.gd" type="Script" id=9]
 
-[sub_resource type="Image" id=31]
+[sub_resource type="Image" id=43]
 data = {
-"data": PoolByteArray( 255, 255, 0, 255, 126, 126, 1, 255, 60, 60, 2, 255, 0, 0, 3, 255 ),
+"data": PoolByteArray( 255, 255, 255, 0, 126, 126, 1, 255, 60, 60, 2, 255, 0, 0, 3, 255 ),
 "format": "RGBA8",
 "height": 1,
 "mipmaps": false,
 "width": 4
 }
 
-[sub_resource type="ImageTexture" id=25]
+[sub_resource type="ImageTexture" id=41]
 flags = 0
 flags = 0
-image = SubResource( 31 )
+image = SubResource( 43 )
 size = Vector2( 4, 1 )
 
-[sub_resource type="ShaderMaterial" id=26]
+[sub_resource type="ShaderMaterial" id=42]
 resource_local_to_scene = true
 shader = ExtResource( 7 )
 shader_param/palette_size = 4
 shader_param/offset = 0.0
 shader_param/blue_index_offset = 0.0
-shader_param/palette = SubResource( 25 )
+shader_param/palette = SubResource( 41 )
 
 [sub_resource type="Animation" id=17]
 length = 0.3
@@ -291,7 +291,7 @@ tracks/0/keys = {
 extents = Vector2( 7, 7.5 )
 
 [node name="funguy" type="KinematicBody2D"]
-material = SubResource( 26 )
+material = SubResource( 42 )
 collision_mask = 2
 script = ExtResource( 2 )
 speed = 60.0
@@ -356,10 +356,11 @@ value = 5.0
 max_value = 5.0
 
 [node name="normal_palette" parent="." instance=ExtResource( 8 )]
-index = 3
+type = 1
 
 [node name="hurt_palette" parent="." instance=ExtResource( 8 )]
-index = 7
+type = 1
+index = 1
 
 [node name="damage_animation" type="AnimationPlayer" parent="."]
 autoplay = "normal"
