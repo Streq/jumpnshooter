@@ -7,8 +7,10 @@ export var material : ShaderMaterial
 export var glow = false setget set_glow
 export var glow_speed = 1.0
 
+export (int, FLAGS, "0","1","2","3") var transparent_layers = 0
+
+
 export var string_val : String setget set_string_val
-export var is_object := false
 var shader_offset
 
 var ready = false
@@ -69,13 +71,13 @@ func update_tex_from_palette():
 		var img = Image.new()
 		img.create(size, 1, false, Image.FORMAT_RGBA8)
 		img.lock()
-		if is_object:
-			img.set_pixel(0, 0, Color.transparent)
-			for i in range(1,size):
+		
+		for i in size:
+			if ((1 << i) & transparent_layers):
+				img.set_pixel(i%size, i/size, Color.transparent)
+			else:
 				img.set_pixel(i%size, i/size, palette[i])
-		else:
-			for i in size:
-				img.set_pixel(i%size, i/size, palette[i])
+			
 		img.unlock()
 		update_tex(img)
 	

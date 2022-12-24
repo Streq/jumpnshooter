@@ -13,33 +13,33 @@
 [ext_resource path="res://assets/texture/shooter_body.png" type="Texture" id=13]
 [ext_resource path="res://assets/texture/shooter_legs.png" type="Texture" id=14]
 
-[sub_resource type="Image" id=43]
+[sub_resource type="Image" id=40]
 data = {
-"data": PoolByteArray( 255, 255, 255, 0, 126, 126, 1, 255, 60, 60, 2, 255, 0, 0, 3, 255 ),
+"data": PoolByteArray( 0, 0, 3, 255, 255, 255, 0, 255, 126, 126, 1, 255, 255, 255, 255, 0 ),
 "format": "RGBA8",
 "height": 1,
 "mipmaps": false,
 "width": 4
 }
 
-[sub_resource type="ImageTexture" id=41]
+[sub_resource type="ImageTexture" id=38]
 flags = 0
 flags = 0
-image = SubResource( 43 )
+image = SubResource( 40 )
 size = Vector2( 4, 1 )
 
-[sub_resource type="ShaderMaterial" id=42]
+[sub_resource type="ShaderMaterial" id=39]
 resource_local_to_scene = true
 shader = ExtResource( 11 )
 shader_param/palette_size = 4
 shader_param/offset = 0.0
 shader_param/blue_index_offset = 0.0
-shader_param/palette = SubResource( 41 )
+shader_param/palette = SubResource( 38 )
 
 [sub_resource type="RectangleShape2D" id=13]
 extents = Vector2( 4, 6.5 )
 
-[sub_resource type="Image" id=44]
+[sub_resource type="Image" id=41]
 data = {
 "data": PoolByteArray( 255, 255, 0, 255, 126, 126, 1, 255, 60, 60, 2, 255, 0, 0, 3, 255 ),
 "format": "RGBA8",
@@ -51,7 +51,7 @@ data = {
 [sub_resource type="ImageTexture" id=25]
 flags = 0
 flags = 0
-image = SubResource( 44 )
+image = SubResource( 41 )
 size = Vector2( 4, 1 )
 
 [sub_resource type="ShaderMaterial" id=26]
@@ -1044,7 +1044,7 @@ tracks/1/keys = {
 }
 
 [node name="player" type="KinematicBody2D" groups=["player"]]
-material = SubResource( 42 )
+material = SubResource( 39 )
 collision_mask = 2
 script = ExtResource( 3 )
 speed = 100.0
