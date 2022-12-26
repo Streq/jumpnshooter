@@ -16,6 +16,10 @@ func _ready() -> void:
 	print(Vector2.RIGHT.move_toward(Vector2.LEFT,0.5))
 	print(Vector2.RIGHT.limit_length(-1))
 	
+	if "" or null:
+		print("jaja")
+	
+	
 
 func project_and_extend_to_cover(covered:Vector2,projected:Vector2):
 	var projection = projected.project(covered)

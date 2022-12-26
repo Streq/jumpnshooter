@@ -8,6 +8,10 @@ var current: State = null
 var states:= {}
 onready var root = owner
 
+func _ready():
+	yield(owner,"ready")
+	initialize()
+
 func initialize():
 	for state in get_children():
 		states[state.name] = state

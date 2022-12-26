@@ -4,8 +4,9 @@ signal got_hit(damage)
 
 onready var animation_player: AnimationPlayer = $AnimationPlayer
 onready var pivot: Node2D = $pivot
-onready var input_state: Node = $input_state
+onready var input_state: InputState = $input_state
 onready var damage_animation: AnimationPlayer = $damage_animation
+onready var state_machine = $state_machine
 
 
 var velocity := Vector2()
@@ -37,48 +38,10 @@ func set_lookup_dir(val):
 
 var grounded = false
 
-
-enum STATE {
-	IDLE,
-	WALK
-}
-
-
-func _physics_process(delta: float) -> void:
-	var direction = input_state.dir
-	
-	if direction.x:
-		set_facing_dir(direction.x)
-
-		if is_on_floor():
-			velocity.x += sign(direction.x)*horizontal_acceleration*delta
-			animation_player.play("walk")
-			if !grounded:
-				#start on second frame
-				animation_player.seek(0.1)
-		else:
-			animation_player.play("air")
-			velocity.x += sign(direction.x)*horizontal_air_acceleration*delta
-	else:
-		if is_on_floor():
-			velocity.x -= sign(velocity.x)*min(horizontal_decceleration*delta,abs(velocity.x))
-			animation_player.play("idle")
-		else:
-			velocity.x -= sign(velocity.x)*min(horizontal_air_decceleration*delta,abs(velocity.x))
-			animation_player.play("air")
-	
-	
-	
-	var gravity = soft_gravity #if held_jump else hard_gravity
-	var gravity_dir = -get_floor_normal() if is_on_floor() else Vector2.DOWN
-	velocity += gravity_dir*gravity*delta
-	velocity.x = clamp(velocity.x, -speed, speed)
-	if !is_on_floor():
-		velocity.y = min(fall_speed, velocity.y)
-	grounded = is_on_floor()
-	var snap = Vector2.DOWN if is_on_floor() else Vector2.ZERO
-	velocity = move_and_slide_with_snap(velocity, snap, Vector2.UP, true,4,deg2rad(52))
-	
 func _on_hit(damage):
 	emit_signal("got_hit", damage)
+#	damage_animation.queue("hurt")
 	damage_animation.play("hurt")
+	
+func _physics_process(delta):
+	state_machine.physics_update(delta)

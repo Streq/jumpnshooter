@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=2]
+[gd_scene load_steps=32 format=2]
 
 [ext_resource path="res://src/characters/gerardo/gerardo.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/texture/hill_8x8.png" type="Texture" id=2]
@@ -13,36 +13,38 @@
 [ext_resource path="res://src/HUD/health/heart.tscn" type="PackedScene" id=11]
 [ext_resource path="res://src/test/player/target_complete.gd" type="Script" id=12]
 [ext_resource path="res://src/HUD/textbox/dialog.tscn" type="PackedScene" id=13]
+[ext_resource path="res://src/characters/moving_turret/moving_turret.tscn" type="PackedScene" id=14]
+[ext_resource path="res://src/characters/moving_turret/moving_turret_controller.gd" type="Script" id=15]
 
-[sub_resource type="Image" id=43]
+[sub_resource type="Image" id=45]
 data = {
-"data": PoolByteArray( 0, 0, 3, 255, 255, 255, 0, 255, 126, 126, 1, 255, 255, 255, 255, 0 ),
+"data": PoolByteArray( 60, 60, 2, 255, 126, 126, 1, 255, 255, 255, 0, 255, 255, 255, 255, 0 ),
 "format": "RGBA8",
 "height": 1,
 "mipmaps": false,
 "width": 4
 }
 
-[sub_resource type="ImageTexture" id=38]
+[sub_resource type="ImageTexture" id=23]
 flags = 0
 flags = 0
-image = SubResource( 43 )
+image = SubResource( 45 )
 size = Vector2( 4, 1 )
 
-[sub_resource type="ShaderMaterial" id=39]
+[sub_resource type="ShaderMaterial" id=24]
 resource_local_to_scene = true
 shader = ExtResource( 4 )
 shader_param/palette_size = 4
 shader_param/offset = 0.0
 shader_param/blue_index_offset = 0.0
-shader_param/palette = SubResource( 38 )
+shader_param/palette = SubResource( 23 )
 
 [sub_resource type="AtlasTexture" id=28]
 resource_local_to_scene = true
 atlas = ExtResource( 9 )
 region = Rect2( 0, 0, 8, 8 )
 
-[sub_resource type="Image" id=44]
+[sub_resource type="Image" id=46]
 data = {
 "data": PoolByteArray( 255, 255, 0, 255, 126, 126, 1, 255, 60, 60, 2, 255, 0, 0, 3, 255 ),
 "format": "RGBA8",
@@ -51,19 +53,19 @@ data = {
 "width": 4
 }
 
-[sub_resource type="ImageTexture" id=41]
+[sub_resource type="ImageTexture" id=39]
 flags = 0
 flags = 0
-image = SubResource( 44 )
+image = SubResource( 46 )
 size = Vector2( 4, 1 )
 
-[sub_resource type="ShaderMaterial" id=42]
+[sub_resource type="ShaderMaterial" id=40]
 resource_local_to_scene = true
 shader = ExtResource( 4 )
 shader_param/palette_size = 4
 shader_param/offset = 0
 shader_param/blue_index_offset = 0.0
-shader_param/palette = SubResource( 41 )
+shader_param/palette = SubResource( 39 )
 
 [sub_resource type="ConvexPolygonShape2D" id=32]
 points = PoolVector2Array( 8, 8, 0, 8, 0, 0, 8, 0 )
@@ -250,10 +252,13 @@ points = PoolVector2Array( 8, 8, 0, 8, 0, 4, 8, 0 )
 7/shapes = [  ]
 7/z_index = 0
 
-[sub_resource type="RectangleShape2D" id=23]
+[sub_resource type="RectangleShape2D" id=41]
 extents = Vector2( 4, 6.5 )
 
 [sub_resource type="RectangleShape2D" id=30]
+
+[sub_resource type="RectangleShape2D" id=44]
+extents = Vector2( 155, 7.5 )
 
 [node name="Node2D" type="Node2D"]
 
@@ -273,13 +278,13 @@ margin_bottom = 8.0
 custom_constants/separation = 0
 
 [node name="heart" parent="HUD/health_bar/hearts" instance=ExtResource( 11 )]
-material = SubResource( 39 )
+material = SubResource( 24 )
 texture = SubResource( 28 )
 
 [node name="dialog" parent="HUD" instance=ExtResource( 13 )]
 
 [node name="back" type="TileMap" parent="."]
-material = SubResource( 42 )
+material = SubResource( 40 )
 tile_set = SubResource( 5 )
 cell_size = Vector2( 8, 8 )
 collision_layer = 2
@@ -289,7 +294,7 @@ tile_data = PoolIntArray( -327561, 6, 0, -327560, 6, 0, -327559, 6, 0, -327558, 
 [node name="palette_client" parent="back" instance=ExtResource( 5 )]
 
 [node name="TileMap" type="TileMap" parent="."]
-material = SubResource( 42 )
+material = SubResource( 40 )
 tile_set = SubResource( 5 )
 cell_size = Vector2( 8, 8 )
 collision_layer = 2
@@ -299,6 +304,7 @@ tile_data = PoolIntArray( 131145, 1, 0, 131146, 0, 1, 131147, 0, 1, 131148, 0, 1
 [node name="palette_client" parent="TileMap" instance=ExtResource( 5 )]
 
 [node name="player" parent="." instance=ExtResource( 1 )]
+material = SubResource( 24 )
 position = Vector2( 186, 102 )
 speed = 75.0
 horizontal_air_acceleration = 150.0
@@ -312,45 +318,40 @@ horizontal_extent = 0
 vertical_extent = 32
 vertical_lerp_target = 64
 
-[node name="player_controller" type="Node" parent="player"]
-pause_mode = 2
-process_priority = -1000
-script = ExtResource( 8 )
-
 [node name="player_area" type="Area2D" parent="player"]
 collision_layer = 16
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="player/player_area"]
 position = Vector2( 0, 1.5 )
-shape = SubResource( 23 )
+shape = SubResource( 41 )
+
+[node name="player_controller" type="Node" parent="player"]
+pause_mode = 2
+process_priority = -1000
+script = ExtResource( 8 )
 
 [node name="funguy" parent="." instance=ExtResource( 7 )]
-material = SubResource( 39 )
 position = Vector2( 564, 95 )
 speed = 30.0
 horizontal_acceleration = 100.0
 
 [node name="funguy2" parent="." instance=ExtResource( 7 )]
-material = SubResource( 39 )
 position = Vector2( 450, 47 )
 speed = 30.0
 horizontal_acceleration = 100.0
 
 [node name="funguy3" parent="." instance=ExtResource( 7 )]
-material = SubResource( 39 )
 position = Vector2( 721, 6 )
 speed = 30.0
 horizontal_acceleration = 100.0
 
 [node name="funguy4" parent="." instance=ExtResource( 7 )]
-material = SubResource( 39 )
 position = Vector2( 1451, 62 )
 speed = 30.0
 horizontal_acceleration = 100.0
 
 [node name="funguy5" parent="." instance=ExtResource( 7 )]
-material = SubResource( 39 )
 position = Vector2( 1761, 61 )
 speed = 30.0
 horizontal_acceleration = 100.0
@@ -364,6 +365,20 @@ script = ExtResource( 12 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="target_complete"]
 shape = SubResource( 30 )
 
-[connection signal="change_gun" from="player" to="player/pivot/upper_body_pivot/gun_hold" method="change_gun"]
+[node name="turret" parent="." instance=ExtResource( 14 )]
+position = Vector2( 231, 92 )
+
+[node name="turret_controller" type="Node2D" parent="turret"]
+process_priority = -10
+script = ExtResource( 15 )
+
+[node name="target_detect" type="Area2D" parent="turret/turret_controller"]
+collision_layer = 0
+collision_mask = 16
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="turret/turret_controller/target_detect"]
+position = Vector2( 0, 0.5 )
+shape = SubResource( 44 )
+
 [connection signal="health_changed" from="player" to="HUD/health_bar" method="_on_player_health_changed"]
 [connection signal="area_entered" from="target_complete" to="target_complete" method="_on_target_complete_area_entered"]
