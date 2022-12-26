@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=2]
+[gd_scene load_steps=31 format=2]
 
 [ext_resource path="res://src/characters/gerardo/gerardo.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/texture/hill_8x8.png" type="Texture" id=2]
@@ -14,9 +14,9 @@
 [ext_resource path="res://src/test/player/target_complete.gd" type="Script" id=12]
 [ext_resource path="res://src/HUD/textbox/dialog.tscn" type="PackedScene" id=13]
 [ext_resource path="res://src/characters/moving_turret/moving_turret.tscn" type="PackedScene" id=14]
-[ext_resource path="res://src/characters/moving_turret/moving_turret_controller.gd" type="Script" id=15]
+[ext_resource path="res://src/characters/moving_turret/turret_controller.tscn" type="PackedScene" id=15]
 
-[sub_resource type="Image" id=45]
+[sub_resource type="Image" id=42]
 data = {
 "data": PoolByteArray( 60, 60, 2, 255, 126, 126, 1, 255, 255, 255, 0, 255, 255, 255, 255, 0 ),
 "format": "RGBA8",
@@ -28,7 +28,7 @@ data = {
 [sub_resource type="ImageTexture" id=23]
 flags = 0
 flags = 0
-image = SubResource( 45 )
+image = SubResource( 42 )
 size = Vector2( 4, 1 )
 
 [sub_resource type="ShaderMaterial" id=24]
@@ -44,7 +44,7 @@ resource_local_to_scene = true
 atlas = ExtResource( 9 )
 region = Rect2( 0, 0, 8, 8 )
 
-[sub_resource type="Image" id=46]
+[sub_resource type="Image" id=43]
 data = {
 "data": PoolByteArray( 255, 255, 0, 255, 126, 126, 1, 255, 60, 60, 2, 255, 0, 0, 3, 255 ),
 "format": "RGBA8",
@@ -56,7 +56,7 @@ data = {
 [sub_resource type="ImageTexture" id=39]
 flags = 0
 flags = 0
-image = SubResource( 46 )
+image = SubResource( 43 )
 size = Vector2( 4, 1 )
 
 [sub_resource type="ShaderMaterial" id=40]
@@ -257,9 +257,6 @@ extents = Vector2( 4, 6.5 )
 
 [sub_resource type="RectangleShape2D" id=30]
 
-[sub_resource type="RectangleShape2D" id=44]
-extents = Vector2( 155, 7.5 )
-
 [node name="Node2D" type="Node2D"]
 
 [node name="HUD" type="CanvasLayer" parent="."]
@@ -366,19 +363,19 @@ script = ExtResource( 12 )
 shape = SubResource( 30 )
 
 [node name="turret" parent="." instance=ExtResource( 14 )]
-position = Vector2( 231, 92 )
+position = Vector2( 164, 36 )
 
-[node name="turret_controller" type="Node2D" parent="turret"]
-process_priority = -10
-script = ExtResource( 15 )
+[node name="turret_controller" parent="turret" instance=ExtResource( 15 )]
 
-[node name="target_detect" type="Area2D" parent="turret/turret_controller"]
-collision_layer = 0
-collision_mask = 16
+[node name="turret2" parent="." instance=ExtResource( 14 )]
+position = Vector2( 508, 20 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="turret/turret_controller/target_detect"]
-position = Vector2( 0, 0.5 )
-shape = SubResource( 44 )
+[node name="turret_controller" parent="turret2" instance=ExtResource( 15 )]
+
+[node name="turret3" parent="." instance=ExtResource( 14 )]
+position = Vector2( 1018, 62 )
+
+[node name="turret_controller" parent="turret3" instance=ExtResource( 15 )]
 
 [connection signal="health_changed" from="player" to="HUD/health_bar" method="_on_player_health_changed"]
 [connection signal="area_entered" from="target_complete" to="target_complete" method="_on_target_complete_area_entered"]

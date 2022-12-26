@@ -291,7 +291,7 @@ tracks/7/enabled = true
 tracks/7/keys = {
 "times": PoolRealArray( 0.85, 1, 1.15, 1.3, 1.45, 1.6 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
-"update": 0,
+"update": 1,
 "values": [ Vector2( 1, 0 ), Vector2( 0, 0 ), Vector2( 1, 0 ), Vector2( 0, 0 ), Vector2( 1, 0 ), Vector2( 0, 0 ) ]
 }
 
@@ -448,8 +448,8 @@ shape = SubResource( 8 )
 
 [node name="health" type="Node" parent="."]
 script = ExtResource( 4 )
-value = 10.0
-max_value = 10.0
+value = 20.0
+max_value = 20.0
 
 [node name="normal_palette" parent="." instance=ExtResource( 1 )]
 type = 1
@@ -469,7 +469,6 @@ use_parent_material = true
 
 [node name="Sprite" type="Sprite" parent="pivot"]
 use_parent_material = true
-position = Vector2( 1, 0 )
 texture = ExtResource( 10 )
 hframes = 3
 vframes = 2
