@@ -1,9 +1,11 @@
 extends Node2D
 
 var input : InputState
-var target = null
+#var target = null
 onready var target_detect: Area2D = $pivot/target_detect
 onready var hind = $pivot/target_detect/hind
+onready var downard_target_detect: Area2D = $pivot/downard_target_detect
+
 onready var pivot = $pivot
 
 onready var root = get_parent()
@@ -20,32 +22,37 @@ func _ready():
 
 func _physics_process(delta: float) -> void:
 	var targets_on_sight = target_detect.get_overlapping_areas()
-
+	var targets_on_down_sight = downard_target_detect.get_overlapping_areas()
+	var target = null
+	var down_target = null
+	
 	if targets_on_sight:
 		target = targets_on_sight[0]
-	else:
-		target = null
-	
+	elif targets_on_down_sight:
+		down_target = targets_on_down_sight[0]
+		
 	var has_floor_ahead = floor_detect.get_overlapping_bodies()
-	
+	input.dir.y = 0.0
 	if target:
 		var dir_target = sign(target.global_position.x - global_position.x)
 		if has_floor_ahead or dir_target != root.facing_dir:
 			input.dir.x = dir_target
 		else:
 			input.dir.x = 0.0
+	elif down_target:
+		input.dir.y = 1.0
 	elif has_floor_ahead or !root.is_on_floor():
 		input.dir.x = root.facing_dir
 	else:
 		input.dir.x = -root.facing_dir
 
 	
-	if root.animation_player.current_animation == "shoot":
+	if root.animation_player.current_animation in ["shoot", "shoot_down"]:
 		shoot_cooldown.start()
 	
 	input.B.release()
 	
-	if targets_on_sight.size()>0 and shoot_cooldown.is_stopped():
+	if (target or down_target) and shoot_cooldown.is_stopped():
 		input.B.pressed = true
 
 func _on_got_hit(damage):

@@ -169,6 +169,7 @@ func die():
 	if !dead:
 		start_hurt()
 		velocity = Vector2(-facing_dir*75,-100.0)
+		gun_hold.set_trigger_pulled(false)
 		dead = true
 
 

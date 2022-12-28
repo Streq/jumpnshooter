@@ -11,6 +11,10 @@ func _physics_update(delta):
 		character.velocity.y -= character.jump_speed
 		return
 	if input_state.B.is_just_pressed():
+		var v_dir = input_state.dir.y
+		if v_dir>0:
+			goto("shoot_down")
+			return
 		goto("shoot")
 		return
 	if !h_dir:

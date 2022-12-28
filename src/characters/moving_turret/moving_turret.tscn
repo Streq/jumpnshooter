@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=2]
+[gd_scene load_steps=36 format=2]
 
 [ext_resource path="res://src/util/color/palette_client.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/shader/palette.gdshader" type="Shader" id=2]
@@ -16,29 +16,30 @@
 [ext_resource path="res://src/characters/moving_turret/air.gd" type="Script" id=14]
 [ext_resource path="res://src/characters/moving_turret/muzzle.gd" type="Script" id=15]
 [ext_resource path="res://src/bullets/turret/turret_bullet.tscn" type="PackedScene" id=16]
+[ext_resource path="res://src/bullets/turret/turret_down_bullet.tscn" type="PackedScene" id=17]
 
-[sub_resource type="Image" id=31]
+[sub_resource type="Image" id=45]
 data = {
-"data": PoolByteArray( 60, 60, 2, 255, 126, 126, 1, 255, 255, 255, 0, 255, 255, 255, 255, 0 ),
+"data": PoolByteArray( 255, 255, 0, 255, 126, 126, 1, 255, 60, 60, 2, 255, 255, 255, 255, 0 ),
 "format": "RGBA8",
 "height": 1,
 "mipmaps": false,
 "width": 4
 }
 
-[sub_resource type="ImageTexture" id=23]
+[sub_resource type="ImageTexture" id=43]
 flags = 0
 flags = 0
-image = SubResource( 31 )
+image = SubResource( 45 )
 size = Vector2( 4, 1 )
 
-[sub_resource type="ShaderMaterial" id=24]
+[sub_resource type="ShaderMaterial" id=44]
 resource_local_to_scene = true
 shader = ExtResource( 2 )
 shader_param/palette_size = 4
 shader_param/offset = 0.0
 shader_param/blue_index_offset = 0.0
-shader_param/palette = SubResource( 23 )
+shader_param/palette = SubResource( 43 )
 
 [sub_resource type="Animation" id=21]
 resource_name = "RESET"
@@ -211,19 +212,19 @@ tracks/1/keys = {
 "values": [ 2, 0 ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("pivot/Sprite:texture")
+tracks/2/path = NodePath("shake_anim:current_animation")
 tracks/2/interp = 1
-tracks/2/loop_wrap = false
+tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ ExtResource( 10 ) ]
+"times": PoolRealArray( 0.85, 1.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 2,
+"values": [ "shake", "no_shake" ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("pivot/Sprite:hframes")
+tracks/3/path = NodePath("pivot/Sprite:texture")
 tracks/3/interp = 1
 tracks/3/loop_wrap = false
 tracks/3/imported = false
@@ -232,10 +233,10 @@ tracks/3/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ 3 ]
+"values": [ ExtResource( 10 ) ]
 }
 tracks/4/type = "value"
-tracks/4/path = NodePath("pivot/Sprite:vframes")
+tracks/4/path = NodePath("pivot/Sprite:hframes")
 tracks/4/interp = 1
 tracks/4/loop_wrap = false
 tracks/4/imported = false
@@ -247,7 +248,7 @@ tracks/4/keys = {
 "values": [ 3 ]
 }
 tracks/5/type = "value"
-tracks/5/path = NodePath("pivot/Sprite:visible")
+tracks/5/path = NodePath("pivot/Sprite:vframes")
 tracks/5/interp = 1
 tracks/5/loop_wrap = false
 tracks/5/imported = false
@@ -256,74 +257,76 @@ tracks/5/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ true ]
+"values": [ 3 ]
 }
 tracks/6/type = "value"
-tracks/6/path = NodePath("pivot/Sprite:frame")
+tracks/6/path = NodePath("pivot/Sprite:visible")
 tracks/6/interp = 1
 tracks/6/loop_wrap = false
 tracks/6/imported = false
 tracks/6/enabled = true
 tracks/6/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("pivot/Sprite:frame")
+tracks/7/interp = 1
+tracks/7/loop_wrap = false
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
 "times": PoolRealArray( 0, 0.2, 0.6, 1.6 ),
 "transitions": PoolRealArray( 1, 1, 1, 1 ),
 "update": 1,
 "values": [ 0.0, 1.0, 2.0, 0.0 ]
 }
-tracks/7/type = "value"
-tracks/7/path = NodePath("shake_anim:current_animation")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/imported = false
-tracks/7/enabled = true
-tracks/7/keys = {
-"times": PoolRealArray( 0.85, 1.6 ),
+
+[sub_resource type="Animation" id=26]
+length = 1.7
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("shake_anim:current_animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0.2, 0.95 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 2,
 "values": [ "shake", "no_shake" ]
 }
-
-[sub_resource type="Animation" id=26]
-length = 2.1
-step = 0.05
-tracks/0/type = "value"
-tracks/0/path = NodePath("pivot/Sprite:texture")
-tracks/0/interp = 1
-tracks/0/loop_wrap = false
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ ExtResource( 10 ) ]
-}
 tracks/1/type = "value"
-tracks/1/path = NodePath("pivot/Sprite:hframes")
+tracks/1/path = NodePath("normal_palette:index")
 tracks/1/interp = 1
-tracks/1/loop_wrap = false
+tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
+"times": PoolRealArray( 0.2, 0.95 ),
+"transitions": PoolRealArray( 1, 1 ),
 "update": 1,
-"values": [ 3 ]
+"values": [ 2, 0 ]
 }
-tracks/2/type = "value"
-tracks/2/path = NodePath("pivot/Sprite:vframes")
+tracks/2/type = "method"
+tracks/2/path = NodePath("pivot/down_muzzle")
 tracks/2/interp = 1
-tracks/2/loop_wrap = false
+tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"times": PoolRealArray( 0 ),
+"times": PoolRealArray( 0.95 ),
 "transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ 3 ]
+"values": [ {
+"args": [  ],
+"method": "shoot"
+} ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("pivot/Sprite:visible")
+tracks/3/path = NodePath("pivot/Sprite:texture")
 tracks/3/interp = 1
 tracks/3/loop_wrap = false
 tracks/3/imported = false
@@ -332,43 +335,55 @@ tracks/3/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ true ]
+"values": [ ExtResource( 10 ) ]
 }
 tracks/4/type = "value"
-tracks/4/path = NodePath("pivot/Sprite:frame")
+tracks/4/path = NodePath("pivot/Sprite:hframes")
 tracks/4/interp = 1
 tracks/4/loop_wrap = false
 tracks/4/imported = false
 tracks/4/enabled = true
 tracks/4/keys = {
-"times": PoolRealArray( 0, 0.6 ),
-"transitions": PoolRealArray( 1, 1 ),
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ 5.0, 6.0 ]
+"values": [ 3 ]
 }
 tracks/5/type = "value"
-tracks/5/path = NodePath("shake_anim:current_animation")
+tracks/5/path = NodePath("pivot/Sprite:vframes")
 tracks/5/interp = 1
-tracks/5/loop_wrap = true
+tracks/5/loop_wrap = false
 tracks/5/imported = false
 tracks/5/enabled = true
 tracks/5/keys = {
-"times": PoolRealArray( 0.85, 1.6 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 2,
-"values": [ "shake", "no_shake" ]
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 3 ]
 }
 tracks/6/type = "value"
-tracks/6/path = NodePath("normal_palette:index")
+tracks/6/path = NodePath("pivot/Sprite:visible")
 tracks/6/interp = 1
-tracks/6/loop_wrap = true
+tracks/6/loop_wrap = false
 tracks/6/imported = false
 tracks/6/enabled = true
 tracks/6/keys = {
-"times": PoolRealArray( 0.85, 1.6 ),
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("pivot/Sprite:frame")
+tracks/7/interp = 1
+tracks/7/loop_wrap = false
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0, 0.2 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
-"values": [ 2, 0 ]
+"values": [ 5.0, 6.0 ]
 }
 
 [sub_resource type="Animation" id=4]
@@ -549,12 +564,13 @@ tracks/0/keys = {
 }
 
 [node name="turret" type="KinematicBody2D"]
-material = SubResource( 24 )
+material = SubResource( 44 )
 collision_mask = 2
 script = ExtResource( 3 )
 speed = 25.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+playback_process_mode = 0
 anims/RESET = SubResource( 21 )
 anims/air = SubResource( 1 )
 anims/idle = SubResource( 2 )
@@ -573,8 +589,8 @@ shape = SubResource( 8 )
 
 [node name="health" type="Node" parent="."]
 script = ExtResource( 4 )
-value = 20.0
-max_value = 20.0
+value = 10.0
+max_value = 10.0
 
 [node name="normal_palette" parent="." instance=ExtResource( 1 )]
 type = 1
@@ -591,13 +607,14 @@ anims/normal = SubResource( 16 )
 
 [node name="pivot" type="Node2D" parent="."]
 use_parent_material = true
+z_index = 1
 
 [node name="Sprite" type="Sprite" parent="pivot"]
 use_parent_material = true
 texture = ExtResource( 10 )
 hframes = 3
 vframes = 3
-frame = 6
+frame = 5
 __meta__ = {
 "_aseprite_wizard_config_": {
 "layer": "",
@@ -634,6 +651,13 @@ unique_name_in_owner = true
 position = Vector2( 8, 0 )
 script = ExtResource( 15 )
 BULLET = ExtResource( 16 )
+
+[node name="down_muzzle" type="Node2D" parent="pivot"]
+unique_name_in_owner = true
+position = Vector2( 0, 6 )
+rotation = 1.57079
+script = ExtResource( 15 )
+BULLET = ExtResource( 17 )
 
 [node name="behavior" type="Node" parent="."]
 script = ExtResource( 9 )
