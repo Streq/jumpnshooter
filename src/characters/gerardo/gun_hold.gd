@@ -29,6 +29,7 @@ func _add_gun(gun):
 	release_trigger()
 	self.gun = gun
 	add_child(self.gun)
+	self.gun.position = Vector2()
 	connect("trigger_pulled",self.gun,"pull_trigger")
 	connect("trigger_released",self.gun,"release_trigger")
 	gun.wearer = owner

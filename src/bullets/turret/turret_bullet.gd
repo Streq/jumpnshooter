@@ -1,14 +1,19 @@
 extends KinematicBody2D
-
+signal initialize
 export var speed := 200.0
+export var fix_transform := false
 onready var bullet_hit: Sprite = $bullet_hit
+onready var sprite: Sprite = $Sprite
 
 
 var velocity := Vector2()
 
 func initialize():
 	velocity = Vector2.RIGHT.rotated(global_rotation)*speed
-
+	if fix_transform:
+		sprite.global_rotation = 0
+		sprite.global_scale = Vector2(1,1)
+	emit_signal("initialize")
 func _physics_process(delta):
 	move_and_slide(velocity)
 	

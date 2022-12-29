@@ -5,7 +5,11 @@
 [ext_resource path="res://src/bullets/turret/gravity.gd" type="Script" id=3]
 
 [node name="turret_down_bullet" instance=ExtResource( 1 )]
+__meta__ = {
+"_edit_pinned_properties_": [ "fix_transform" ]
+}
 speed = 0.0
+fix_transform = false
 
 [node name="Sprite" parent="." index="0"]
 texture = ExtResource( 2 )

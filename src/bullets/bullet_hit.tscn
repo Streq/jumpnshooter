@@ -70,7 +70,6 @@ tracks/4/keys = {
 texture = ExtResource( 1 )
 hframes = 2
 vframes = 2
-frame = 3
 script = ExtResource( 2 )
 __meta__ = {
 "_aseprite_wizard_config_": {

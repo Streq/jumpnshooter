@@ -179,3 +179,6 @@ func play_dead_air():
 func play_dead_floor():
 	lower_body_animation.play("knocked")
 	upper_body_animation.play("knocked")
+
+func is_looking_up():
+	return look_up_dir<0

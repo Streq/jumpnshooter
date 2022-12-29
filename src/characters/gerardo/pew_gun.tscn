@@ -1,0 +1,65 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://src/characters/gerardo/gun.tscn" type="PackedScene" id=1]
+[ext_resource path="res://assets/texture/muzzle_pop.png" type="Texture" id=2]
+[ext_resource path="res://src/characters/gerardo/muzzle_pop.gd" type="Script" id=3]
+[ext_resource path="res://src/bullets/bullet.tscn" type="PackedScene" id=4]
+[ext_resource path="res://src/characters/gerardo/muzzle.gd" type="Script" id=5]
+
+[sub_resource type="Animation" id=1]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "pop"
+length = 0.017
+step = 0.0166667
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.0166667 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+
+[node name="gun" instance=ExtResource( 1 )]
+cooldown = 0.1
+automatic = true
+
+[node name="muzzle" type="Node2D" parent="." index="1"]
+position = Vector2( 8, 0 )
+script = ExtResource( 5 )
+speed = 200.0
+bullet_lifetime = 0.4
+BULLET = ExtResource( 4 )
+
+[node name="muzzle_pop" type="Sprite" parent="muzzle" index="0"]
+visible = false
+z_index = 1
+texture = ExtResource( 2 )
+script = ExtResource( 3 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="muzzle/muzzle_pop" index="0"]
+playback_process_mode = 0
+anims/RESET = SubResource( 1 )
+anims/pop = SubResource( 2 )
+
+[connection signal="shoot" from="." to="muzzle" method="shoot"]
+[connection signal="shoot_up" from="." to="muzzle" method="shoot"]
+[connection signal="shoot" from="muzzle" to="muzzle/muzzle_pop" method="_on_gun_shoot"]

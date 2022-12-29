@@ -41,7 +41,7 @@ func _physics_process(delta: float) -> void:
 			input.dir.x = 0.0
 	elif down_target:
 		input.dir.y = 1.0
-	elif has_floor_ahead or !root.is_on_floor():
+	elif (has_floor_ahead or !root.is_on_floor()) and (!root.is_on_wall()):
 		input.dir.x = root.facing_dir
 	else:
 		input.dir.x = -root.facing_dir
