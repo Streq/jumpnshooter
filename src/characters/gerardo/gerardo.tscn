@@ -1240,13 +1240,12 @@ script = ExtResource( 1 )
 [node name="guns" type="Node" parent="."]
 script = ExtResource( 5 )
 
-[node name="gun" parent="guns" instance=ExtResource( 6 )]
+[node name="pew_gun" parent="guns" instance=ExtResource( 6 )]
 position = Vector2( 0, 2 )
 
 [node name="fireball_gun" parent="guns" instance=ExtResource( 2 )]
 
 [node name="spark_gun" parent="guns" instance=ExtResource( 7 )]
 
-[connection signal="change_gun" from="." to="pivot/upper_body_pivot/gun_hold" method="change_gun"]
 [connection signal="hurt_started" from="." to="hurt_timer" method="start"]
 [connection signal="timeout" from="hurt_timer" to="." method="end_hurt"]

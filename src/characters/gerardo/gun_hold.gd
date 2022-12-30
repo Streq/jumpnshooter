@@ -33,7 +33,7 @@ func _add_gun(gun):
 	connect("trigger_pulled",self.gun,"pull_trigger")
 	connect("trigger_released",self.gun,"release_trigger")
 	gun.wearer = owner
-
+	gun.wearer.set_gun(gun)
 func _remove_gun():
 	release_trigger()
 	remove_child(self.gun)

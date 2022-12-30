@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://assets/texture/gun_select/pew_gun.png" type="Texture" id=1]
+[ext_resource path="res://src/HUD/weapons/weapon_HUD.gd" type="Script" id=2]
+
+[node name="weapon" type="Control"]
+margin_right = 16.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 16, 16 )
+script = ExtResource( 2 )
+
+[node name="Sprite" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+centered = false
