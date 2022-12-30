@@ -2,7 +2,7 @@
 
 [ext_resource path="res://src/characters/gerardo/gun.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/texture/fireball_gun.png" type="Texture" id=2]
-[ext_resource path="res://src/characters/gerardo/fireball.tscn" type="PackedScene" id=3]
+[ext_resource path="res://src/bullets/fireball.tscn" type="PackedScene" id=3]
 [ext_resource path="res://assets/texture/muzzle_pop.png" type="Texture" id=4]
 [ext_resource path="res://src/characters/gerardo/muzzle_pop.gd" type="Script" id=5]
 [ext_resource path="res://src/characters/gerardo/muzzle.gd" type="Script" id=6]

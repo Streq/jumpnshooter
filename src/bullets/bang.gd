@@ -10,3 +10,5 @@ func _physics_process(delta: float) -> void:
 			continue
 		area.get_hit(self)
 		hit_enemies.append(area)
+func initialize(source):
+	pass

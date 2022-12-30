@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=2]
+[gd_scene load_steps=36 format=2]
 
 [ext_resource path="res://src/characters/gerardo/weapons.gd" type="Script" id=1]
 [ext_resource path="res://src/characters/gerardo/fireball_gun.tscn" type="PackedScene" id=2]
@@ -6,13 +6,14 @@
 [ext_resource path="res://src/characters/gerardo/gun_hold.gd" type="Script" id=4]
 [ext_resource path="res://src/characters/gerardo/guns.gd" type="Script" id=5]
 [ext_resource path="res://src/characters/gerardo/pew_gun.tscn" type="PackedScene" id=6]
+[ext_resource path="res://src/characters/gerardo/spark_gun.tscn" type="PackedScene" id=7]
 [ext_resource path="res://src/characters/input_state/input_state.tscn" type="PackedScene" id=10]
 [ext_resource path="res://assets/shader/palette.gdshader" type="Shader" id=11]
 [ext_resource path="res://src/util/color/palette_client.tscn" type="PackedScene" id=12]
 [ext_resource path="res://assets/texture/shooter_body.png" type="Texture" id=13]
 [ext_resource path="res://assets/texture/shooter_legs.png" type="Texture" id=14]
 
-[sub_resource type="Image" id=51]
+[sub_resource type="Image" id=48]
 data = {
 "data": PoolByteArray( 255, 255, 0, 255, 126, 126, 1, 255, 60, 60, 2, 255, 255, 255, 255, 0 ),
 "format": "RGBA8",
@@ -21,24 +22,24 @@ data = {
 "width": 4
 }
 
-[sub_resource type="ImageTexture" id=49]
+[sub_resource type="ImageTexture" id=43]
 flags = 0
 flags = 0
-image = SubResource( 51 )
+image = SubResource( 48 )
 size = Vector2( 4, 1 )
 
-[sub_resource type="ShaderMaterial" id=50]
+[sub_resource type="ShaderMaterial" id=44]
 resource_local_to_scene = true
 shader = ExtResource( 11 )
 shader_param/palette_size = 4
 shader_param/offset = 0.0
 shader_param/blue_index_offset = 0.0
-shader_param/palette = SubResource( 49 )
+shader_param/palette = SubResource( 43 )
 
 [sub_resource type="RectangleShape2D" id=13]
 extents = Vector2( 4, 6.5 )
 
-[sub_resource type="Image" id=52]
+[sub_resource type="Image" id=49]
 data = {
 "data": PoolByteArray( 255, 255, 0, 255, 126, 126, 1, 255, 60, 60, 2, 255, 0, 0, 3, 255 ),
 "format": "RGBA8",
@@ -50,7 +51,7 @@ data = {
 [sub_resource type="ImageTexture" id=25]
 flags = 0
 flags = 0
-image = SubResource( 52 )
+image = SubResource( 49 )
 size = Vector2( 4, 1 )
 
 [sub_resource type="ShaderMaterial" id=26]
@@ -1122,7 +1123,7 @@ tracks/1/keys = {
 }
 
 [node name="player" type="KinematicBody2D" groups=["player"]]
-material = SubResource( 50 )
+material = SubResource( 44 )
 collision_mask = 2
 script = ExtResource( 3 )
 speed = 100.0
@@ -1244,8 +1245,8 @@ position = Vector2( 0, 2 )
 
 [node name="fireball_gun" parent="guns" instance=ExtResource( 2 )]
 
+[node name="spark_gun" parent="guns" instance=ExtResource( 7 )]
+
 [connection signal="change_gun" from="." to="pivot/upper_body_pivot/gun_hold" method="change_gun"]
 [connection signal="hurt_started" from="." to="hurt_timer" method="start"]
 [connection signal="timeout" from="hurt_timer" to="." method="end_hurt"]
-[connection signal="shoot" from="guns/gun" to="guns/gun/muzzle" method="shoot"]
-[connection signal="shoot" from="guns/fireball_gun" to="guns/fireball_gun/muzzle" method="shoot"]

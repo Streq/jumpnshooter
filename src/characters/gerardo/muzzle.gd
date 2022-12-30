@@ -9,8 +9,9 @@ func shoot():
 	var bullet = BULLET.instance()
 	owner.wearer.get_parent().add_child(bullet)
 	bullet.global_transform = global_transform
-	bullet.speed = speed
+	if speed >= 0.0:
+		bullet.speed = speed
 	if bullet_lifetime >= 0.0:
 		bullet.lifetime = bullet_lifetime
-	bullet.initialize()
+	bullet.initialize(self)
 	emit_signal("shoot")

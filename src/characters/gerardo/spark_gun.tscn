@@ -1,11 +1,12 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://src/characters/gerardo/gun.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/texture/spark_gun.png" type="Texture" id=2]
-[ext_resource path="res://src/characters/gerardo/fireball.tscn" type="PackedScene" id=3]
+[ext_resource path="res://src/bullets/fireball.tscn" type="PackedScene" id=3]
 [ext_resource path="res://assets/texture/muzzle_pop.png" type="Texture" id=4]
 [ext_resource path="res://src/characters/gerardo/muzzle_pop.gd" type="Script" id=5]
 [ext_resource path="res://src/characters/gerardo/muzzle.gd" type="Script" id=6]
+[ext_resource path="res://src/bullets/spark_bullet.tscn" type="PackedScene" id=7]
 
 [sub_resource type="Animation" id=3]
 length = 0.001
@@ -71,7 +72,7 @@ tracks/0/keys = {
 "values": [ true, false ]
 }
 
-[node name="fireball_gun" instance=ExtResource( 1 )]
+[node name="spark_gun" instance=ExtResource( 1 )]
 BULLET = ExtResource( 3 )
 cooldown = 0.6
 
@@ -79,11 +80,11 @@ cooldown = 0.6
 texture = ExtResource( 2 )
 
 [node name="muzzle" type="Node2D" parent="." index="1"]
-position = Vector2( 6, -3 )
-rotation = -0.523598
+position = Vector2( 5, 4 )
+rotation = 1.57079
 script = ExtResource( 6 )
-bullet_lifetime = 1.6
-BULLET = ExtResource( 3 )
+speed = -1.0
+BULLET = ExtResource( 7 )
 
 [node name="muzzle_pop" type="Sprite" parent="muzzle" index="0"]
 visible = false
@@ -97,12 +98,11 @@ anims/RESET = SubResource( 3 )
 anims/pop = SubResource( 4 )
 
 [node name="muzzle_up" type="Node2D" parent="." index="2"]
-position = Vector2( 6, -3 )
-rotation = 0.523598
+position = Vector2( 5, 4 )
+rotation = 3.14159
 script = ExtResource( 6 )
-speed = 150.0
-bullet_lifetime = 1.6
-BULLET = ExtResource( 3 )
+speed = -1.0
+BULLET = ExtResource( 7 )
 
 [node name="muzzle_pop" type="Sprite" parent="muzzle_up" index="0"]
 visible = false
