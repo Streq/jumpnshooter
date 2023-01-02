@@ -14,7 +14,7 @@ func _physics_update(delta: float):
 	
 	distance_x = stepify(distance_x, 16.0)
 	input.dir.x = sign(distance_x)
-	if input.dir.x != baby.facing_dir:
+	if input.dir.x and input.dir.x != baby.facing_dir:
 		return
 	input.B.release()
 	input.dir.y = 0
