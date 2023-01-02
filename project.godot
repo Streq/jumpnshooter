@@ -153,7 +153,7 @@ _global_script_class_icons={
 [application]
 
 config/name="jumpnshooter"
-run/main_scene="res://src/test/player/player_test.tscn"
+run/main_scene="res://src/test/player/rabid_baby_test.tscn"
 config/icon="res://assets/texture/icon.png"
 
 [autoload]

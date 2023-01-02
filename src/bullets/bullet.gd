@@ -6,6 +6,7 @@ signal wall_collision(collision)
 signal hit_wall()
 export var damage := 1.0
 export var speed := 200.0
+export var team := 0
 onready var bullet_hit: Sprite = $bullet_hit
 onready var animation_player: AnimationPlayer = $AnimationPlayer
 export var drag := 0.0
@@ -55,7 +56,10 @@ func _on_wall_collision(collision: KinematicCollision2D) -> void:
 	
 
 func _on_hitbox_area_entered(area: Area2D) -> void:
-	area.get_hit(self)
+	var target = area.owner
+	if target.team == team or target.pass_through:
+		return
+	area.owner._on_hit(self)
 	queue_free()
 	bullet_hit.show()
 	bullet_hit.play()

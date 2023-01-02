@@ -7,6 +7,7 @@ onready var animation_player: AnimationPlayer = $AnimationPlayer
 export var stopped_threshold := 0.005
 export var speed := 50.0
 export var damage := 4.0
+export var team := 0
 export (float, -1, 1, 2) var facing_dir := 1.0
 
 

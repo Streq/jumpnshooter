@@ -1249,3 +1249,4 @@ position = Vector2( 0, 2 )
 
 [connection signal="hurt_started" from="." to="hurt_timer" method="start"]
 [connection signal="timeout" from="hurt_timer" to="." method="end_hurt"]
+[connection signal="shoot" from="guns/fireball_gun" to="guns/fireball_gun/muzzle" method="shoot"]

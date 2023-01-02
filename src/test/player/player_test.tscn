@@ -380,7 +380,6 @@ format = 1
 tile_data = PoolIntArray( 589935, 6, 0, 655469, 6, 0, 720997, 6, 0, 786531, 6, 0, 852014, 6, 0, 917548, 6, 0, 983082, 6, 0, 1048616, 6, 0 )
 
 [node name="turret6" parent="." instance=ExtResource( 20 )]
-material = SubResource( 44 )
 position = Vector2( 1776, 0 )
 
 [node name="player" parent="." instance=ExtResource( 1 )]
@@ -435,31 +434,26 @@ process_priority = -1000
 script = ExtResource( 8 )
 
 [node name="funguy" parent="." instance=ExtResource( 7 )]
-material = SubResource( 44 )
 position = Vector2( 564, 95 )
 speed = 30.0
 horizontal_acceleration = 100.0
 
 [node name="funguy2" parent="." instance=ExtResource( 7 )]
-material = SubResource( 44 )
 position = Vector2( 845, 77 )
 speed = 30.0
 horizontal_acceleration = 100.0
 
 [node name="funguy3" parent="." instance=ExtResource( 7 )]
-material = SubResource( 44 )
 position = Vector2( 721, 6 )
 speed = 30.0
 horizontal_acceleration = 100.0
 
 [node name="funguy4" parent="." instance=ExtResource( 7 )]
-material = SubResource( 44 )
 position = Vector2( 1451, 62 )
 speed = 30.0
 horizontal_acceleration = 100.0
 
 [node name="funguy5" parent="." instance=ExtResource( 7 )]
-material = SubResource( 44 )
 position = Vector2( 1761, 61 )
 speed = 30.0
 horizontal_acceleration = 100.0
@@ -474,50 +468,42 @@ script = ExtResource( 12 )
 shape = SubResource( 30 )
 
 [node name="turret" parent="." instance=ExtResource( 14 )]
-material = SubResource( 44 )
 position = Vector2( 163, 48 )
 facing_dir = -1.0
 
 [node name="turret_controller" parent="turret" instance=ExtResource( 15 )]
 
 [node name="turret8" parent="." instance=ExtResource( 14 )]
-material = SubResource( 44 )
 position = Vector2( -108, 56 )
 facing_dir = -1.0
 
 [node name="turret_controller" parent="turret8" instance=ExtResource( 15 )]
 
 [node name="turret4" parent="." instance=ExtResource( 14 )]
-material = SubResource( 44 )
 position = Vector2( 427, 47 )
 
 [node name="turret_controller" parent="turret4" instance=ExtResource( 15 )]
 
 [node name="turret5" parent="." instance=ExtResource( 14 )]
-material = SubResource( 44 )
 position = Vector2( 495, 68 )
 
 [node name="turret_controller" parent="turret5" instance=ExtResource( 15 )]
 
 [node name="turret7" parent="." instance=ExtResource( 14 )]
-material = SubResource( 44 )
 position = Vector2( 2099, 58 )
 facing_dir = -1.0
 
 [node name="turret_controller" parent="turret7" instance=ExtResource( 15 )]
 
 [node name="turret3" parent="." instance=ExtResource( 14 )]
-material = SubResource( 44 )
 position = Vector2( 1018, 62 )
 
 [node name="turret_controller" parent="turret3" instance=ExtResource( 15 )]
 
 [node name="turret2" parent="." instance=ExtResource( 20 )]
-material = SubResource( 44 )
 position = Vector2( 513, 24 )
 
 [node name="turret9" parent="." instance=ExtResource( 20 )]
-material = SubResource( 44 )
 position = Vector2( 580, 8 )
 
 [node name="Sprite" type="Sprite" parent="."]

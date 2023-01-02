@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=2]
+[gd_scene load_steps=29 format=2]
 
 [ext_resource path="res://src/characters/input_state/input_state.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/characters/funguy/funguy.gd" type="Script" id=2]
@@ -14,6 +14,7 @@
 [ext_resource path="res://src/characters/funguy/walk.gd" type="Script" id=12]
 [ext_resource path="res://src/util/state_machine/state_machine.tscn" type="PackedScene" id=13]
 [ext_resource path="res://src/characters/funguy/idle.gd" type="Script" id=14]
+[ext_resource path="res://src/characters/ghost/touch_damager.gd" type="Script" id=15]
 
 [sub_resource type="Image" id=45]
 data = {
@@ -235,6 +236,9 @@ tracks/4/keys = {
 [sub_resource type="RectangleShape2D" id=16]
 extents = Vector2( 7, 7.5 )
 
+[sub_resource type="RectangleShape2D" id=30]
+extents = Vector2( 7, 7.5 )
+
 [sub_resource type="RectangleShape2D" id=28]
 extents = Vector2( 155, 7.5 )
 
@@ -295,13 +299,11 @@ tracks/0/keys = {
 "values": [ true ]
 }
 
-[sub_resource type="RectangleShape2D" id=30]
-extents = Vector2( 7, 7.5 )
-
 [node name="funguy" type="KinematicBody2D"]
 material = SubResource( 44 )
 collision_mask = 2
 script = ExtResource( 2 )
+team = 1
 speed = 60.0
 horizontal_acceleration = 250.0
 
@@ -336,6 +338,18 @@ __meta__ = {
 "source": "res://assets/aseprite/funguy.aseprite"
 }
 }
+
+[node name="touch_damager" type="Node2D" parent="pivot"]
+script = ExtResource( 15 )
+
+[node name="hitbox" type="Area2D" parent="pivot/touch_damager"]
+collision_layer = 0
+collision_mask = 32
+script = ExtResource( 9 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="pivot/touch_damager/hitbox"]
+position = Vector2( 0, 0.5 )
+shape = SubResource( 30 )
 
 [node name="input_state" parent="." instance=ExtResource( 1 )]
 
@@ -378,15 +392,6 @@ anims/RESET = SubResource( 32 )
 anims/hurt = SubResource( 36 )
 anims/normal = SubResource( 37 )
 
-[node name="hitbox" type="Area2D" parent="."]
-collision_layer = 0
-collision_mask = 32
-script = ExtResource( 9 )
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox"]
-position = Vector2( 0, 0.5 )
-shape = SubResource( 30 )
-
 [node name="behavior" type="Node" parent="."]
 script = ExtResource( 10 )
 
@@ -406,5 +411,5 @@ script = ExtResource( 11 )
 animation = "air"
 
 [connection signal="got_hit" from="." to="health" method="subtract"]
+[connection signal="area_entered" from="pivot/touch_damager/hitbox" to="pivot/touch_damager" method="_on_hitbox_area_entered"]
 [connection signal="empty" from="health" to="." method="queue_free"]
-[connection signal="area_entered" from="hitbox" to="hitbox" method="_on_hitbox_area_entered"]

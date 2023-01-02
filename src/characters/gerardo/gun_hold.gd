@@ -28,8 +28,10 @@ func change_gun(gun):
 func _add_gun(gun):
 	release_trigger()
 	self.gun = gun
+	self.gun.team = owner.team
 	add_child(self.gun)
 	self.gun.position = Vector2()
+	self.gun.owner = owner
 	connect("trigger_pulled",self.gun,"pull_trigger")
 	connect("trigger_released",self.gun,"release_trigger")
 	gun.wearer = owner

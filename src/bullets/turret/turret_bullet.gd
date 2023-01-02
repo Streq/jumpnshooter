@@ -1,7 +1,9 @@
 extends KinematicBody2D
+signal hit()
 signal initialize
 export var speed := 200.0
 export var fix_transform := false
+export var team := 0
 onready var bullet_hit: Sprite = $bullet_hit
 onready var sprite: Sprite = $Sprite
 
@@ -32,3 +34,12 @@ func hit():
 	bullet_hit.play()
 	NodeUtils.reparent_keep_transform(bullet_hit,get_parent())
 
+
+
+func _on_hitbox_area_entered(area: Area2D) -> void:
+	var target = area.owner
+	if target.team == team or target.pass_through:
+		return
+	area.owner._on_hit(self)
+	hit()
+	emit_signal("hit")

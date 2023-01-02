@@ -9,7 +9,11 @@ onready var damage_animation: AnimationPlayer = $damage_animation
 onready var state_machine = $state_machine
 
 
+export var invulnerable := false
+export var pass_through := false
+
 var velocity := Vector2()
+export var team := 0
 
 export var speed = 75.0
 export var soft_gravity = 150.0
@@ -38,10 +42,15 @@ func set_lookup_dir(val):
 
 var grounded = false
 
-func _on_hit(damage):
-	emit_signal("got_hit", damage)
+func _on_hit(by):
+	if invulnerable:
+		return
+	emit_signal("got_hit", by.damage)
 #	damage_animation.queue("hurt")
 	damage_animation.play("hurt")
 	
 func _physics_process(delta):
 	state_machine.physics_update(delta)
+
+func get_world():
+	return get_parent()

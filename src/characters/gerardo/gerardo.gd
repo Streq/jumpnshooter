@@ -19,7 +19,8 @@ export var horizontal_air_decceleration = 10.0
 export var health := 3
 export var max_health := 3
 export var invulnerable := false
-
+export var pass_through := false
+export var team := 0
 
 export var jump_speed = 100.0
 
@@ -143,6 +144,10 @@ static func project_and_extend_to_cover(covered:Vector2,projected:Vector2):
 	return projected*sqrt(covered.length_squared()/projection.length_squared())
 
 
+func _on_hit(by):
+	if !invulnerable:
+		get_hurt()
+
 func get_hurt():
 	set_health(health-1)
 	if health == 0:
@@ -157,12 +162,14 @@ func set_health(value):
 func start_hurt():
 	hurt_animation.play("hurt")
 	invulnerable = true
+	pass_through = true
 	velocity = Vector2()
 	emit_signal("hurt_started")
 
 func end_hurt():
 	hurt_animation.play("RESET")
 	invulnerable = false
+	pass_through = false
 	emit_signal("hurt_ended")
 
 func die():
@@ -182,3 +189,7 @@ func play_dead_floor():
 
 func is_looking_up():
 	return look_up_dir<0
+
+
+func get_world():
+	return get_parent()

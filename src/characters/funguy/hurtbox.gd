@@ -1,4 +1,4 @@
 extends Area2D
 
 func get_hit(by):
-	owner._on_hit(by.damage)
+	owner._on_hit(by)

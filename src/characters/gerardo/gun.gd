@@ -4,7 +4,7 @@ signal shoot_up()
 export var BULLET : PackedScene
 export var cooldown := 0.2
 export var automatic := false
-
+export var team := 0
 
 var wearer = null
 
@@ -34,3 +34,6 @@ func pull_trigger():
 	trigger.press()
 func release_trigger():
 	trigger.release()
+
+func get_world():
+	return owner.get_world()

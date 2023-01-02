@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=2]
+[gd_scene load_steps=37 format=2]
 
 [ext_resource path="res://src/util/color/palette_client.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/shader/palette.gdshader" type="Shader" id=2]
@@ -17,6 +17,7 @@
 [ext_resource path="res://src/characters/moving_turret/muzzle.gd" type="Script" id=15]
 [ext_resource path="res://src/bullets/turret/turret_bullet.tscn" type="PackedScene" id=16]
 [ext_resource path="res://src/bullets/turret/turret_down_bullet.tscn" type="PackedScene" id=17]
+[ext_resource path="res://src/characters/ghost/touch_damager.gd" type="Script" id=18]
 
 [sub_resource type="Image" id=45]
 data = {
@@ -509,10 +510,10 @@ tracks/0/keys = {
 "values": [ true ]
 }
 
-[sub_resource type="RectangleShape2D" id=12]
+[sub_resource type="RectangleShape2D" id=13]
 extents = Vector2( 6, 6.5 )
 
-[sub_resource type="RectangleShape2D" id=13]
+[sub_resource type="RectangleShape2D" id=12]
 extents = Vector2( 6, 6.5 )
 
 [sub_resource type="Animation" id=27]
@@ -567,6 +568,7 @@ tracks/0/keys = {
 material = SubResource( 44 )
 collision_mask = 2
 script = ExtResource( 3 )
+team = 1
 speed = 25.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
@@ -628,15 +630,6 @@ __meta__ = {
 }
 }
 
-[node name="hitbox" type="Area2D" parent="pivot"]
-collision_layer = 0
-collision_mask = 32
-script = ExtResource( 8 )
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="pivot/hitbox"]
-position = Vector2( 0, 0.5 )
-shape = SubResource( 12 )
-
 [node name="hurtbox" type="Area2D" parent="pivot"]
 collision_layer = 8
 collision_mask = 0
@@ -659,6 +652,18 @@ rotation = 1.57079
 script = ExtResource( 15 )
 BULLET = ExtResource( 17 )
 
+[node name="touch_damager" type="Node2D" parent="pivot"]
+script = ExtResource( 18 )
+
+[node name="hitbox" type="Area2D" parent="pivot/touch_damager"]
+collision_layer = 0
+collision_mask = 32
+script = ExtResource( 8 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="pivot/touch_damager/hitbox"]
+position = Vector2( 0, 0.5 )
+shape = SubResource( 12 )
+
 [node name="behavior" type="Node" parent="."]
 script = ExtResource( 9 )
 
@@ -667,7 +672,6 @@ start_state = "idle"
 
 [node name="idle" type="Node" parent="state_machine"]
 script = ExtResource( 11 )
-animation = "idle"
 
 [node name="shoot" type="Node" parent="state_machine"]
 script = ExtResource( 12 )
@@ -694,4 +698,4 @@ anims/shake = SubResource( 28 )
 
 [connection signal="got_hit" from="." to="health" method="subtract"]
 [connection signal="empty" from="health" to="." method="queue_free"]
-[connection signal="area_entered" from="pivot/hitbox" to="pivot/hitbox" method="_on_hitbox_area_entered"]
+[connection signal="area_entered" from="pivot/touch_damager/hitbox" to="pivot/touch_damager" method="_on_hitbox_area_entered"]
