@@ -1,0 +1,47 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://src/util/state_machine/state_machine.tscn" type="PackedScene" id=1]
+[ext_resource path="res://src/characters/rabid_baby/AI/burp.gd" type="Script" id=2]
+[ext_resource path="res://src/characters/rabid_baby/AI/follow_player.gd" type="Script" id=3]
+[ext_resource path="res://src/test/player/baby_boss_controller.gd" type="Script" id=4]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 6, 20 )
+
+[node name="baby_controller" type="Node2D"]
+process_priority = -10
+script = ExtResource( 4 )
+
+[node name="platform_detect" type="RayCast2D" parent="."]
+position = Vector2( 0, -39 )
+enabled = true
+cast_to = Vector2( 0, 32 )
+collision_mask = 2
+
+[node name="state_machine" parent="." instance=ExtResource( 1 )]
+start_state = "follow_player"
+
+[node name="follow_player" type="Node" parent="state_machine"]
+script = ExtResource( 3 )
+
+[node name="burp_cooldown" type="Timer" parent="state_machine/follow_player"]
+process_mode = 0
+wait_time = 10.0
+one_shot = true
+autostart = true
+
+[node name="up_attack_cooldown" type="Timer" parent="state_machine/follow_player"]
+process_mode = 0
+wait_time = 5.0
+one_shot = true
+autostart = true
+
+[node name="burp" type="Node" parent="state_machine"]
+script = ExtResource( 2 )
+
+[node name="look_up_detect" type="Area2D" parent="."]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="look_up_detect"]
+position = Vector2( 0, -19 )
+shape = SubResource( 1 )
