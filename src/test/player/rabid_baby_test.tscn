@@ -1,4 +1,4 @@
-[gd_scene load_steps=53 format=2]
+[gd_scene load_steps=54 format=2]
 
 [ext_resource path="res://src/characters/gerardo/gerardo.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/texture/hill_8x8.png" type="Texture" id=2]
@@ -26,12 +26,12 @@
 [ext_resource path="res://assets/texture/selected_panel.png" type="Texture" id=24]
 [ext_resource path="res://src/test/player/weapons_HUD.gd" type="Script" id=25]
 [ext_resource path="res://src/HUD/health/health_connector.gd" type="Script" id=26]
-[ext_resource path="res://src/test/player/boss_area.gd" type="Script" id=27]
+[ext_resource path="res://src/pickups/medikit.tscn" type="PackedScene" id=27]
 [ext_resource path="res://src/map/text_area.gd" type="Script" id=28]
 [ext_resource path="res://src/test/player/restart_on_text_done.gd" type="Script" id=29]
 [ext_resource path="res://src/HUD/textbox/say.gd" type="Script" id=30]
 
-[sub_resource type="Image" id=70]
+[sub_resource type="Image" id=77]
 data = {
 "data": PoolByteArray( 255, 255, 0, 255, 126, 126, 1, 255, 60, 60, 2, 255, 255, 255, 255, 0 ),
 "format": "RGBA8",
@@ -43,7 +43,7 @@ data = {
 [sub_resource type="ImageTexture" id=65]
 flags = 0
 flags = 0
-image = SubResource( 70 )
+image = SubResource( 77 )
 size = Vector2( 4, 1 )
 
 [sub_resource type="ShaderMaterial" id=66]
@@ -68,7 +68,7 @@ flags = 2
 atlas = ExtResource( 22 )
 region = Rect2( 0, 0, 128, 8 )
 
-[sub_resource type="Image" id=71]
+[sub_resource type="Image" id=78]
 data = {
 "data": PoolByteArray( 255, 255, 0, 255, 126, 126, 1, 255, 60, 60, 2, 255, 0, 0, 3, 255 ),
 "format": "RGBA8",
@@ -80,7 +80,7 @@ data = {
 [sub_resource type="ImageTexture" id=68]
 flags = 0
 flags = 0
-image = SubResource( 71 )
+image = SubResource( 78 )
 size = Vector2( 4, 1 )
 
 [sub_resource type="ShaderMaterial" id=69]
@@ -285,9 +285,15 @@ extents = Vector2( 4, 6.5 )
 [sub_resource type="RectangleShape2D" id=30]
 
 [sub_resource type="RectangleShape2D" id=56]
-extents = Vector2( 76, 10 )
+extents = Vector2( 8, 29 )
 
-[sub_resource type="Animation" id=59]
+[sub_resource type="RectangleShape2D" id=63]
+extents = Vector2( 6804, 10 )
+
+[sub_resource type="RectangleShape2D" id=72]
+extents = Vector2( 16, 60.5 )
+
+[sub_resource type="Animation" id=75]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/path = NodePath("../HUD/boss_healthbar:visible")
@@ -314,7 +320,7 @@ tracks/1/keys = {
 "values": [ true ]
 }
 
-[sub_resource type="Animation" id=60]
+[sub_resource type="Animation" id=76]
 resource_name = "start"
 tracks/0/type = "value"
 tracks/0/path = NodePath("../HUD/boss_healthbar:visible")
@@ -340,9 +346,6 @@ tracks/1/keys = {
 "update": 1,
 "values": [ false ]
 }
-
-[sub_resource type="RectangleShape2D" id=63]
-extents = Vector2( 6804, 10 )
 
 [node name="Node2D" type="Node2D"]
 
@@ -509,7 +512,6 @@ material = SubResource( 66 )
 position = Vector2( 1776, 0 )
 
 [node name="player" parent="." instance=ExtResource( 1 )]
-material = SubResource( 66 )
 position = Vector2( 8, 112 )
 speed = 75.0
 horizontal_air_acceleration = 150.0
@@ -621,8 +623,8 @@ material = SubResource( 66 )
 position = Vector2( 580, 8 )
 
 [node name="rabid_baby" parent="." instance=ExtResource( 16 )]
-material = SubResource( 66 )
 position = Vector2( 2768, 96 )
+facing_dir = -1.0
 
 [node name="player_controller" type="Node" parent="rabid_baby"]
 pause_mode = 2
@@ -641,34 +643,18 @@ vertical_lerp_target = 64
 player_path = NodePath("../../player")
 disabled = true
 
-[node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="rabid_baby"]
-position = Vector2( 88, 0 )
-
-[node name="say" type="Node" parent="rabid_baby/VisibilityNotifier2D"]
-script = ExtResource( 30 )
-text = "GUGU TATA PUTO"
-who = "Bebe"
-show_name = false
-
-[node name="boss_area" type="Area2D" parent="."]
-position = Vector2( 2688, 24 )
-collision_layer = 0
-collision_mask = 16
-script = ExtResource( 27 )
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="boss_area"]
-position = Vector2( -60, 40 )
-shape = SubResource( 56 )
-
-[node name="boss_fight_start" type="AnimationPlayer" parent="boss_area"]
-anims/RESET = SubResource( 59 )
-anims/start = SubResource( 60 )
-
 [node name="text_area" type="Area2D" parent="."]
 position = Vector2( 72, 72 )
 collision_layer = 0
 collision_mask = 16
 script = ExtResource( 28 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="text_area"]
+position = Vector2( -60, 40 )
+shape = SubResource( 56 )
+
+[node name="say" type="Node" parent="text_area"]
+script = ExtResource( 30 )
 text = "Hola! Bienvenido a tu laburo!
 Soy tu jefe.
 Apreta Z para seguir.
@@ -683,33 +669,79 @@ Con las flechitas te moves.
 
 Tenes que ir todo para la derecha hasta pasar el nivel.
 Suerte Perro"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="text_area"]
-position = Vector2( -60, 40 )
-shape = SubResource( 56 )
+who = "Jefe"
+show_name = false
 
 [node name="text_area2" type="Area2D" parent="."]
 position = Vector2( -32, 424 )
 collision_layer = 0
 collision_mask = 16
 script = ExtResource( 28 )
-text = "Caiste al vacio!!!
-No vas a poder salir de ahi Nunca mas!!!
-Estas despedido!!!!!"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="text_area2"]
 position = Vector2( -60, 40 )
 shape = SubResource( 63 )
 
-[node name="restart_on_text_done" type="Node" parent="text_area2"]
+[node name="say" type="Node" parent="text_area2"]
+script = ExtResource( 30 )
+text = "Caiste al vacio!!!
+No vas a poder salir de ahi Nunca mas!!!
+Estas despedido!!!!!"
+who = "Jefe"
+show_name = false
+
+[node name="reload_scene" type="Node" parent="text_area2/say"]
 script = ExtResource( 29 )
+
+[node name="text_area3" type="Area2D" parent="."]
+position = Vector2( 2616, -120 )
+collision_layer = 0
+collision_mask = 16
+script = ExtResource( 28 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="text_area3"]
+position = Vector2( -88, 111 )
+shape = SubResource( 72 )
+
+[node name="say" type="Node" parent="text_area3"]
+script = ExtResource( 30 )
+text = "Bueno nada ahora vas a pelear contra un bebe gigante"
+who = "Jefe"
+show_name = false
+
+[node name="text_area4" type="Area2D" parent="."]
+position = Vector2( 2696, -64 )
+collision_layer = 0
+collision_mask = 16
+script = ExtResource( 28 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="text_area4"]
+position = Vector2( -56, 124.5 )
+shape = SubResource( 72 )
+
+[node name="say" type="Node" parent="text_area4"]
+script = ExtResource( 30 )
+text = "GUGU TATA PUTO"
+who = "Bebe"
+show_name = false
+
+[node name="boss_fight_start" type="AnimationPlayer" parent="text_area4"]
+anims/RESET = SubResource( 75 )
+anims/start = SubResource( 76 )
+
+[node name="medikit" parent="." instance=ExtResource( 27 )]
+position = Vector2( 2480, 60 )
 
 [connection signal="change_gun" from="player" to="HUD/HBoxContainer/weapons_hud" method="_on_player_change_gun"]
 [connection signal="health_changed" from="player" to="HUD/HBoxContainer/health_bar" method="_on_player_health_changed"]
 [connection signal="area_entered" from="target_complete" to="target_complete" method="_on_target_complete_area_entered"]
-[connection signal="screen_entered" from="rabid_baby/VisibilityNotifier2D" to="rabid_baby/VisibilityNotifier2D/say" method="trigger"]
-[connection signal="finished" from="rabid_baby/VisibilityNotifier2D/say" to="rabid_baby/VisibilityNotifier2D" method="queue_free"]
-[connection signal="area_entered" from="boss_area" to="boss_area" method="_on_boss_area_area_entered"]
-[connection signal="area_entered" from="text_area" to="text_area" method="_on_boss_area_area_entered"]
-[connection signal="area_entered" from="text_area2" to="text_area2" method="_on_boss_area_area_entered"]
-[connection signal="triggered" from="text_area2" to="text_area2/restart_on_text_done" method="trigger"]
+[connection signal="area_entered" from="text_area" to="text_area" method="_on_area_entered"]
+[connection signal="triggered" from="text_area" to="text_area/say" method="trigger"]
+[connection signal="area_entered" from="text_area2" to="text_area2" method="_on_area_entered"]
+[connection signal="triggered" from="text_area2" to="text_area2/say" method="trigger"]
+[connection signal="finished" from="text_area2/say" to="text_area2/say/reload_scene" method="trigger"]
+[connection signal="area_entered" from="text_area3" to="text_area3" method="_on_area_entered"]
+[connection signal="triggered" from="text_area3" to="text_area3/say" method="trigger"]
+[connection signal="area_entered" from="text_area4" to="text_area4" method="_on_area_entered"]
+[connection signal="triggered" from="text_area4" to="text_area4/say" method="trigger"]
+[connection signal="finished" from="text_area4/say" to="text_area4/boss_fight_start" method="play" binds= [ "start" ]]

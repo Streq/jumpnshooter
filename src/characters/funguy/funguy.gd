@@ -54,3 +54,6 @@ func _physics_process(delta):
 
 func get_world():
 	return get_parent()
+
+func _ready() -> void:
+	set_facing_dir(facing_dir)

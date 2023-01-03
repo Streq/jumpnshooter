@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://src/global/DialogProfiles.gd" type="Script" id=1]
 [ext_resource path="res://assets/mockups/almohado_profile.png" type="Texture" id=2]
@@ -8,6 +8,44 @@
 [ext_resource path="res://assets/audio/sfx/choque.wav" type="AudioStream" id=6]
 [ext_resource path="res://assets/mockups/toto_profile.png" type="Texture" id=7]
 [ext_resource path="res://assets/texture/rabid_baby_profile.png" type="Texture" id=8]
+[ext_resource path="res://assets/texture/phone.png" type="Texture" id=9]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Node
+tool
+
+export var texture : Texture
+export var voice : AudioStream setget set_voice
+
+onready var voice_stream_player :AudioStreamPlayer = $stream
+var moods := {}
+
+
+var is_ready = false
+func set_voice(val):
+	voice = val
+		
+	if is_ready:
+		voice_stream_player.stream = val
+
+func _ready():
+	is_ready = true
+	set_voice(voice)
+	if has_node(\"moods\"):
+		for child in $moods.get_children():
+			moods[child.name] = child
+
+
+func get_voice(mood):
+	if moods.has(mood) and moods[mood].voice:
+		return moods[mood].voice_stream_player
+	return voice_stream_player
+
+func get_texture(mood):
+	if moods.has(mood) and moods[mood].texture:
+		return moods[mood].texture
+	return texture
+"
 
 [node name="Profiles" type="Node"]
 pause_mode = 2
@@ -34,16 +72,19 @@ voice = ExtResource( 4 )
 
 [node name="stream" parent="Toto" index="0"]
 stream = ExtResource( 4 )
-volume_db = -12.353
 
 [node name="Bebe" parent="." instance=ExtResource( 3 )]
+script = SubResource( 1 )
 texture = ExtResource( 8 )
+voice = ExtResource( 6 )
+
+[node name="Jefe" parent="." instance=ExtResource( 3 )]
+texture = ExtResource( 9 )
 voice = ExtResource( 4 )
 
-[node name="stream" parent="Bebe" index="0"]
+[node name="stream" parent="Jefe" index="0"]
 stream = ExtResource( 4 )
-volume_db = -12.353
 
 [editable path="Almohado"]
 [editable path="Toto"]
-[editable path="Bebe"]
+[editable path="Jefe"]

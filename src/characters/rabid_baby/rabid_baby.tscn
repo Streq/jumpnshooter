@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=2]
+[gd_scene load_steps=40 format=2]
 
 [ext_resource path="res://assets/shader/palette.gdshader" type="Shader" id=1]
 [ext_resource path="res://src/characters/input_state/input_state.tscn" type="PackedScene" id=2]
@@ -9,7 +9,6 @@
 [ext_resource path="res://src/bullets/fireball.tscn" type="PackedScene" id=7]
 [ext_resource path="res://src/characters/rabid_baby/look_up.gd" type="Script" id=8]
 [ext_resource path="res://src/util/color/palette_client.tscn" type="PackedScene" id=9]
-[ext_resource path="res://src/characters/rabid_baby/print_value.gd" type="Script" id=10]
 [ext_resource path="res://src/characters/rabid_baby/idle.gd" type="Script" id=11]
 [ext_resource path="res://src/characters/rabid_baby/walk.gd" type="Script" id=12]
 [ext_resource path="res://src/characters/gerardo/muzzle.gd" type="Script" id=13]
@@ -19,7 +18,7 @@
 [ext_resource path="res://src/characters/funguy/funguy.gd" type="Script" id=17]
 [ext_resource path="res://src/characters/ghost/touch_damager.gd" type="Script" id=18]
 
-[sub_resource type="Image" id=66]
+[sub_resource type="Image" id=69]
 data = {
 "data": PoolByteArray( 255, 255, 0, 255, 126, 126, 1, 255, 60, 60, 2, 255, 255, 255, 255, 0 ),
 "format": "RGBA8",
@@ -28,19 +27,19 @@ data = {
 "width": 4
 }
 
-[sub_resource type="ImageTexture" id=43]
+[sub_resource type="ImageTexture" id=65]
 flags = 0
 flags = 0
-image = SubResource( 66 )
+image = SubResource( 69 )
 size = Vector2( 4, 1 )
 
-[sub_resource type="ShaderMaterial" id=44]
+[sub_resource type="ShaderMaterial" id=66]
 resource_local_to_scene = true
 shader = ExtResource( 1 )
 shader_param/palette_size = 4
 shader_param/offset = 0.0
 shader_param/blue_index_offset = 0.0
-shader_param/palette = SubResource( 43 )
+shader_param/palette = SubResource( 65 )
 
 [sub_resource type="RectangleShape2D" id=48]
 extents = Vector2( 12, 11.5 )
@@ -117,7 +116,7 @@ extents = Vector2( 13, 9.5 )
 [sub_resource type="RectangleShape2D" id=64]
 extents = Vector2( 22, 7.5 )
 
-[sub_resource type="RectangleShape2D" id=65]
+[sub_resource type="RectangleShape2D" id=68]
 extents = Vector2( 10.5, 11.5 )
 
 [sub_resource type="Animation" id=27]
@@ -712,7 +711,7 @@ tracks/6/keys = {
 }
 
 [node name="rabid_baby" type="KinematicBody2D"]
-material = SubResource( 44 )
+material = SubResource( 66 )
 collision_mask = 2
 script = ExtResource( 17 )
 team = 1
@@ -731,9 +730,6 @@ shape = SubResource( 48 )
 script = ExtResource( 3 )
 max_value = 300.0
 value = 300.0
-
-[node name="print_value" type="Node" parent="health"]
-script = ExtResource( 10 )
 
 [node name="normal_palette" parent="." instance=ExtResource( 9 )]
 type = 1
@@ -813,7 +809,7 @@ disabled = true
 
 [node name="CollisionShape2D6" type="CollisionShape2D" parent="pivot/touch_damager/hitbox"]
 position = Vector2( 11.5, 12.5 )
-shape = SubResource( 65 )
+shape = SubResource( 68 )
 disabled = true
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="pivot/touch_damager/hitbox"]

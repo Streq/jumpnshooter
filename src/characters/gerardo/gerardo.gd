@@ -190,6 +190,8 @@ func play_dead_floor():
 func is_looking_up():
 	return look_up_dir<0
 
+func add_health(amount):
+	set_health(health + amount)
 
 func get_world():
 	return get_parent()
