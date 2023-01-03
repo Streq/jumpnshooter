@@ -1,4 +1,4 @@
-[gd_scene load_steps=54 format=2]
+[gd_scene load_steps=57 format=2]
 
 [ext_resource path="res://src/characters/gerardo/gerardo.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/texture/hill_8x8.png" type="Texture" id=2]
@@ -30,6 +30,9 @@
 [ext_resource path="res://src/map/text_area.gd" type="Script" id=28]
 [ext_resource path="res://src/test/player/restart_on_text_done.gd" type="Script" id=29]
 [ext_resource path="res://src/HUD/textbox/say.gd" type="Script" id=30]
+[ext_resource path="res://src/test/player/on_dead_sequence.gd" type="Script" id=31]
+[ext_resource path="res://src/events/say.tscn" type="PackedScene" id=32]
+[ext_resource path="res://src/HUD/events/game_over.tscn" type="PackedScene" id=33]
 
 [sub_resource type="Image" id=77]
 data = {
@@ -427,6 +430,8 @@ script = ExtResource( 26 )
 health_bar_path = NodePath("..")
 character_path = NodePath("../../../rabid_baby")
 
+[node name="game_over" parent="HUD" instance=ExtResource( 33 )]
+
 [node name="back" type="TileMap" parent="."]
 visible = false
 material = SubResource( 69 )
@@ -543,6 +548,18 @@ horizontal_extent = 0
 vertical_extent = 32
 vertical_lerp_target = 64
 
+[node name="on_dead_sequence" type="Node" parent="player"]
+script = ExtResource( 31 )
+
+[node name="say" parent="player/on_dead_sequence" instance=ExtResource( 32 )]
+text = "Bueno che vamos cortando con la siestita"
+
+[node name="say2" parent="player/on_dead_sequence" instance=ExtResource( 32 )]
+text = "Si, dale, hacete el muerto"
+
+[node name="say3" parent="player/on_dead_sequence" instance=ExtResource( 32 )]
+text = "Estas despedido"
+
 [node name="funguy" parent="." instance=ExtResource( 7 )]
 material = SubResource( 66 )
 position = Vector2( 564, 95 )
@@ -583,33 +600,28 @@ script = ExtResource( 12 )
 shape = SubResource( 30 )
 
 [node name="turret" parent="." instance=ExtResource( 14 )]
-material = SubResource( 66 )
 position = Vector2( 163, 48 )
 facing_dir = -1.0
 
 [node name="turret_controller" parent="turret" instance=ExtResource( 15 )]
 
 [node name="turret4" parent="." instance=ExtResource( 14 )]
-material = SubResource( 66 )
 position = Vector2( 427, 47 )
 
 [node name="turret_controller" parent="turret4" instance=ExtResource( 15 )]
 
 [node name="turret5" parent="." instance=ExtResource( 14 )]
-material = SubResource( 66 )
 position = Vector2( 495, 68 )
 
 [node name="turret_controller" parent="turret5" instance=ExtResource( 15 )]
 
 [node name="turret7" parent="." instance=ExtResource( 14 )]
-material = SubResource( 66 )
 position = Vector2( 2099, 58 )
 facing_dir = -1.0
 
 [node name="turret_controller" parent="turret7" instance=ExtResource( 15 )]
 
 [node name="turret3" parent="." instance=ExtResource( 14 )]
-material = SubResource( 66 )
 position = Vector2( 1018, 62 )
 
 [node name="turret_controller" parent="turret3" instance=ExtResource( 15 )]
@@ -672,17 +684,17 @@ Suerte Perro"
 who = "Jefe"
 show_name = false
 
-[node name="text_area2" type="Area2D" parent="."]
+[node name="fell_area" type="Area2D" parent="."]
 position = Vector2( -32, 424 )
 collision_layer = 0
 collision_mask = 16
 script = ExtResource( 28 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="text_area2"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="fell_area"]
 position = Vector2( -60, 40 )
 shape = SubResource( 63 )
 
-[node name="say" type="Node" parent="text_area2"]
+[node name="say" type="Node" parent="fell_area"]
 script = ExtResource( 30 )
 text = "Caiste al vacio!!!
 No vas a poder salir de ahi Nunca mas!!!
@@ -690,7 +702,7 @@ Estas despedido!!!!!"
 who = "Jefe"
 show_name = false
 
-[node name="reload_scene" type="Node" parent="text_area2/say"]
+[node name="reload_scene" type="Node" parent="fell_area/say"]
 script = ExtResource( 29 )
 
 [node name="text_area3" type="Area2D" parent="."]
@@ -703,11 +715,7 @@ script = ExtResource( 28 )
 position = Vector2( -88, 111 )
 shape = SubResource( 72 )
 
-[node name="say" type="Node" parent="text_area3"]
-script = ExtResource( 30 )
-text = "Bueno nada ahora vas a pelear contra un bebe gigante"
-who = "Jefe"
-show_name = false
+[node name="say" parent="text_area3" instance=ExtResource( 32 )]
 
 [node name="text_area4" type="Area2D" parent="."]
 position = Vector2( 2696, -64 )
@@ -733,13 +741,15 @@ anims/start = SubResource( 76 )
 position = Vector2( 2480, 60 )
 
 [connection signal="change_gun" from="player" to="HUD/HBoxContainer/weapons_hud" method="_on_player_change_gun"]
+[connection signal="dead" from="player" to="player/on_dead_sequence" method="trigger"]
 [connection signal="health_changed" from="player" to="HUD/HBoxContainer/health_bar" method="_on_player_health_changed"]
+[connection signal="finished" from="player/on_dead_sequence" to="HUD/game_over" method="trigger"]
 [connection signal="area_entered" from="target_complete" to="target_complete" method="_on_target_complete_area_entered"]
 [connection signal="area_entered" from="text_area" to="text_area" method="_on_area_entered"]
 [connection signal="triggered" from="text_area" to="text_area/say" method="trigger"]
-[connection signal="area_entered" from="text_area2" to="text_area2" method="_on_area_entered"]
-[connection signal="triggered" from="text_area2" to="text_area2/say" method="trigger"]
-[connection signal="finished" from="text_area2/say" to="text_area2/say/reload_scene" method="trigger"]
+[connection signal="area_entered" from="fell_area" to="fell_area" method="_on_area_entered"]
+[connection signal="triggered" from="fell_area" to="fell_area/say" method="trigger"]
+[connection signal="finished" from="fell_area/say" to="HUD/game_over" method="trigger"]
 [connection signal="area_entered" from="text_area3" to="text_area3" method="_on_area_entered"]
 [connection signal="triggered" from="text_area3" to="text_area3/say" method="trigger"]
 [connection signal="area_entered" from="text_area4" to="text_area4" method="_on_area_entered"]

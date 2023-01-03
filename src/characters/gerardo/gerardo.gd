@@ -3,6 +3,7 @@ signal change_gun(gun)
 signal hurt_started()
 signal hurt_ended()
 signal health_changed(value, max_value)
+signal dead()
 
 var velocity := Vector2()
 
@@ -178,7 +179,7 @@ func die():
 		velocity = Vector2(-facing_dir*75,-100.0)
 		gun_hold.set_trigger_pulled(false)
 		dead = true
-
+		emit_signal("dead")
 
 func play_dead_air():
 	lower_body_animation.play("hurt")

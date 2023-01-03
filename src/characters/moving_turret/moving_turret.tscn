@@ -19,7 +19,7 @@
 [ext_resource path="res://src/bullets/turret/turret_down_bullet.tscn" type="PackedScene" id=17]
 [ext_resource path="res://src/characters/ghost/touch_damager.gd" type="Script" id=18]
 
-[sub_resource type="Image" id=45]
+[sub_resource type="Image" id=67]
 data = {
 "data": PoolByteArray( 255, 255, 0, 255, 126, 126, 1, 255, 60, 60, 2, 255, 255, 255, 255, 0 ),
 "format": "RGBA8",
@@ -28,19 +28,19 @@ data = {
 "width": 4
 }
 
-[sub_resource type="ImageTexture" id=43]
+[sub_resource type="ImageTexture" id=65]
 flags = 0
 flags = 0
-image = SubResource( 45 )
+image = SubResource( 67 )
 size = Vector2( 4, 1 )
 
-[sub_resource type="ShaderMaterial" id=44]
+[sub_resource type="ShaderMaterial" id=66]
 resource_local_to_scene = true
 shader = ExtResource( 2 )
 shader_param/palette_size = 4
 shader_param/offset = 0.0
 shader_param/blue_index_offset = 0.0
-shader_param/palette = SubResource( 43 )
+shader_param/palette = SubResource( 65 )
 
 [sub_resource type="Animation" id=21]
 resource_name = "RESET"
@@ -565,7 +565,7 @@ tracks/0/keys = {
 }
 
 [node name="turret" type="KinematicBody2D"]
-material = SubResource( 44 )
+material = SubResource( 66 )
 collision_mask = 2
 script = ExtResource( 3 )
 team = 1
@@ -591,8 +591,8 @@ shape = SubResource( 8 )
 
 [node name="health" type="Node" parent="."]
 script = ExtResource( 4 )
-value = 10.0
 max_value = 10.0
+value = 10.0
 
 [node name="normal_palette" parent="." instance=ExtResource( 1 )]
 type = 1

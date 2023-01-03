@@ -17,6 +17,7 @@ onready var hind_lookout_timer = $hind_lookout_timer
 func _ready():
 	yield(root,"ready")
 	input = root.input_state
+	pivot.scale.x = root.facing_dir
 	NodeUtils.reparent_keep_transform(pivot, root.pivot)
 	root.connect("got_hit",self,"_on_got_hit")
 
