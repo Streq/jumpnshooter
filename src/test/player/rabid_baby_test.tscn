@@ -1,4 +1,4 @@
-[gd_scene load_steps=49 format=2]
+[gd_scene load_steps=53 format=2]
 
 [ext_resource path="res://src/characters/gerardo/gerardo.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/texture/hill_8x8.png" type="Texture" id=2]
@@ -27,8 +27,11 @@
 [ext_resource path="res://src/test/player/weapons_HUD.gd" type="Script" id=25]
 [ext_resource path="res://src/HUD/health/health_connector.gd" type="Script" id=26]
 [ext_resource path="res://src/test/player/boss_area.gd" type="Script" id=27]
+[ext_resource path="res://src/map/text_area.gd" type="Script" id=28]
+[ext_resource path="res://src/test/player/restart_on_text_done.gd" type="Script" id=29]
+[ext_resource path="res://src/HUD/textbox/say.gd" type="Script" id=30]
 
-[sub_resource type="Image" id=61]
+[sub_resource type="Image" id=70]
 data = {
 "data": PoolByteArray( 255, 255, 0, 255, 126, 126, 1, 255, 60, 60, 2, 255, 255, 255, 255, 0 ),
 "format": "RGBA8",
@@ -37,19 +40,19 @@ data = {
 "width": 4
 }
 
-[sub_resource type="ImageTexture" id=43]
+[sub_resource type="ImageTexture" id=65]
 flags = 0
 flags = 0
-image = SubResource( 61 )
+image = SubResource( 70 )
 size = Vector2( 4, 1 )
 
-[sub_resource type="ShaderMaterial" id=44]
+[sub_resource type="ShaderMaterial" id=66]
 resource_local_to_scene = true
 shader = ExtResource( 4 )
 shader_param/palette_size = 4
 shader_param/offset = 0.0
 shader_param/blue_index_offset = 0.0
-shader_param/palette = SubResource( 43 )
+shader_param/palette = SubResource( 65 )
 
 [sub_resource type="AtlasTexture" id=28]
 resource_local_to_scene = true
@@ -65,7 +68,7 @@ flags = 2
 atlas = ExtResource( 22 )
 region = Rect2( 0, 0, 128, 8 )
 
-[sub_resource type="Image" id=62]
+[sub_resource type="Image" id=71]
 data = {
 "data": PoolByteArray( 255, 255, 0, 255, 126, 126, 1, 255, 60, 60, 2, 255, 0, 0, 3, 255 ),
 "format": "RGBA8",
@@ -74,19 +77,19 @@ data = {
 "width": 4
 }
 
-[sub_resource type="ImageTexture" id=46]
+[sub_resource type="ImageTexture" id=68]
 flags = 0
 flags = 0
-image = SubResource( 62 )
+image = SubResource( 71 )
 size = Vector2( 4, 1 )
 
-[sub_resource type="ShaderMaterial" id=47]
+[sub_resource type="ShaderMaterial" id=69]
 resource_local_to_scene = true
 shader = ExtResource( 4 )
 shader_param/palette_size = 4
 shader_param/offset = 0
 shader_param/blue_index_offset = 0.0
-shader_param/palette = SubResource( 46 )
+shader_param/palette = SubResource( 68 )
 
 [sub_resource type="ConvexPolygonShape2D" id=32]
 points = PoolVector2Array( 8, 8, 0, 8, 0, 0, 8, 0 )
@@ -338,6 +341,9 @@ tracks/1/keys = {
 "values": [ false ]
 }
 
+[sub_resource type="RectangleShape2D" id=63]
+extents = Vector2( 6804, 10 )
+
 [node name="Node2D" type="Node2D"]
 
 [node name="HUD" type="CanvasLayer" parent="."]
@@ -364,7 +370,7 @@ margin_bottom = 40.0
 custom_constants/separation = 0
 
 [node name="heart" parent="HUD/HBoxContainer/health_bar/hearts" instance=ExtResource( 11 )]
-material = SubResource( 44 )
+material = SubResource( 66 )
 margin_bottom = 36.0
 texture = SubResource( 28 )
 
@@ -398,6 +404,7 @@ margin_right = 56.0
 weapon_name = "spark_gun"
 
 [node name="dialog" parent="HUD" instance=ExtResource( 13 )]
+unique_name_in_owner = true
 visible = false
 
 [node name="boss_healthbar" type="TextureProgress" parent="HUD"]
@@ -419,7 +426,7 @@ character_path = NodePath("../../../rabid_baby")
 
 [node name="back" type="TileMap" parent="."]
 visible = false
-material = SubResource( 47 )
+material = SubResource( 69 )
 tile_set = SubResource( 5 )
 cell_size = Vector2( 8, 8 )
 collision_layer = 2
@@ -430,7 +437,7 @@ tile_data = PoolIntArray( -327561, 6, 0, -327560, 6, 0, -327559, 6, 0, -327558, 
 
 [node name="TileMap" type="TileMap" parent="."]
 visible = false
-material = SubResource( 47 )
+material = SubResource( 69 )
 tile_set = SubResource( 5 )
 cell_size = Vector2( 8, 8 )
 collision_layer = 0
@@ -498,9 +505,11 @@ format = 1
 tile_data = PoolIntArray( 589935, 6, 0, 655469, 6, 0, 720997, 6, 0, 786531, 6, 0, 852014, 6, 0, 917548, 6, 0, 917823, 4, 0, 917853, 6, 0, 983082, 6, 0, 1048616, 6, 0 )
 
 [node name="turret6" parent="." instance=ExtResource( 20 )]
+material = SubResource( 66 )
 position = Vector2( 1776, 0 )
 
 [node name="player" parent="." instance=ExtResource( 1 )]
+material = SubResource( 66 )
 position = Vector2( 8, 112 )
 speed = 75.0
 horizontal_air_acceleration = 150.0
@@ -533,26 +542,31 @@ vertical_extent = 32
 vertical_lerp_target = 64
 
 [node name="funguy" parent="." instance=ExtResource( 7 )]
+material = SubResource( 66 )
 position = Vector2( 564, 95 )
 speed = 30.0
 horizontal_acceleration = 100.0
 
 [node name="funguy2" parent="." instance=ExtResource( 7 )]
+material = SubResource( 66 )
 position = Vector2( 845, 77 )
 speed = 30.0
 horizontal_acceleration = 100.0
 
 [node name="funguy3" parent="." instance=ExtResource( 7 )]
+material = SubResource( 66 )
 position = Vector2( 721, 6 )
 speed = 30.0
 horizontal_acceleration = 100.0
 
 [node name="funguy4" parent="." instance=ExtResource( 7 )]
+material = SubResource( 66 )
 position = Vector2( 1451, 62 )
 speed = 30.0
 horizontal_acceleration = 100.0
 
 [node name="funguy5" parent="." instance=ExtResource( 7 )]
+material = SubResource( 66 )
 position = Vector2( 1761, 61 )
 speed = 30.0
 horizontal_acceleration = 100.0
@@ -567,39 +581,47 @@ script = ExtResource( 12 )
 shape = SubResource( 30 )
 
 [node name="turret" parent="." instance=ExtResource( 14 )]
+material = SubResource( 66 )
 position = Vector2( 163, 48 )
 facing_dir = -1.0
 
 [node name="turret_controller" parent="turret" instance=ExtResource( 15 )]
 
 [node name="turret4" parent="." instance=ExtResource( 14 )]
+material = SubResource( 66 )
 position = Vector2( 427, 47 )
 
 [node name="turret_controller" parent="turret4" instance=ExtResource( 15 )]
 
 [node name="turret5" parent="." instance=ExtResource( 14 )]
+material = SubResource( 66 )
 position = Vector2( 495, 68 )
 
 [node name="turret_controller" parent="turret5" instance=ExtResource( 15 )]
 
 [node name="turret7" parent="." instance=ExtResource( 14 )]
+material = SubResource( 66 )
 position = Vector2( 2099, 58 )
 facing_dir = -1.0
 
 [node name="turret_controller" parent="turret7" instance=ExtResource( 15 )]
 
 [node name="turret3" parent="." instance=ExtResource( 14 )]
+material = SubResource( 66 )
 position = Vector2( 1018, 62 )
 
 [node name="turret_controller" parent="turret3" instance=ExtResource( 15 )]
 
 [node name="turret2" parent="." instance=ExtResource( 20 )]
+material = SubResource( 66 )
 position = Vector2( 513, 24 )
 
 [node name="turret9" parent="." instance=ExtResource( 20 )]
+material = SubResource( 66 )
 position = Vector2( 580, 8 )
 
 [node name="rabid_baby" parent="." instance=ExtResource( 16 )]
+material = SubResource( 66 )
 position = Vector2( 2768, 96 )
 
 [node name="player_controller" type="Node" parent="rabid_baby"]
@@ -619,6 +641,15 @@ vertical_lerp_target = 64
 player_path = NodePath("../../player")
 disabled = true
 
+[node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="rabid_baby"]
+position = Vector2( 88, 0 )
+
+[node name="say" type="Node" parent="rabid_baby/VisibilityNotifier2D"]
+script = ExtResource( 30 )
+text = "GUGU TATA PUTO"
+who = "Bebe"
+show_name = false
+
 [node name="boss_area" type="Area2D" parent="."]
 position = Vector2( 2688, 24 )
 collision_layer = 0
@@ -633,7 +664,52 @@ shape = SubResource( 56 )
 anims/RESET = SubResource( 59 )
 anims/start = SubResource( 60 )
 
+[node name="text_area" type="Area2D" parent="."]
+position = Vector2( 72, 72 )
+collision_layer = 0
+collision_mask = 16
+script = ExtResource( 28 )
+text = "Hola! Bienvenido a tu laburo!
+Soy tu jefe.
+Apreta Z para seguir.
+
+Vos sos el chaboncito de aca abajo.
+Yo te estoy hablando por cucaracha.
+Tu laburo es matar demonios.
+
+Con Z saltas.
+Con X disparas.
+Con las flechitas te moves.
+
+Tenes que ir todo para la derecha hasta pasar el nivel.
+Suerte Perro"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="text_area"]
+position = Vector2( -60, 40 )
+shape = SubResource( 56 )
+
+[node name="text_area2" type="Area2D" parent="."]
+position = Vector2( -32, 424 )
+collision_layer = 0
+collision_mask = 16
+script = ExtResource( 28 )
+text = "Caiste al vacio!!!
+No vas a poder salir de ahi Nunca mas!!!
+Estas despedido!!!!!"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="text_area2"]
+position = Vector2( -60, 40 )
+shape = SubResource( 63 )
+
+[node name="restart_on_text_done" type="Node" parent="text_area2"]
+script = ExtResource( 29 )
+
 [connection signal="change_gun" from="player" to="HUD/HBoxContainer/weapons_hud" method="_on_player_change_gun"]
 [connection signal="health_changed" from="player" to="HUD/HBoxContainer/health_bar" method="_on_player_health_changed"]
 [connection signal="area_entered" from="target_complete" to="target_complete" method="_on_target_complete_area_entered"]
+[connection signal="screen_entered" from="rabid_baby/VisibilityNotifier2D" to="rabid_baby/VisibilityNotifier2D/say" method="trigger"]
+[connection signal="finished" from="rabid_baby/VisibilityNotifier2D/say" to="rabid_baby/VisibilityNotifier2D" method="queue_free"]
 [connection signal="area_entered" from="boss_area" to="boss_area" method="_on_boss_area_area_entered"]
+[connection signal="area_entered" from="text_area" to="text_area" method="_on_boss_area_area_entered"]
+[connection signal="area_entered" from="text_area2" to="text_area2" method="_on_boss_area_area_entered"]
+[connection signal="triggered" from="text_area2" to="text_area2/restart_on_text_done" method="trigger"]

@@ -8,12 +8,13 @@ func change_profile(request: TextRequest):
 	var textbox = owner.textbox
 	var profile_name = request.who
 	var mood = request.mood
-	
+	var show_name = request.show_name
 	if !profile_name:
 		profile_picture.hide()
 		profile_display_name.hide()
 		return
 	profile_display_name.set_text(profile_name)
+	profile_display_name.visible = show_name
 	profile_picture.set_texture(null)
 	if (
 		profile_voice_stream_player
@@ -31,7 +32,7 @@ func change_profile(request: TextRequest):
 	
 	
 	profile_picture.show()
-	profile_display_name.show()
+#	profile_display_name.show()
 	
 	profile_voice_stream_player = profile.get_voice(mood)
 	

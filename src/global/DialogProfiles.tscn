@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://src/global/DialogProfiles.gd" type="Script" id=1]
 [ext_resource path="res://assets/mockups/almohado_profile.png" type="Texture" id=2]
@@ -7,8 +7,10 @@
 [ext_resource path="res://assets/mockups/almohado_mad_profile.png" type="Texture" id=5]
 [ext_resource path="res://assets/audio/sfx/choque.wav" type="AudioStream" id=6]
 [ext_resource path="res://assets/mockups/toto_profile.png" type="Texture" id=7]
+[ext_resource path="res://assets/texture/rabid_baby_profile.png" type="Texture" id=8]
 
 [node name="Profiles" type="Node"]
+pause_mode = 2
 script = ExtResource( 1 )
 
 [node name="Almohado" parent="." instance=ExtResource( 3 )]
@@ -34,5 +36,14 @@ voice = ExtResource( 4 )
 stream = ExtResource( 4 )
 volume_db = -12.353
 
+[node name="Bebe" parent="." instance=ExtResource( 3 )]
+texture = ExtResource( 8 )
+voice = ExtResource( 4 )
+
+[node name="stream" parent="Bebe" index="0"]
+stream = ExtResource( 4 )
+volume_db = -12.353
+
 [editable path="Almohado"]
 [editable path="Toto"]
+[editable path="Bebe"]
