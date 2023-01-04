@@ -20,6 +20,7 @@ func say(request:TextRequest):
 	characters_skipped_count = 0
 	text = ""
 	full_text = request.text
+#	align = request.side
 	show_text()
 func show_text():
 	show()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=57 format=2]
+[gd_scene load_steps=61 format=2]
 
 [ext_resource path="res://src/characters/gerardo/gerardo.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/texture/hill_8x8.png" type="Texture" id=2]
@@ -33,8 +33,10 @@
 [ext_resource path="res://src/test/player/on_dead_sequence.gd" type="Script" id=31]
 [ext_resource path="res://src/events/say.tscn" type="PackedScene" id=32]
 [ext_resource path="res://src/HUD/events/game_over.tscn" type="PackedScene" id=33]
+[ext_resource path="res://assets/texture/ship.png" type="Texture" id=34]
+[ext_resource path="res://src/test/player/on_baby_dead_sequence.gd" type="Script" id=35]
 
-[sub_resource type="Image" id=77]
+[sub_resource type="Image" id=87]
 data = {
 "data": PoolByteArray( 255, 255, 0, 255, 126, 126, 1, 255, 60, 60, 2, 255, 255, 255, 255, 0 ),
 "format": "RGBA8",
@@ -43,19 +45,19 @@ data = {
 "width": 4
 }
 
-[sub_resource type="ImageTexture" id=65]
+[sub_resource type="ImageTexture" id=82]
 flags = 0
 flags = 0
-image = SubResource( 77 )
+image = SubResource( 87 )
 size = Vector2( 4, 1 )
 
-[sub_resource type="ShaderMaterial" id=66]
+[sub_resource type="ShaderMaterial" id=83]
 resource_local_to_scene = true
 shader = ExtResource( 4 )
 shader_param/palette_size = 4
 shader_param/offset = 0.0
 shader_param/blue_index_offset = 0.0
-shader_param/palette = SubResource( 65 )
+shader_param/palette = SubResource( 82 )
 
 [sub_resource type="AtlasTexture" id=28]
 resource_local_to_scene = true
@@ -71,7 +73,7 @@ flags = 2
 atlas = ExtResource( 22 )
 region = Rect2( 0, 0, 128, 8 )
 
-[sub_resource type="Image" id=78]
+[sub_resource type="Image" id=88]
 data = {
 "data": PoolByteArray( 255, 255, 0, 255, 126, 126, 1, 255, 60, 60, 2, 255, 0, 0, 3, 255 ),
 "format": "RGBA8",
@@ -80,19 +82,19 @@ data = {
 "width": 4
 }
 
-[sub_resource type="ImageTexture" id=68]
+[sub_resource type="ImageTexture" id=85]
 flags = 0
 flags = 0
-image = SubResource( 78 )
+image = SubResource( 88 )
 size = Vector2( 4, 1 )
 
-[sub_resource type="ShaderMaterial" id=69]
+[sub_resource type="ShaderMaterial" id=86]
 resource_local_to_scene = true
 shader = ExtResource( 4 )
 shader_param/palette_size = 4
 shader_param/offset = 0
 shader_param/blue_index_offset = 0.0
-shader_param/palette = SubResource( 68 )
+shader_param/palette = SubResource( 85 )
 
 [sub_resource type="ConvexPolygonShape2D" id=32]
 points = PoolVector2Array( 8, 8, 0, 8, 0, 0, 8, 0 )
@@ -350,6 +352,37 @@ tracks/1/keys = {
 "values": [ false ]
 }
 
+[sub_resource type="Animation" id=79]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=80]
+resource_name = "land"
+length = 4.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 4 ),
+"transitions": PoolRealArray( 0.329877, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 0, 108 ) ]
+}
+
 [node name="Node2D" type="Node2D"]
 
 [node name="HUD" type="CanvasLayer" parent="."]
@@ -376,7 +409,7 @@ margin_bottom = 40.0
 custom_constants/separation = 0
 
 [node name="heart" parent="HUD/HBoxContainer/health_bar/hearts" instance=ExtResource( 11 )]
-material = SubResource( 66 )
+material = SubResource( 83 )
 margin_bottom = 36.0
 texture = SubResource( 28 )
 
@@ -434,7 +467,7 @@ character_path = NodePath("../../../rabid_baby")
 
 [node name="back" type="TileMap" parent="."]
 visible = false
-material = SubResource( 69 )
+material = SubResource( 86 )
 tile_set = SubResource( 5 )
 cell_size = Vector2( 8, 8 )
 collision_layer = 2
@@ -445,7 +478,7 @@ tile_data = PoolIntArray( -327561, 6, 0, -327560, 6, 0, -327559, 6, 0, -327558, 
 
 [node name="TileMap" type="TileMap" parent="."]
 visible = false
-material = SubResource( 69 )
+material = SubResource( 86 )
 tile_set = SubResource( 5 )
 cell_size = Vector2( 8, 8 )
 collision_layer = 0
@@ -513,11 +546,12 @@ format = 1
 tile_data = PoolIntArray( 589935, 6, 0, 655469, 6, 0, 720997, 6, 0, 786531, 6, 0, 852014, 6, 0, 917548, 6, 0, 917823, 4, 0, 917853, 6, 0, 983082, 6, 0, 1048616, 6, 0 )
 
 [node name="turret6" parent="." instance=ExtResource( 20 )]
-material = SubResource( 66 )
+material = SubResource( 83 )
 position = Vector2( 1776, 0 )
 
 [node name="player" parent="." instance=ExtResource( 1 )]
-position = Vector2( 8, 112 )
+material = SubResource( 83 )
+position = Vector2( -40, 104 )
 speed = 75.0
 horizontal_air_acceleration = 150.0
 max_health = 3
@@ -555,37 +589,37 @@ script = ExtResource( 31 )
 text = "Bueno che vamos cortando con la siestita"
 
 [node name="say2" parent="player/on_dead_sequence" instance=ExtResource( 32 )]
-text = "Si, dale, hacete el muerto"
+text = "Sí, dale, hacete el muerto"
 
 [node name="say3" parent="player/on_dead_sequence" instance=ExtResource( 32 )]
-text = "Estas despedido"
+text = "Estás despedido"
 
 [node name="funguy" parent="." instance=ExtResource( 7 )]
-material = SubResource( 66 )
+material = SubResource( 83 )
 position = Vector2( 564, 95 )
 speed = 30.0
 horizontal_acceleration = 100.0
 
 [node name="funguy2" parent="." instance=ExtResource( 7 )]
-material = SubResource( 66 )
+material = SubResource( 83 )
 position = Vector2( 845, 77 )
 speed = 30.0
 horizontal_acceleration = 100.0
 
 [node name="funguy3" parent="." instance=ExtResource( 7 )]
-material = SubResource( 66 )
+material = SubResource( 83 )
 position = Vector2( 721, 6 )
 speed = 30.0
 horizontal_acceleration = 100.0
 
 [node name="funguy4" parent="." instance=ExtResource( 7 )]
-material = SubResource( 66 )
+material = SubResource( 83 )
 position = Vector2( 1451, 62 )
 speed = 30.0
 horizontal_acceleration = 100.0
 
 [node name="funguy5" parent="." instance=ExtResource( 7 )]
-material = SubResource( 66 )
+material = SubResource( 83 )
 position = Vector2( 1761, 61 )
 speed = 30.0
 horizontal_acceleration = 100.0
@@ -600,41 +634,47 @@ script = ExtResource( 12 )
 shape = SubResource( 30 )
 
 [node name="turret" parent="." instance=ExtResource( 14 )]
+material = SubResource( 83 )
 position = Vector2( 163, 48 )
 facing_dir = -1.0
 
 [node name="turret_controller" parent="turret" instance=ExtResource( 15 )]
 
 [node name="turret4" parent="." instance=ExtResource( 14 )]
+material = SubResource( 83 )
 position = Vector2( 427, 47 )
 
 [node name="turret_controller" parent="turret4" instance=ExtResource( 15 )]
 
 [node name="turret5" parent="." instance=ExtResource( 14 )]
+material = SubResource( 83 )
 position = Vector2( 495, 68 )
 
 [node name="turret_controller" parent="turret5" instance=ExtResource( 15 )]
 
 [node name="turret7" parent="." instance=ExtResource( 14 )]
+material = SubResource( 83 )
 position = Vector2( 2099, 58 )
 facing_dir = -1.0
 
 [node name="turret_controller" parent="turret7" instance=ExtResource( 15 )]
 
 [node name="turret3" parent="." instance=ExtResource( 14 )]
+material = SubResource( 83 )
 position = Vector2( 1018, 62 )
 
 [node name="turret_controller" parent="turret3" instance=ExtResource( 15 )]
 
 [node name="turret2" parent="." instance=ExtResource( 20 )]
-material = SubResource( 66 )
+material = SubResource( 83 )
 position = Vector2( 513, 24 )
 
 [node name="turret9" parent="." instance=ExtResource( 20 )]
-material = SubResource( 66 )
+material = SubResource( 83 )
 position = Vector2( 580, 8 )
 
 [node name="rabid_baby" parent="." instance=ExtResource( 16 )]
+material = SubResource( 83 )
 position = Vector2( 2768, 96 )
 facing_dir = -1.0
 
@@ -655,32 +695,31 @@ vertical_lerp_target = 64
 player_path = NodePath("../../player")
 disabled = true
 
-[node name="text_area" type="Area2D" parent="."]
+[node name="tutorial_detect" type="Area2D" parent="."]
 position = Vector2( 72, 72 )
 collision_layer = 0
 collision_mask = 16
 script = ExtResource( 28 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="text_area"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="tutorial_detect"]
 position = Vector2( -60, 40 )
 shape = SubResource( 56 )
 
-[node name="say" type="Node" parent="text_area"]
+[node name="say" type="Node" parent="tutorial_detect"]
 script = ExtResource( 30 )
 text = "Hola! Bienvenido a tu laburo!
 Soy tu jefe.
-Apreta Z para seguir.
+Apretá Z para seguir.
 
-Vos sos el chaboncito de aca abajo.
-Yo te estoy hablando por cucaracha.
-Tu laburo es matar demonios.
+Te estoy hablando por cucaracha.
+Tu laburo, como te habrán dicho en la entrevista, es matar demonios.
 
-Con Z saltas.
-Con X disparas.
-Con las flechitas te moves.
+Con Z saltás.
+Con X disparás.
+Con las flechitas te movés.
 
-Tenes que ir todo para la derecha hasta pasar el nivel.
-Suerte Perro"
+Tenés que ir todo para la derecha hasta pasar el nivel.
+Suerte y a laburar!!!"
 who = "Jefe"
 show_name = false
 
@@ -717,41 +756,70 @@ shape = SubResource( 72 )
 
 [node name="say" parent="text_area3" instance=ExtResource( 32 )]
 
-[node name="text_area4" type="Area2D" parent="."]
+[node name="beby_boss_sequence" type="Area2D" parent="."]
 position = Vector2( 2696, -64 )
 collision_layer = 0
 collision_mask = 16
 script = ExtResource( 28 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="text_area4"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="beby_boss_sequence"]
 position = Vector2( -56, 124.5 )
 shape = SubResource( 72 )
 
-[node name="say" type="Node" parent="text_area4"]
+[node name="say" type="Node" parent="beby_boss_sequence"]
 script = ExtResource( 30 )
 text = "GUGU TATA PUTO"
 who = "Bebe"
 show_name = false
+side = 2
 
-[node name="boss_fight_start" type="AnimationPlayer" parent="text_area4"]
+[node name="boss_fight_start" type="AnimationPlayer" parent="beby_boss_sequence"]
 anims/RESET = SubResource( 75 )
 anims/start = SubResource( 76 )
 
 [node name="medikit" parent="." instance=ExtResource( 27 )]
 position = Vector2( 2480, 60 )
 
+[node name="ship_spawn" type="Node2D" parent="."]
+visible = false
+position = Vector2( 12, -20 )
+
+[node name="Sprite" type="Sprite" parent="ship_spawn"]
+texture = ExtResource( 34 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="ship_spawn"]
+autoplay = "land"
+anims/RESET = SubResource( 79 )
+anims/land = SubResource( 80 )
+
+[node name="on_baby_dead_sequence" type="Node" parent="."]
+script = ExtResource( 35 )
+
+[node name="say" parent="on_baby_dead_sequence" instance=ExtResource( 32 )]
+text = "QUÉ HICISTE? MATASTE A MI BEBÉ"
+who = "Señora"
+side = 2
+
+[node name="say2" parent="on_baby_dead_sequence" instance=ExtResource( 32 )]
+text = "Señora su bebé mató a 36 personas"
+show_name = true
+
+[node name="say3" parent="on_baby_dead_sequence" instance=ExtResource( 32 )]
+text = "Decíselo vos porque a mí no me escucha"
+show_name = true
+
 [connection signal="change_gun" from="player" to="HUD/HBoxContainer/weapons_hud" method="_on_player_change_gun"]
 [connection signal="dead" from="player" to="player/on_dead_sequence" method="trigger"]
 [connection signal="health_changed" from="player" to="HUD/HBoxContainer/health_bar" method="_on_player_health_changed"]
 [connection signal="finished" from="player/on_dead_sequence" to="HUD/game_over" method="trigger"]
 [connection signal="area_entered" from="target_complete" to="target_complete" method="_on_target_complete_area_entered"]
-[connection signal="area_entered" from="text_area" to="text_area" method="_on_area_entered"]
-[connection signal="triggered" from="text_area" to="text_area/say" method="trigger"]
+[connection signal="area_entered" from="tutorial_detect" to="tutorial_detect" method="_on_area_entered"]
+[connection signal="triggered" from="tutorial_detect" to="tutorial_detect/say" method="trigger"]
 [connection signal="area_entered" from="fell_area" to="fell_area" method="_on_area_entered"]
 [connection signal="triggered" from="fell_area" to="fell_area/say" method="trigger"]
 [connection signal="finished" from="fell_area/say" to="HUD/game_over" method="trigger"]
 [connection signal="area_entered" from="text_area3" to="text_area3" method="_on_area_entered"]
 [connection signal="triggered" from="text_area3" to="text_area3/say" method="trigger"]
-[connection signal="area_entered" from="text_area4" to="text_area4" method="_on_area_entered"]
-[connection signal="triggered" from="text_area4" to="text_area4/say" method="trigger"]
-[connection signal="finished" from="text_area4/say" to="text_area4/boss_fight_start" method="play" binds= [ "start" ]]
+[connection signal="area_entered" from="beby_boss_sequence" to="beby_boss_sequence" method="_on_area_entered"]
+[connection signal="triggered" from="beby_boss_sequence" to="beby_boss_sequence/say" method="trigger"]
+[connection signal="finished" from="beby_boss_sequence/say" to="beby_boss_sequence/boss_fight_start" method="play" binds= [ "start" ]]

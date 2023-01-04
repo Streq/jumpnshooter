@@ -3,6 +3,15 @@ tool
 
 export var texture : Texture
 export var voice : AudioStream setget set_voice
+export var volume_db := -12.0 setget set_volume_db
+export var pitch_scale := 1.0 setget set_pitch_scale
+
+func set_volume_db(val):
+	volume_db = val
+	$stream.volume_db = val
+func set_pitch_scale(val):
+	pitch_scale = val
+	$stream.pitch_scale = val
 
 onready var voice_stream_player :AudioStreamPlayer = $stream
 var moods := {}
@@ -18,6 +27,8 @@ func set_voice(val):
 func _ready():
 	is_ready = true
 	set_voice(voice)
+	set_volume_db(volume_db)
+	set_pitch_scale(pitch_scale)
 	if has_node("moods"):
 		for child in $moods.get_children():
 			moods[child.name] = child

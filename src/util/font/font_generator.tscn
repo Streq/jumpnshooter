@@ -17,5 +17,6 @@ script = ExtResource( 1 )
 font_texture_path = "res://assets/font/ZX Eurostile.png"
 reference_string = " !\"#$%&'()*+,-./0123456789:;<=>?
 @ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_
-£abcdefghijklmnopqrstuvwxyz{|}~©"
+£abcdefghijklmnopqrstuvwxyz{|}~©
+áéíóúñÁÉÍÓÚÑ"
 output_font = "res://assets/font/ZX Eurostile.res"

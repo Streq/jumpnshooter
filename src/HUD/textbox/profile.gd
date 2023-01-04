@@ -9,6 +9,14 @@ func change_profile(request: TextRequest):
 	var profile_name = request.who
 	var mood = request.mood
 	var show_name = request.show_name
+	var show_profile = request.show_profile
+	var side = request.side
+	alignment = side
+	if alignment == HALIGN_RIGHT:
+		move_child(profile_picture,1)
+	else:
+		move_child(profile_picture,0)
+	
 	if !profile_name:
 		profile_picture.hide()
 		profile_display_name.hide()
@@ -31,7 +39,7 @@ func change_profile(request: TextRequest):
 	profile_picture.set_texture(profile.get_texture(mood))
 	
 	
-	profile_picture.show()
+	profile_picture.visible = show_profile and profile_picture.texture
 #	profile_display_name.show()
 	
 	profile_voice_stream_player = profile.get_voice(mood)
