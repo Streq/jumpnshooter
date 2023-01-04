@@ -1,6 +1,6 @@
 extends KinematicBody2D
 signal got_hit(damage)
-
+signal dead()
 
 onready var animation_player: AnimationPlayer = $AnimationPlayer
 onready var pivot: Node2D = $pivot
@@ -57,3 +57,7 @@ func get_world():
 
 func _ready() -> void:
 	set_facing_dir(facing_dir)
+
+func die():
+	emit_signal("dead")
+	queue_free()

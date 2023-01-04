@@ -1,19 +1,17 @@
-[gd_scene load_steps=36 format=2]
+[gd_scene load_steps=34 format=2]
 
 [ext_resource path="res://src/characters/gerardo/weapons.gd" type="Script" id=1]
-[ext_resource path="res://src/characters/gerardo/fireball_gun.tscn" type="PackedScene" id=2]
 [ext_resource path="res://src/characters/gerardo/gerardo.gd" type="Script" id=3]
 [ext_resource path="res://src/characters/gerardo/gun_hold.gd" type="Script" id=4]
 [ext_resource path="res://src/characters/gerardo/guns.gd" type="Script" id=5]
 [ext_resource path="res://src/characters/gerardo/pew_gun.tscn" type="PackedScene" id=6]
-[ext_resource path="res://src/characters/gerardo/spark_gun.tscn" type="PackedScene" id=7]
 [ext_resource path="res://src/characters/input_state/input_state.tscn" type="PackedScene" id=10]
 [ext_resource path="res://assets/shader/palette.gdshader" type="Shader" id=11]
 [ext_resource path="res://src/util/color/palette_client.tscn" type="PackedScene" id=12]
 [ext_resource path="res://assets/texture/shooter_body.png" type="Texture" id=13]
 [ext_resource path="res://assets/texture/shooter_legs.png" type="Texture" id=14]
 
-[sub_resource type="Image" id=67]
+[sub_resource type="Image" id=84]
 data = {
 "data": PoolByteArray( 255, 255, 0, 255, 126, 126, 1, 255, 60, 60, 2, 255, 255, 255, 255, 0 ),
 "format": "RGBA8",
@@ -22,24 +20,24 @@ data = {
 "width": 4
 }
 
-[sub_resource type="ImageTexture" id=65]
+[sub_resource type="ImageTexture" id=82]
 flags = 0
 flags = 0
-image = SubResource( 67 )
+image = SubResource( 84 )
 size = Vector2( 4, 1 )
 
-[sub_resource type="ShaderMaterial" id=66]
+[sub_resource type="ShaderMaterial" id=83]
 resource_local_to_scene = true
 shader = ExtResource( 11 )
 shader_param/palette_size = 4
 shader_param/offset = 0.0
 shader_param/blue_index_offset = 0.0
-shader_param/palette = SubResource( 65 )
+shader_param/palette = SubResource( 82 )
 
 [sub_resource type="RectangleShape2D" id=13]
 extents = Vector2( 4, 6.5 )
 
-[sub_resource type="Image" id=68]
+[sub_resource type="Image" id=85]
 data = {
 "data": PoolByteArray( 255, 255, 0, 255, 126, 126, 1, 255, 60, 60, 2, 255, 0, 0, 3, 255 ),
 "format": "RGBA8",
@@ -51,7 +49,7 @@ data = {
 [sub_resource type="ImageTexture" id=25]
 flags = 0
 flags = 0
-image = SubResource( 68 )
+image = SubResource( 85 )
 size = Vector2( 4, 1 )
 
 [sub_resource type="ShaderMaterial" id=26]
@@ -1123,7 +1121,7 @@ tracks/1/keys = {
 }
 
 [node name="player" type="KinematicBody2D" groups=["player"]]
-material = SubResource( 66 )
+material = SubResource( 83 )
 collision_mask = 2
 script = ExtResource( 3 )
 speed = 100.0
@@ -1238,14 +1236,12 @@ one_shot = true
 script = ExtResource( 1 )
 
 [node name="guns" type="Node" parent="."]
+unique_name_in_owner = true
 script = ExtResource( 5 )
 
 [node name="pew_gun" parent="guns" instance=ExtResource( 6 )]
 position = Vector2( 0, 2 )
 
-[node name="fireball_gun" parent="guns" instance=ExtResource( 2 )]
-
-[node name="spark_gun" parent="guns" instance=ExtResource( 7 )]
-
 [connection signal="hurt_started" from="." to="hurt_timer" method="start"]
 [connection signal="timeout" from="hurt_timer" to="." method="end_hurt"]
+[connection signal="shoot" from="guns/pew_gun" to="guns/pew_gun/muzzle" method="shoot"]

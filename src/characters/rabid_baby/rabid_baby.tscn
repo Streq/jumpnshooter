@@ -18,7 +18,7 @@
 [ext_resource path="res://src/characters/funguy/funguy.gd" type="Script" id=17]
 [ext_resource path="res://src/characters/ghost/touch_damager.gd" type="Script" id=18]
 
-[sub_resource type="Image" id=69]
+[sub_resource type="Image" id=84]
 data = {
 "data": PoolByteArray( 255, 255, 0, 255, 126, 126, 1, 255, 60, 60, 2, 255, 255, 255, 255, 0 ),
 "format": "RGBA8",
@@ -27,19 +27,19 @@ data = {
 "width": 4
 }
 
-[sub_resource type="ImageTexture" id=65]
+[sub_resource type="ImageTexture" id=82]
 flags = 0
 flags = 0
-image = SubResource( 69 )
+image = SubResource( 84 )
 size = Vector2( 4, 1 )
 
-[sub_resource type="ShaderMaterial" id=66]
+[sub_resource type="ShaderMaterial" id=83]
 resource_local_to_scene = true
 shader = ExtResource( 1 )
 shader_param/palette_size = 4
 shader_param/offset = 0.0
 shader_param/blue_index_offset = 0.0
-shader_param/palette = SubResource( 65 )
+shader_param/palette = SubResource( 82 )
 
 [sub_resource type="RectangleShape2D" id=48]
 extents = Vector2( 12, 11.5 )
@@ -711,7 +711,7 @@ tracks/6/keys = {
 }
 
 [node name="rabid_baby" type="KinematicBody2D"]
-material = SubResource( 66 )
+material = SubResource( 83 )
 collision_mask = 2
 script = ExtResource( 17 )
 team = 1
@@ -889,5 +889,5 @@ anims/up_attack = SubResource( 53 )
 anims/walk = SubResource( 54 )
 
 [connection signal="got_hit" from="." to="health" method="subtract"]
-[connection signal="empty" from="health" to="." method="queue_free"]
+[connection signal="empty" from="health" to="." method="die"]
 [connection signal="area_entered" from="pivot/touch_damager/hitbox" to="pivot/touch_damager" method="_on_hitbox_area_entered"]

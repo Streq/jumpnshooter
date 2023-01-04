@@ -35,6 +35,7 @@ onready var gun_hold = $pivot/upper_body_pivot/gun_hold
 onready var pivot = $pivot
 onready var input_state: InputState = $input_state
 onready var hurt_animation: AnimationPlayer = $hurt_animation
+onready var guns: Node = $guns
 
 var held_jump = false
 var jumping = false
@@ -125,7 +126,8 @@ func _physics_process(delta):
 	
 func set_gun(gun):
 	emit_signal("change_gun", gun)
-	
+
+
 func _ready():
 	set_facing_dir(facing_dir)
 	set_health(health)

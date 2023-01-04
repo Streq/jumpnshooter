@@ -1,4 +1,4 @@
-[gd_scene load_steps=61 format=2]
+[gd_scene load_steps=63 format=2]
 
 [ext_resource path="res://src/characters/gerardo/gerardo.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/texture/hill_8x8.png" type="Texture" id=2]
@@ -35,6 +35,8 @@
 [ext_resource path="res://src/HUD/events/game_over.tscn" type="PackedScene" id=33]
 [ext_resource path="res://assets/texture/ship.png" type="Texture" id=34]
 [ext_resource path="res://src/test/player/on_baby_dead_sequence.gd" type="Script" id=35]
+[ext_resource path="res://src/pickups/drop_on_death.gd" type="Script" id=36]
+[ext_resource path="res://src/pickups/fireball_gun_pickup.tscn" type="PackedScene" id=37]
 
 [sub_resource type="Image" id=87]
 data = {
@@ -420,10 +422,12 @@ margin_bottom = 40.0
 
 [node name="weapons_hud" type="HBoxContainer" parent="HUD/HBoxContainer"]
 margin_left = 24.0
-margin_right = 80.0
+margin_right = 40.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 16, 16 )
 script = ExtResource( 25 )
+WEAPON_SELECT = ExtResource( 21 )
+player_path = NodePath("../../../player")
 
 [node name="selected_panel" type="Sprite" parent="HUD/HBoxContainer/weapons_hud"]
 texture = ExtResource( 24 )
@@ -431,16 +435,6 @@ centered = false
 
 [node name="weapon" parent="HUD/HBoxContainer/weapons_hud" instance=ExtResource( 21 )]
 weapon_name = "pew_gun"
-
-[node name="weapon2" parent="HUD/HBoxContainer/weapons_hud" instance=ExtResource( 21 )]
-margin_left = 20.0
-margin_right = 36.0
-weapon_name = "fireball_gun"
-
-[node name="weapon3" parent="HUD/HBoxContainer/weapons_hud" instance=ExtResource( 21 )]
-margin_left = 40.0
-margin_right = 56.0
-weapon_name = "spark_gun"
 
 [node name="dialog" parent="HUD" instance=ExtResource( 13 )]
 unique_name_in_owner = true
@@ -550,7 +544,6 @@ material = SubResource( 83 )
 position = Vector2( 1776, 0 )
 
 [node name="player" parent="." instance=ExtResource( 1 )]
-material = SubResource( 83 )
 position = Vector2( -40, 104 )
 speed = 75.0
 horizontal_air_acceleration = 150.0
@@ -674,7 +667,6 @@ material = SubResource( 83 )
 position = Vector2( 580, 8 )
 
 [node name="rabid_baby" parent="." instance=ExtResource( 16 )]
-material = SubResource( 83 )
 position = Vector2( 2768, 96 )
 facing_dir = -1.0
 
@@ -694,6 +686,10 @@ vertical_lerp_target = 64
 [node name="baby_controller" parent="rabid_baby" instance=ExtResource( 18 )]
 player_path = NodePath("../../player")
 disabled = true
+
+[node name="spawn_weapon_on_death" type="Node" parent="rabid_baby"]
+script = ExtResource( 36 )
+PICKUP = ExtResource( 37 )
 
 [node name="tutorial_detect" type="Area2D" parent="."]
 position = Vector2( 72, 72 )
@@ -808,11 +804,11 @@ show_name = true
 text = "Decíselo vos porque a mí no me escucha"
 show_name = true
 
-[connection signal="change_gun" from="player" to="HUD/HBoxContainer/weapons_hud" method="_on_player_change_gun"]
 [connection signal="dead" from="player" to="player/on_dead_sequence" method="trigger"]
 [connection signal="health_changed" from="player" to="HUD/HBoxContainer/health_bar" method="_on_player_health_changed"]
 [connection signal="finished" from="player/on_dead_sequence" to="HUD/game_over" method="trigger"]
 [connection signal="area_entered" from="target_complete" to="target_complete" method="_on_target_complete_area_entered"]
+[connection signal="dead" from="rabid_baby" to="rabid_baby/spawn_weapon_on_death" method="trigger"]
 [connection signal="area_entered" from="tutorial_detect" to="tutorial_detect" method="_on_area_entered"]
 [connection signal="triggered" from="tutorial_detect" to="tutorial_detect/say" method="trigger"]
 [connection signal="area_entered" from="fell_area" to="fell_area" method="_on_area_entered"]
