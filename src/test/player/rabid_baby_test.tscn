@@ -1,4 +1,4 @@
-[gd_scene load_steps=63 format=2]
+[gd_scene load_steps=64 format=2]
 
 [ext_resource path="res://src/characters/gerardo/gerardo.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/texture/hill_8x8.png" type="Texture" id=2]
@@ -37,6 +37,7 @@
 [ext_resource path="res://src/test/player/on_baby_dead_sequence.gd" type="Script" id=35]
 [ext_resource path="res://src/pickups/drop_on_death.gd" type="Script" id=36]
 [ext_resource path="res://src/pickups/fireball_gun_pickup.tscn" type="PackedScene" id=37]
+[ext_resource path="res://src/test/player/on_pickup_sequence.gd" type="Script" id=38]
 
 [sub_resource type="Image" id=87]
 data = {
@@ -540,10 +541,12 @@ format = 1
 tile_data = PoolIntArray( 589935, 6, 0, 655469, 6, 0, 720997, 6, 0, 786531, 6, 0, 852014, 6, 0, 917548, 6, 0, 917823, 4, 0, 917853, 6, 0, 983082, 6, 0, 1048616, 6, 0 )
 
 [node name="turret6" parent="." instance=ExtResource( 20 )]
+material = SubResource( 83 )
 position = Vector2( 1776, 0 )
 
 [node name="player" parent="." instance=ExtResource( 1 )]
-position = Vector2( -40, 104 )
+material = SubResource( 83 )
+position = Vector2( -104, 112 )
 speed = 75.0
 horizontal_air_acceleration = 150.0
 max_health = 3
@@ -587,26 +590,31 @@ text = "Sí, dale, hacete el muerto"
 text = "Estás despedido"
 
 [node name="funguy" parent="." instance=ExtResource( 7 )]
+material = SubResource( 83 )
 position = Vector2( 564, 95 )
 speed = 30.0
 horizontal_acceleration = 100.0
 
 [node name="funguy2" parent="." instance=ExtResource( 7 )]
+material = SubResource( 83 )
 position = Vector2( 845, 77 )
 speed = 30.0
 horizontal_acceleration = 100.0
 
 [node name="funguy3" parent="." instance=ExtResource( 7 )]
+material = SubResource( 83 )
 position = Vector2( 721, 6 )
 speed = 30.0
 horizontal_acceleration = 100.0
 
 [node name="funguy4" parent="." instance=ExtResource( 7 )]
+material = SubResource( 83 )
 position = Vector2( 1451, 62 )
 speed = 30.0
 horizontal_acceleration = 100.0
 
 [node name="funguy5" parent="." instance=ExtResource( 7 )]
+material = SubResource( 83 )
 position = Vector2( 1761, 61 )
 speed = 30.0
 horizontal_acceleration = 100.0
@@ -621,36 +629,43 @@ script = ExtResource( 12 )
 shape = SubResource( 30 )
 
 [node name="turret" parent="." instance=ExtResource( 14 )]
+material = SubResource( 83 )
 position = Vector2( 163, 48 )
 facing_dir = -1.0
 
 [node name="turret_controller" parent="turret" instance=ExtResource( 15 )]
 
 [node name="turret4" parent="." instance=ExtResource( 14 )]
+material = SubResource( 83 )
 position = Vector2( 427, 47 )
 
 [node name="turret_controller" parent="turret4" instance=ExtResource( 15 )]
 
 [node name="turret5" parent="." instance=ExtResource( 14 )]
+material = SubResource( 83 )
 position = Vector2( 495, 68 )
 
 [node name="turret_controller" parent="turret5" instance=ExtResource( 15 )]
 
 [node name="turret7" parent="." instance=ExtResource( 14 )]
+material = SubResource( 83 )
 position = Vector2( 2099, 58 )
 facing_dir = -1.0
 
 [node name="turret_controller" parent="turret7" instance=ExtResource( 15 )]
 
 [node name="turret3" parent="." instance=ExtResource( 14 )]
+material = SubResource( 83 )
 position = Vector2( 1018, 62 )
 
 [node name="turret_controller" parent="turret3" instance=ExtResource( 15 )]
 
 [node name="turret2" parent="." instance=ExtResource( 20 )]
+material = SubResource( 83 )
 position = Vector2( 513, 24 )
 
 [node name="turret9" parent="." instance=ExtResource( 20 )]
+material = SubResource( 83 )
 position = Vector2( 580, 8 )
 
 [node name="rabid_baby" parent="." instance=ExtResource( 16 )]
@@ -674,7 +689,8 @@ vertical_lerp_target = 64
 player_path = NodePath("../../player")
 disabled = true
 
-[node name="spawn_weapon_on_death" type="Node" parent="rabid_baby"]
+[node name="spawn_weapon_on_death" type="Node2D" parent="rabid_baby"]
+position = Vector2( 0, 12 )
 script = ExtResource( 36 )
 PICKUP = ExtResource( 37 )
 
@@ -791,11 +807,21 @@ show_name = true
 text = "Decíselo vos porque a mí no me escucha"
 show_name = true
 
+[node name="on_pickup_sequence" type="Node" parent="."]
+script = ExtResource( 38 )
+
+[node name="say" parent="on_pickup_sequence" instance=ExtResource( 32 )]
+text = "Muy buen trabajo señor!!!
+Tu arma acaba de obtener las propiedades del demonio exterminado!
+
+Con A o S podés cambiar de munición."
+
 [connection signal="dead" from="player" to="player/on_dead_sequence" method="trigger"]
 [connection signal="health_changed" from="player" to="HUD/HBoxContainer/health_bar" method="_on_player_health_changed"]
 [connection signal="finished" from="player/on_dead_sequence" to="HUD/game_over" method="trigger"]
 [connection signal="area_entered" from="target_complete" to="target_complete" method="_on_target_complete_area_entered"]
 [connection signal="dead" from="rabid_baby" to="rabid_baby/spawn_weapon_on_death" method="trigger"]
+[connection signal="triggered" from="rabid_baby/spawn_weapon_on_death" to="on_pickup_sequence" method="_on_spawn_weapon_on_death_triggered"]
 [connection signal="area_entered" from="tutorial_detect" to="tutorial_detect" method="_on_area_entered"]
 [connection signal="triggered" from="tutorial_detect" to="tutorial_detect/say" method="trigger"]
 [connection signal="area_entered" from="fell_area" to="fell_area" method="_on_area_entered"]
@@ -806,3 +832,4 @@ show_name = true
 [connection signal="area_entered" from="beby_boss_sequence" to="beby_boss_sequence" method="_on_area_entered"]
 [connection signal="triggered" from="beby_boss_sequence" to="beby_boss_sequence/say" method="trigger"]
 [connection signal="finished" from="beby_boss_sequence/say" to="beby_boss_sequence/boss_fight_start" method="play" binds= [ "start" ]]
+[connection signal="triggered" from="on_pickup_sequence" to="on_pickup_sequence/say" method="trigger"]

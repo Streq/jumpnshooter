@@ -4,9 +4,9 @@
 [ext_resource path="res://src/characters/funguy/death_particles.gd" type="Script" id=2]
 [ext_resource path="res://assets/texture/dust_particle.png" type="Texture" id=3]
 
-[sub_resource type="Curve" id=85]
+[sub_resource type="Curve" id=92]
 max_value = 480.12
-_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 0.635514, 480.12 ), 0.0, 0.0, 0, 0, Vector2( 0.866822, 207.87 ), 120.618, 120.618, 0, 0 ]
+_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 120.618, 120.618, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
 
 [sub_resource type="Animation" id=86]
 length = 0.001
@@ -66,14 +66,11 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0.2, 1 ),
-"transitions": PoolRealArray( 1, 1 ),
+"times": PoolRealArray( 0.2 ),
+"transitions": PoolRealArray( 1 ),
 "values": [ {
 "args": [ "play", -1, 1.0, false ],
 "method": "play"
-}, {
-"args": [ true ],
-"method": "stop"
 } ]
 }
 tracks/1/type = "value"
@@ -91,16 +88,17 @@ tracks/1/keys = {
 
 [node name="death_particles" type="CPUParticles2D"]
 emitting = false
-amount = 9
-lifetime = 0.4
+amount = 40
+lifetime = 4.0
 one_shot = true
-explosiveness = 1.0
+explosiveness = 0.5
+lifetime_randomness = 1.0
 texture = ExtResource( 3 )
 spread = 180.0
 gravity = Vector2( 0, 0 )
 initial_velocity = 100.0
-damping = 100.0
-damping_curve = SubResource( 85 )
+damping = 50.0
+damping_curve = SubResource( 92 )
 script = ExtResource( 2 )
 
 [node name="flicker" type="AnimationPlayer" parent="."]
@@ -117,7 +115,7 @@ owner_ancestry_until_world = 2
 
 [node name="lifetime" type="Timer" parent="."]
 process_mode = 0
-wait_time = 2.0
+wait_time = 10.0
 one_shot = true
 
 [connection signal="trigger" from="." to="AnimationPlayer" method="play" binds= [ "disappear" ]]

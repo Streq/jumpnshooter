@@ -412,7 +412,6 @@ script = ExtResource( 11 )
 animation = "air"
 
 [node name="death_particles" parent="." instance=ExtResource( 16 )]
-one_shot = true
 
 [connection signal="dead" from="." to="death_particles" method="trigger"]
 [connection signal="got_hit" from="." to="health" method="subtract"]
