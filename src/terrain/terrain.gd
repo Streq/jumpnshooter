@@ -3,10 +3,13 @@ extends TileSet
 
 const SQUARE = 2
 const SLOPE = 7
-
+const HILL = 1
+const HILL_NO_FLOOR = 9
 var binds = {
 	SQUARE : [SLOPE],
-	SLOPE : [SQUARE]
+	SLOPE : [SQUARE],
+	HILL : [HILL_NO_FLOOR],
+	HILL_NO_FLOOR : [HILL]
 }
 
 func _is_tile_bound(drawn_id, neighbor_id):

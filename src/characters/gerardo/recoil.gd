@@ -1,7 +1,7 @@
 extends Node
 
 
-export var recoil := 4.0
+export var recoil := 0.0
 export var fixed_distance := 1.0
 func trigger():
 	var recoil_direction = Vector2.RIGHT.rotated(get_parent().global_rotation)
