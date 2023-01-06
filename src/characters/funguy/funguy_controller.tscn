@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://src/characters/funguy/controller.gd" type="Script" id=1]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 155, 7.5 )
+
+[node name="controller" type="Node2D"]
+process_priority = -1410065408
+script = ExtResource( 1 )
+
+[node name="target_detect" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 16
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="target_detect"]
+position = Vector2( 0, 0.5 )
+shape = SubResource( 1 )

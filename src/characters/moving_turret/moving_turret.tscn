@@ -703,4 +703,3 @@ anims/shake = SubResource( 28 )
 [connection signal="got_hit" from="." to="health" method="subtract"]
 [connection signal="empty" from="health" to="." method="die"]
 [connection signal="area_entered" from="pivot/touch_damager/hitbox" to="pivot/touch_damager" method="_on_hitbox_area_entered"]
-[connection signal="trigger" from="death_particles" to="death_particles/reparent_to_world" method="trigger"]

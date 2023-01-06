@@ -16,6 +16,9 @@ export(SIDE) var side : int = SIDE.LEFT
 
 onready var dialog: VBoxContainer = $"%dialog"
 
+func say(text):
+	self.text = text
+	trigger()
 
 func trigger():
 	dialog.say(TextRequest.new(text, who, mood, show_name, show_profile, speed, side))

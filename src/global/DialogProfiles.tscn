@@ -26,7 +26,7 @@ texture = ExtResource( 5 )
 
 [node name="Pedro el alfarero" parent="." instance=ExtResource( 3 )]
 
-[node name="Toto" parent="." instance=ExtResource( 3 )]
+[node name="Gerardo" parent="." instance=ExtResource( 3 )]
 texture = ExtResource( 7 )
 voice = ExtResource( 4 )
 
@@ -36,7 +36,7 @@ voice = ExtResource( 6 )
 
 [node name="Señora" parent="." instance=ExtResource( 3 )]
 voice = ExtResource( 10 )
-volume_db = -16.0
+volume_db = -24.0
 
 [node name="Jefe" parent="." instance=ExtResource( 3 )]
 texture = ExtResource( 9 )
