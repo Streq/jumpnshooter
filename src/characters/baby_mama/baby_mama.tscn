@@ -1,7 +1,31 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=11 format=2]
 
+[ext_resource path="res://assets/shader/palette.gdshader" type="Shader" id=1]
 [ext_resource path="res://src/characters/funguy/funguy.tscn" type="PackedScene" id=2]
 [ext_resource path="res://src/characters/baby_mama/baby_mama.png" type="Texture" id=3]
+
+[sub_resource type="Image" id=89]
+data = {
+"data": PoolByteArray( 255, 255, 0, 255, 126, 126, 1, 255, 60, 60, 2, 255, 255, 255, 255, 0 ),
+"format": "RGBA8",
+"height": 1,
+"mipmaps": false,
+"width": 4
+}
+
+[sub_resource type="ImageTexture" id=82]
+flags = 0
+flags = 0
+image = SubResource( 89 )
+size = Vector2( 4, 1 )
+
+[sub_resource type="ShaderMaterial" id=83]
+resource_local_to_scene = true
+shader = ExtResource( 1 )
+shader_param/palette_size = 4
+shader_param/offset = 0.0
+shader_param/blue_index_offset = 0.0
+shader_param/palette = SubResource( 82 )
 
 [sub_resource type="Animation" id=85]
 resource_name = "RESET"
@@ -196,7 +220,10 @@ tracks/4/keys = {
 "values": [ 1.0, 0.0, 2.0, 0.0 ]
 }
 
-[node name="funguy" instance=ExtResource( 2 )]
+[node name="baby_mama" instance=ExtResource( 2 )]
+material = SubResource( 83 )
+invulnerable = true
+pass_through = true
 
 [node name="AnimationPlayer" parent="." index="0"]
 anims/RESET = SubResource( 85 )

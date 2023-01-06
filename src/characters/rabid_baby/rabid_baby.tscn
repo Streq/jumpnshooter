@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=2]
+[gd_scene load_steps=45 format=2]
 
 [ext_resource path="res://assets/shader/palette.gdshader" type="Shader" id=1]
 [ext_resource path="res://src/characters/input_state/input_state.tscn" type="PackedScene" id=2]
@@ -19,6 +19,9 @@
 [ext_resource path="res://src/characters/funguy/funguy.gd" type="Script" id=17]
 [ext_resource path="res://src/characters/ghost/touch_damager.gd" type="Script" id=18]
 [ext_resource path="res://src/characters/rabid_baby/death_sequence.gd" type="Script" id=19]
+[ext_resource path="res://assets/audio/sfx/explosion.wav" type="AudioStream" id=20]
+[ext_resource path="res://assets/audio/sfx/explosion3.wav" type="AudioStream" id=21]
+[ext_resource path="res://assets/audio/sfx/explosion2.wav" type="AudioStream" id=22]
 
 [sub_resource type="Image" id=88]
 data = {
@@ -730,8 +733,8 @@ shape = SubResource( 48 )
 
 [node name="health" type="Node" parent="."]
 script = ExtResource( 3 )
-max_value = 300.0
-value = 300.0
+max_value = 200.0
+value = 200.0
 
 [node name="normal_palette" parent="." instance=ExtResource( 9 )]
 type = 1
@@ -896,7 +899,20 @@ script = ExtResource( 19 )
 [node name="death_particles" parent="." instance=ExtResource( 10 )]
 position = Vector2( 0, 13 )
 
+[node name="explosions" type="Node2D" parent="."]
+
+[node name="explosion0" type="AudioStreamPlayer2D" parent="explosions"]
+stream = ExtResource( 20 )
+volume_db = -12.0
+
+[node name="explosion1" type="AudioStreamPlayer2D" parent="explosions"]
+stream = ExtResource( 22 )
+volume_db = -12.0
+
+[node name="explosion2" type="AudioStreamPlayer2D" parent="explosions"]
+stream = ExtResource( 21 )
+volume_db = -12.0
+
 [connection signal="got_hit" from="." to="health" method="subtract"]
 [connection signal="empty" from="health" to="death_sequence" method="trigger"]
 [connection signal="area_entered" from="pivot/touch_damager/hitbox" to="pivot/touch_damager" method="_on_hitbox_area_entered"]
-[connection signal="trigger" from="death_particles" to="death_particles/reparent_to_world" method="trigger"]

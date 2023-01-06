@@ -1,10 +1,13 @@
-[gd_scene load_steps=34 format=2]
+[gd_scene load_steps=37 format=2]
 
 [ext_resource path="res://src/characters/gerardo/weapons.gd" type="Script" id=1]
+[ext_resource path="res://src/sound/global_sound_client.tscn" type="PackedScene" id=2]
 [ext_resource path="res://src/characters/gerardo/gerardo.gd" type="Script" id=3]
 [ext_resource path="res://src/characters/gerardo/gun_hold.gd" type="Script" id=4]
 [ext_resource path="res://src/characters/gerardo/guns.gd" type="Script" id=5]
 [ext_resource path="res://src/characters/gerardo/pew_gun.tscn" type="PackedScene" id=6]
+[ext_resource path="res://assets/audio/sfx/choque2.wav" type="AudioStream" id=7]
+[ext_resource path="res://assets/audio/sfx/landed2.wav" type="AudioStream" id=9]
 [ext_resource path="res://src/characters/input_state/input_state.tscn" type="PackedScene" id=10]
 [ext_resource path="res://assets/shader/palette.gdshader" type="Shader" id=11]
 [ext_resource path="res://src/util/color/palette_client.tscn" type="PackedScene" id=12]
@@ -500,6 +503,20 @@ tracks/5/keys = {
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
 "values": [ 0.0, 1.0 ]
+}
+tracks/6/type = "audio"
+tracks/6/path = NodePath("player/step")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"clips": [ {
+"end_offset": 0.08,
+"start_offset": 0.0,
+"stream": ExtResource( 9 )
+} ],
+"times": PoolRealArray( 0.1 )
 }
 
 [sub_resource type="Animation" id=7]
@@ -1145,6 +1162,7 @@ use_parent_material = true
 
 [node name="upper_body_pivot" type="Node2D" parent="pivot"]
 use_parent_material = true
+position = Vector2( 0, -1 )
 
 [node name="upper_body_sprite" type="Sprite" parent="pivot/upper_body_pivot"]
 use_parent_material = true
@@ -1177,7 +1195,6 @@ use_parent_material = true
 texture = ExtResource( 14 )
 hframes = 3
 vframes = 2
-frame = 1
 __meta__ = {
 "_aseprite_wizard_config_": {
 "layer": "",
@@ -1242,6 +1259,23 @@ script = ExtResource( 5 )
 [node name="pew_gun" parent="guns" instance=ExtResource( 6 )]
 position = Vector2( 0, 2 )
 
+[node name="geardo_hurt" parent="." instance=ExtResource( 2 )]
+sound = "gerardo_hurt"
+
+[node name="dead_floor" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 7 )
+volume_db = -12.0
+
+[node name="step" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 9 )
+volume_db = -12.0
+
+[node name="landed" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 9 )
+volume_db = -12.0
+
 [connection signal="hurt_started" from="." to="hurt_timer" method="start"]
+[connection signal="hurt_started" from="." to="geardo_hurt" method="play"]
+[connection signal="landed" from="." to="landed" method="play"]
 [connection signal="timeout" from="hurt_timer" to="." method="end_hurt"]
 [connection signal="shoot" from="guns/pew_gun" to="guns/pew_gun/muzzle" method="shoot"]

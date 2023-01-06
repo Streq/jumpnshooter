@@ -3,13 +3,22 @@ signal finished()
 onready var SENORA: Node = $"Señora"
 onready var JEFE: Node = $Jefe
 onready var GERARDO: Node = $Gerardo
-
+onready var door: Sprite = $"../door"
+onready var baby_mama: KinematicBody2D = $"../baby_mama"
+onready var player: KinematicBody2D = $"../player"
 
 
 func trigger():
-	
+	door.open()
+	yield(door,"open_finished")
+	yield(get_tree().create_timer(0.5),"timeout")
 	SENORA.say("MI BEBÉ")
-#
+	yield(SENORA,"finished")
+	yield(get_tree().create_timer(0.5),"timeout")
+#	
+	baby_mama.visible = true
+	baby_mama.set_facing_dir(sign(player.global_position.x - baby_mama.global_position.x))
+	yield(get_tree().create_timer(1.0),"timeout")
 #	(VIENE LA SENORA)
 #
 	SENORA.say(

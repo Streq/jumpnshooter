@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://src/pickups/trigger_area.gd" type="Script" id=1]
 [ext_resource path="res://src/characters/gerardo/fireball_gun.tscn" type="PackedScene" id=2]
@@ -7,6 +7,8 @@
 [ext_resource path="res://assets/texture/selected_panel.png" type="Texture" id=5]
 [ext_resource path="res://src/pickups/gun_pickup.gd" type="Script" id=6]
 [ext_resource path="res://assets/texture/dark_square.png" type="Texture" id=7]
+[ext_resource path="res://assets/audio/sfx/weapon_pickup.wav" type="AudioStream" id=8]
+[ext_resource path="res://src/pickups/reparent_to_world.gd" type="Script" id=9]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 8, 8 )
@@ -37,5 +39,15 @@ texture = ExtResource( 3 )
 script = ExtResource( 4 )
 GUN = ExtResource( 2 )
 
+[node name="weapon_pickup_sound" type="AudioStreamPlayer2D" parent="."]
+pause_mode = 2
+stream = ExtResource( 8 )
+volume_db = -12.0
+
+[node name="reparent_to_world" type="Node" parent="weapon_pickup_sound"]
+script = ExtResource( 9 )
+
 [connection signal="picked_up" from="." to="effect" method="trigger"]
+[connection signal="triggered" from="." to="weapon_pickup_sound" method="play"]
+[connection signal="triggered" from="." to="weapon_pickup_sound/reparent_to_world" method="trigger"]
 [connection signal="triggered" from="Area2D" to="." method="pick_up"]

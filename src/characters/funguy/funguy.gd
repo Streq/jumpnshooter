@@ -48,6 +48,7 @@ func _on_hit(by):
 	emit_signal("got_hit", by.damage)
 #	damage_animation.queue("hurt")
 	damage_animation.play("hurt")
+	Sounds.play("enemy_hurt", global_position)
 	
 func _physics_process(delta):
 	state_machine.physics_update(delta)
@@ -61,3 +62,4 @@ func _ready() -> void:
 func die():
 	emit_signal("dead")
 	queue_free()
+	Sounds.play("enemy_die",global_position)

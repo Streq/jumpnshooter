@@ -4,6 +4,7 @@ signal hurt_started()
 signal hurt_ended()
 signal health_changed(value, max_value)
 signal dead()
+signal landed()
 
 var velocity := Vector2()
 
@@ -36,6 +37,7 @@ onready var pivot = $pivot
 onready var input_state: InputState = $input_state
 onready var hurt_animation: AnimationPlayer = $hurt_animation
 onready var guns: Node = $guns
+onready var dead_floor_sound: AudioStreamPlayer = $dead_floor
 
 var held_jump = false
 var jumping = false
@@ -76,7 +78,8 @@ func _physics_process(delta):
 			jump()
 			held_jump = true
 		
-
+		if is_on_floor() and !grounded:
+			emit_signal("landed")
 		if direction.x:
 			set_facing_dir(direction.x)
 
@@ -97,7 +100,6 @@ func _physics_process(delta):
 				velocity.x -= sign(velocity.x)*min(horizontal_air_decceleration*delta,abs(velocity.x))
 				lower_body_animation.play("air")
 		
-		grounded = is_on_floor()
 		
 		if direction.y<0:
 			upper_body_animation.play("point_up")
@@ -115,6 +117,8 @@ func _physics_process(delta):
 	if dead:
 		if is_on_floor():
 			velocity.x -= sign(velocity.x)*min(horizontal_decceleration*delta,abs(velocity.x))
+			if !grounded:
+				dead_floor_sound.play()
 			play_dead_floor()
 			velocity
 		else:
@@ -122,8 +126,8 @@ func _physics_process(delta):
 	
 	update()
 	var snap = Vector2.DOWN if !jumping else Vector2.ZERO
+	grounded = is_on_floor()
 	velocity = move_and_slide_with_snap(velocity, snap, Vector2.UP, true,4,deg2rad(52))
-	
 func set_gun(gun):
 	emit_signal("change_gun", gun)
 
@@ -186,7 +190,10 @@ func die():
 func play_dead_air():
 	lower_body_animation.play("hurt")
 	upper_body_animation.play("hurt")
+
+
 func play_dead_floor():
+	#TODO horrible
 	lower_body_animation.play("knocked")
 	upper_body_animation.play("knocked")
 

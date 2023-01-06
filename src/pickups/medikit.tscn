@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://assets/texture/medikit.png" type="Texture" id=1]
 [ext_resource path="res://src/pickups/health_effect.gd" type="Script" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://assets/texture/health_particle.png" type="Texture" id=4]
 [ext_resource path="res://src/pickups/reparent_to_world.gd" type="Script" id=5]
 [ext_resource path="res://src/pickups/gun_pickup.gd" type="Script" id=6]
+[ext_resource path="res://assets/audio/sfx/medikit.wav" type="AudioStream" id=7]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 4, 4 )
@@ -31,7 +32,7 @@ script = ExtResource( 2 )
 
 [node name="CPUParticles2D" type="CPUParticles2D" parent="."]
 emitting = false
-amount = 3
+amount = 6
 one_shot = true
 explosiveness = 0.75
 texture = ExtResource( 4 )
@@ -47,9 +48,14 @@ process_mode = 0
 wait_time = 2.0
 one_shot = true
 
+[node name="pickup_sound" type="AudioStreamPlayer2D" parent="CPUParticles2D"]
+stream = ExtResource( 7 )
+volume_db = -12.0
+
 [connection signal="picked_up" from="." to="effect" method="trigger"]
 [connection signal="triggered" from="." to="CPUParticles2D" method="restart"]
 [connection signal="triggered" from="." to="CPUParticles2D/reparent_to_world" method="trigger"]
 [connection signal="triggered" from="." to="CPUParticles2D/lifetime" method="start"]
+[connection signal="triggered" from="." to="CPUParticles2D/pickup_sound" method="play"]
 [connection signal="triggered" from="Area2D" to="." method="pick_up"]
 [connection signal="timeout" from="CPUParticles2D/lifetime" to="CPUParticles2D" method="queue_free"]
