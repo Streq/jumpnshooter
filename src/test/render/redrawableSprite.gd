@@ -1,4 +1,12 @@
 extends Sprite
+signal finished
+
+onready var animation_player: AnimationPlayer = $AnimationPlayer
+
+func trigger():
+	animation_player.play("default")
+	yield(animation_player,"animation_finished")
+	emit_signal("finished")
 func _draw() -> void:
 	var frame_size = Vector2(
 		texture.get_width()/hframes, 

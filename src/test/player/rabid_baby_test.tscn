@@ -1,4 +1,4 @@
-[gd_scene load_steps=70 format=2]
+[gd_scene load_steps=74 format=2]
 
 [ext_resource path="res://src/characters/gerardo/gerardo.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/texture/hill_8x8.png" type="Texture" id=2]
@@ -42,8 +42,11 @@
 [ext_resource path="res://src/test/player/door.gd" type="Script" id=40]
 [ext_resource path="res://src/test/player/ship_door.png" type="Texture" id=41]
 [ext_resource path="res://src/characters/baby_mama/baby_mama.tscn" type="PackedScene" id=42]
+[ext_resource path="res://src/test/player/teleport_sequence.gd" type="Script" id=43]
+[ext_resource path="res://src/visuals/blackout.tscn" type="PackedScene" id=44]
+[ext_resource path="res://assets/theme/eurostyle.tres" type="Theme" id=45]
 
-[sub_resource type="Image" id=91]
+[sub_resource type="Image" id=94]
 data = {
 "data": PoolByteArray( 255, 255, 0, 255, 126, 126, 1, 255, 60, 60, 2, 255, 255, 255, 255, 0 ),
 "format": "RGBA8",
@@ -55,7 +58,7 @@ data = {
 [sub_resource type="ImageTexture" id=82]
 flags = 0
 flags = 0
-image = SubResource( 91 )
+image = SubResource( 94 )
 size = Vector2( 4, 1 )
 
 [sub_resource type="ShaderMaterial" id=83]
@@ -80,7 +83,7 @@ flags = 2
 atlas = ExtResource( 22 )
 region = Rect2( 0, 0, 128, 8 )
 
-[sub_resource type="Image" id=92]
+[sub_resource type="Image" id=95]
 data = {
 "data": PoolByteArray( 255, 255, 0, 255, 126, 126, 1, 255, 60, 60, 2, 255, 0, 0, 3, 255 ),
 "format": "RGBA8",
@@ -92,7 +95,7 @@ data = {
 [sub_resource type="ImageTexture" id=85]
 flags = 0
 flags = 0
-image = SubResource( 92 )
+image = SubResource( 95 )
 size = Vector2( 4, 1 )
 
 [sub_resource type="ShaderMaterial" id=86]
@@ -300,7 +303,10 @@ extents = Vector2( 4, 6.5 )
 extents = Vector2( 8, 29 )
 
 [sub_resource type="RectangleShape2D" id=63]
-extents = Vector2( 6804, 10 )
+extents = Vector2( 3146, 81 )
+
+[sub_resource type="RectangleShape2D" id=93]
+extents = Vector2( 602, 152 )
 
 [sub_resource type="RectangleShape2D" id=72]
 extents = Vector2( 16, 60.5 )
@@ -681,7 +687,7 @@ position = Vector2( 1776, 0 )
 
 [node name="player" parent="." instance=ExtResource( 1 )]
 material = SubResource( 83 )
-position = Vector2( -68, 104 )
+position = Vector2( -64, 108 )
 speed = 75.0
 horizontal_air_acceleration = 150.0
 max_health = 3
@@ -718,17 +724,21 @@ script = ExtResource( 31 )
 [node name="say" parent="player/on_dead_sequence" instance=ExtResource( 32 )]
 text = "Bueno che vamos cortando con la siestita"
 
+[node name="say4" parent="player/on_dead_sequence" instance=ExtResource( 32 )]
+text = "..."
+who = "Gerardo"
+show_profile = false
+
 [node name="say2" parent="player/on_dead_sequence" instance=ExtResource( 32 )]
-text = "...
+text = "Sí, dale, hacete el muerto"
 
-
-Sí, dale, hacete el muerto"
+[node name="say5" parent="player/on_dead_sequence" instance=ExtResource( 32 )]
+text = "..."
+who = "Gerardo"
+show_profile = false
 
 [node name="say3" parent="player/on_dead_sequence" instance=ExtResource( 32 )]
-text = "...
-
-
-Estás despedido"
+text = "Estás despedido"
 
 [node name="funguy" parent="." instance=ExtResource( 7 )]
 material = SubResource( 83 )
@@ -867,6 +877,10 @@ script = ExtResource( 28 )
 position = Vector2( -60, 40 )
 shape = SubResource( 56 )
 
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="tutorial_detect"]
+position = Vector2( -224, 40 )
+shape = SubResource( 56 )
+
 [node name="say" type="Node" parent="tutorial_detect"]
 script = ExtResource( 30 )
 text = "Hola! Bienvenido a tu laburo!
@@ -892,7 +906,7 @@ collision_mask = 16
 script = ExtResource( 28 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="fell_area"]
-position = Vector2( -60, 40 )
+position = Vector2( 3598, 111 )
 shape = SubResource( 63 )
 
 [node name="say" type="Node" parent="fell_area"]
@@ -904,6 +918,25 @@ who = "Jefe"
 show_name = false
 
 [node name="reload_scene" type="Node" parent="fell_area/say"]
+script = ExtResource( 29 )
+
+[node name="fell_area2" type="Area2D" parent="."]
+position = Vector2( -32, 424 )
+collision_layer = 0
+collision_mask = 16
+script = ExtResource( 28 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="fell_area2"]
+position = Vector2( -152, 104 )
+shape = SubResource( 93 )
+
+[node name="say" type="Node" parent="fell_area2"]
+script = ExtResource( 30 )
+text = "Para la derecha boboooo"
+who = "Jefe"
+show_name = false
+
+[node name="reload_scene" type="Node" parent="fell_area2/say"]
 script = ExtResource( 29 )
 
 [node name="text_area3" type="Area2D" parent="."]
@@ -960,6 +993,7 @@ script = ExtResource( 35 )
 [node name="Señora" parent="on_baby_dead_sequence" instance=ExtResource( 32 )]
 text = ""
 who = "Señora"
+show_name = true
 side = 2
 
 [node name="Jefe" parent="on_baby_dead_sequence" instance=ExtResource( 32 )]
@@ -1006,10 +1040,42 @@ anims/open = SubResource( 90 )
 visible = false
 position = Vector2( 2676, 112 )
 
+[node name="teleport_sequence" type="Node2D" parent="."]
+script = ExtResource( 43 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="teleport_sequence"]
+
+[node name="Control" type="Control" parent="teleport_sequence/CanvasLayer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="blackout" parent="teleport_sequence/CanvasLayer/Control" instance=ExtResource( 44 )]
+
+[node name="fin" type="Label" parent="teleport_sequence/CanvasLayer/Control"]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -12.0
+margin_top = -24.0
+margin_right = 12.0
+margin_bottom = -16.0
+theme = ExtResource( 45 )
+text = "FIN"
+align = 1
+
+[node name="CanvasLayer2" type="CanvasLayer" parent="teleport_sequence"]
+layer = 20
+follow_viewport_enable = true
+
+[node name="player_spot" type="Node2D" parent="teleport_sequence/CanvasLayer2"]
+
 [connection signal="dead" from="player" to="player/on_dead_sequence" method="trigger"]
 [connection signal="health_changed" from="player" to="HUD/HBoxContainer/health_bar" method="_on_player_health_changed"]
 [connection signal="finished" from="player/on_dead_sequence" to="HUD/game_over" method="trigger"]
 [connection signal="area_entered" from="target_complete" to="target_complete" method="_on_target_complete_area_entered"]
+[connection signal="dead" from="rabid_baby" to="HUD/boss_healthbar" method="hide"]
 [connection signal="dead" from="rabid_baby" to="rabid_baby/spawn_weapon_on_death" method="trigger"]
 [connection signal="triggered" from="rabid_baby/spawn_weapon_on_death" to="on_pickup_sequence" method="_on_spawn_weapon_on_death_triggered"]
 [connection signal="area_entered" from="tutorial_detect" to="tutorial_detect" method="_on_area_entered"]
@@ -1017,6 +1083,9 @@ position = Vector2( 2676, 112 )
 [connection signal="area_entered" from="fell_area" to="fell_area" method="_on_area_entered"]
 [connection signal="triggered" from="fell_area" to="fell_area/say" method="trigger"]
 [connection signal="finished" from="fell_area/say" to="HUD/game_over" method="trigger"]
+[connection signal="area_entered" from="fell_area2" to="fell_area2" method="_on_area_entered"]
+[connection signal="triggered" from="fell_area2" to="fell_area2/say" method="trigger"]
+[connection signal="finished" from="fell_area2/say" to="HUD/game_over" method="trigger"]
 [connection signal="area_entered" from="text_area3" to="text_area3" method="_on_area_entered"]
 [connection signal="triggered" from="text_area3" to="text_area3/say" method="trigger"]
 [connection signal="area_entered" from="beby_boss_sequence" to="beby_boss_sequence" method="_on_area_entered"]

@@ -6,21 +6,37 @@ onready var GERARDO: Node = $Gerardo
 onready var door: Sprite = $"../door"
 onready var baby_mama: KinematicBody2D = $"../baby_mama"
 onready var player: KinematicBody2D = $"../player"
-
+onready var teleport_sequence: Node2D = $"../teleport_sequence"
+onready var player_controller: Node = $"../player/player_controller"
+onready var HUD = $"../HUD"
+onready var fin: Label = $"../teleport_sequence/CanvasLayer/Control/fin"
+#func _ready():
+#	yield(get_tree().current_scene,"ready")
+#	trigger()
 
 func trigger():
+	baby_mama.set_facing_dir(sign(player.global_position.x - baby_mama.global_position.x))
+	
+	if baby_mama.facing_dir > 0:
+		SENORA.side = SENORA.SIDE.LEFT
+	else:
+		SENORA.side = SENORA.SIDE.RIGHT
+	SENORA.show_name = false
 	door.open()
 	yield(door,"open_finished")
+	player_controller.disabled = true
 	yield(get_tree().create_timer(0.5),"timeout")
 	SENORA.say("MI BEBÉ")
 	yield(SENORA,"finished")
 	yield(get_tree().create_timer(0.5),"timeout")
 #	
 	baby_mama.visible = true
-	baby_mama.set_facing_dir(sign(player.global_position.x - baby_mama.global_position.x))
 	yield(get_tree().create_timer(1.0),"timeout")
+	player.set_facing_dir(-baby_mama.facing_dir)
+	
 #	(VIENE LA SENORA)
 #
+	SENORA.show_name = true
 	SENORA.say(
 """MATASTE A MI BEBÉ
 POR QUÉ?
@@ -71,26 +87,31 @@ ERA UNA CRIATURA"""
 	GERARDO.say("Es verdad")
 	JEFE.say("Nasta? es la primera vez que enganchamos a un testigo de otro humano convirtiéndose en demonio. Este podría ser el causante de los últimos demonios, si no de todos.")
 
-	JEFE.say("Preguntale si alguna vez lo volvió a ver")
+	JEFE.say("Preguntale si alguna vez lo volvió a ver, y si sabe de dónde o por qué vino")
 
-	GERARDO.say("Lo volvió a ver al señor?")
+	GERARDO.say("Lo volvió a ver al señor? sabe de dónde o por qué vino?")
 
-	SENORA.say("NO, NUNCA")
+	SENORA.say("NO, NUNCA, MIRE, YO LA VERDAD DE LA DESESPERACIÓN APENAS ALCANCÉ A PREGUNTARLE EL NOMBRE")
 
 	JEFE.say("Bueno, creo que sabemos todo lo que podemos preguntar, ya podés volver a la base.")
 	GERARDO.say("Bueno me voy, señora, ya sé que lo de hoy fue horrible, pero fue necesario, y le prometo que vamos a luchar por que nadie nunca vuelva a pasar por lo que usted pasó hoy.")
 
-	SENORA.say("NO ME SIRVE ESO, NUNCA VOY A VOLVER A VER A MI BEBé")
+	SENORA.say("NO ME SIRVE ESO, NUNCA VOY A VOLVER A VER A MI BEBÉ")
 	GERARDO.say("Bue re egoísta")
-	SENORA.say("VÁYASE DE MI CASA, POR FAVOR, DÉJEME SOLA")
-	GERARDO.say("Está bien, perdón")
+	SENORA.say("VÁYASE, POR FAVOR, DÉJEME SOLA")
+	GERARDO.say("Sí, perdón")
 
 #	VOLVIENDO A LA BASE
 #
-	JEFE.say("La verdad pibe, bastante bien, por un lado tengo mis dudas porque sos medio boludo pero después de ver como recagaste a tiros a ese bebé me quito el sombrero.")
-
+	yield(GERARDO,"finished")
+	teleport_sequence.trigger()
+	yield(teleport_sequence,"finished")
+	JEFE.say("La verdad pibe, bastante bien, por un lado tengo mis dudas porque sos medio boludo pero después de ver como mataste a ese bebé me quito el sombrero.")
+	JEFE.say("Esto es todo por hoy, Santi tiene una jam así que se va a hacer otro juego, por ahí retome este, por ahí no, lo importante es que la vida sigue y nos vemos la PRÓXIMA")
+	yield(JEFE,"finished")
+	HUD.visible = false
+	fin.visible = true
 	
-
 #	NARRADOR.say("Y RIERON HASTA EL FIN DE LOS TIEMPOS")
 
 

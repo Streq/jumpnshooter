@@ -1278,4 +1278,3 @@ volume_db = -12.0
 [connection signal="hurt_started" from="." to="geardo_hurt" method="play"]
 [connection signal="landed" from="." to="landed" method="play"]
 [connection signal="timeout" from="hurt_timer" to="." method="end_hurt"]
-[connection signal="shoot" from="guns/pew_gun" to="guns/pew_gun/muzzle" method="shoot"]
