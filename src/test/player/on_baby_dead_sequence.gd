@@ -95,9 +95,10 @@ ERA UNA CRIATURA"""
 
 	JEFE.say("Bueno, creo que sabemos todo lo que podemos preguntar, ya podés volver a la base.")
 	GERARDO.say("Bueno me voy, señora, ya sé que lo de hoy fue horrible, pero fue necesario, y le prometo que vamos a luchar por que nadie nunca vuelva a pasar por lo que usted pasó hoy.")
-
+	JEFE.say("No le digas esas boludeces a la señora, le importa tres pepinos, se acaba de morir el hijo")
+#	JEFE.say("No le digas esas boludeces a la señora, te va a mandar a cagar")
 	SENORA.say("NO ME SIRVE ESO, NUNCA VOY A VOLVER A VER A MI BEBÉ")
-	GERARDO.say("Bue re egoísta")
+	GERARDO.say("Bue la tenía re clara mi supervisor")
 	SENORA.say("VÁYASE, POR FAVOR, DÉJEME SOLA")
 	GERARDO.say("Sí, perdón")
 

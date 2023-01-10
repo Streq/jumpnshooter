@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=2]
+[gd_scene load_steps=48 format=2]
 
 [ext_resource path="res://assets/shader/palette.gdshader" type="Shader" id=1]
 [ext_resource path="res://src/characters/input_state/input_state.tscn" type="PackedScene" id=2]
@@ -22,8 +22,11 @@
 [ext_resource path="res://assets/audio/sfx/explosion.wav" type="AudioStream" id=20]
 [ext_resource path="res://assets/audio/sfx/explosion3.wav" type="AudioStream" id=21]
 [ext_resource path="res://assets/audio/sfx/explosion2.wav" type="AudioStream" id=22]
+[ext_resource path="res://src/sound/global_sound_client.tscn" type="PackedScene" id=23]
+[ext_resource path="res://assets/audio/sfx/burp.wav" type="AudioStream" id=24]
+[ext_resource path="res://assets/audio/sfx/baby_gaga.wav" type="AudioStream" id=25]
 
-[sub_resource type="Image" id=88]
+[sub_resource type="Image" id=97]
 data = {
 "data": PoolByteArray( 255, 255, 0, 255, 126, 126, 1, 255, 60, 60, 2, 255, 255, 255, 255, 0 ),
 "format": "RGBA8",
@@ -32,19 +35,19 @@ data = {
 "width": 4
 }
 
-[sub_resource type="ImageTexture" id=82]
+[sub_resource type="ImageTexture" id=95]
 flags = 0
 flags = 0
-image = SubResource( 88 )
+image = SubResource( 97 )
 size = Vector2( 4, 1 )
 
-[sub_resource type="ShaderMaterial" id=83]
+[sub_resource type="ShaderMaterial" id=96]
 resource_local_to_scene = true
 shader = ExtResource( 1 )
 shader_param/palette_size = 4
 shader_param/offset = 0.0
 shader_param/blue_index_offset = 0.0
-shader_param/palette = SubResource( 82 )
+shader_param/palette = SubResource( 95 )
 
 [sub_resource type="RectangleShape2D" id=48]
 extents = Vector2( 12, 11.5 )
@@ -247,6 +250,30 @@ tracks/5/keys = {
 "update": 0,
 "values": [ true ]
 }
+tracks/6/type = "value"
+tracks/6/path = NodePath("baby_gaga_sound:playing")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("burp:playing")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
 
 [sub_resource type="Animation" id=51]
 length = 3.33333
@@ -364,6 +391,30 @@ tracks/8/keys = {
 "transitions": PoolRealArray( 1 ),
 "update": 1,
 "values": [ false ]
+}
+tracks/9/type = "value"
+tracks/9/path = NodePath("baby_gaga_sound:playing")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/keys = {
+"times": PoolRealArray( 0, 1.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+tracks/10/type = "value"
+tracks/10/path = NodePath("burp:playing")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/keys = {
+"times": PoolRealArray( 1.6 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
 }
 
 [sub_resource type="Animation" id=52]
@@ -493,7 +544,7 @@ tracks/4/keys = {
 }
 
 [sub_resource type="Animation" id=53]
-length = 1.6
+length = 3.2
 tracks/0/type = "value"
 tracks/0/path = NodePath("pivot/Sprite:texture")
 tracks/0/interp = 1
@@ -549,7 +600,7 @@ tracks/4/loop_wrap = false
 tracks/4/imported = false
 tracks/4/enabled = true
 tracks/4/keys = {
-"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 1, 1.2, 1.4 ),
+"times": PoolRealArray( 0, 0.4, 0.8, 1.2, 2, 2.4, 2.8 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
 "update": 1,
 "values": [ 5.0, 8.0, 9.0, 10.0, 9.0, 8.0, 5.0 ]
@@ -561,7 +612,7 @@ tracks/5/loop_wrap = true
 tracks/5/imported = false
 tracks/5/enabled = true
 tracks/5/keys = {
-"times": PoolRealArray( 0.6, 1 ),
+"times": PoolRealArray( 1.2, 2 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
 "values": [ false, true ]
@@ -573,7 +624,7 @@ tracks/6/loop_wrap = true
 tracks/6/imported = false
 tracks/6/enabled = true
 tracks/6/keys = {
-"times": PoolRealArray( 0.4, 1.2 ),
+"times": PoolRealArray( 0.8, 2.4 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
 "values": [ false, true ]
@@ -585,7 +636,7 @@ tracks/7/loop_wrap = true
 tracks/7/imported = false
 tracks/7/enabled = true
 tracks/7/keys = {
-"times": PoolRealArray( 0.4, 1.2 ),
+"times": PoolRealArray( 0.8, 2.4 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
 "values": [ false, true ]
@@ -597,7 +648,7 @@ tracks/8/loop_wrap = true
 tracks/8/imported = false
 tracks/8/enabled = true
 tracks/8/keys = {
-"times": PoolRealArray( 0.6, 1 ),
+"times": PoolRealArray( 1.2, 2 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
 "values": [ false, true ]
@@ -609,7 +660,7 @@ tracks/9/loop_wrap = true
 tracks/9/imported = false
 tracks/9/enabled = true
 tracks/9/keys = {
-"times": PoolRealArray( 1.4 ),
+"times": PoolRealArray( 2.8 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
 "values": [ false ]
@@ -621,10 +672,36 @@ tracks/10/loop_wrap = true
 tracks/10/imported = false
 tracks/10/enabled = true
 tracks/10/keys = {
-"times": PoolRealArray( 1.4 ),
+"times": PoolRealArray( 2.8 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
 "values": [ false ]
+}
+tracks/11/type = "method"
+tracks/11/path = NodePath("baby_stretch")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/keys = {
+"times": PoolRealArray( 0.4, 0.8, 1.2, 2, 2.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"values": [ {
+"args": [  ],
+"method": "play"
+}, {
+"args": [  ],
+"method": "play"
+}, {
+"args": [  ],
+"method": "play"
+}, {
+"args": [  ],
+"method": "play"
+}, {
+"args": [  ],
+"method": "play"
+} ]
 }
 
 [sub_resource type="Animation" id=54]
@@ -714,9 +791,26 @@ tracks/6/keys = {
 "update": 1,
 "values": [ false ]
 }
+tracks/7/type = "method"
+tracks/7/path = NodePath("big_step_sound")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0.4, 1.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"values": [ {
+"args": [  ],
+"method": "play"
+}, {
+"args": [  ],
+"method": "play"
+} ]
+}
 
 [node name="rabid_baby" type="KinematicBody2D"]
-material = SubResource( 83 )
+material = SubResource( 96 )
 collision_mask = 2
 script = ExtResource( 17 )
 team = 1
@@ -758,7 +852,7 @@ use_parent_material = true
 texture = ExtResource( 16 )
 hframes = 4
 vframes = 3
-frame = 5
+frame = 4
 __meta__ = {
 "_aseprite_wizard_config_": {
 "layer": "",
@@ -911,6 +1005,20 @@ volume_db = -12.0
 
 [node name="explosion2" type="AudioStreamPlayer2D" parent="explosions"]
 stream = ExtResource( 21 )
+volume_db = -12.0
+
+[node name="big_step_sound" parent="." instance=ExtResource( 23 )]
+sound = "big_step"
+
+[node name="baby_stretch" parent="." instance=ExtResource( 23 )]
+sound = "baby_stretch"
+
+[node name="baby_gaga_sound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 25 )
+volume_db = -12.0
+
+[node name="burp" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 24 )
 volume_db = -12.0
 
 [connection signal="got_hit" from="." to="health" method="subtract"]

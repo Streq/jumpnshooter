@@ -1,0 +1,23 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/baby_gaga.wav-4192359eed2ea28fa7c894631ac2c66e.sample"
+
+[deps]
+
+source_file="res://assets/audio/sfx/baby_gaga.wav"
+dest_files=[ "res://.import/baby_gaga.wav-4192359eed2ea28fa7c894631ac2c66e.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0
