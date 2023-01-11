@@ -5,4 +5,4 @@ export var sound := ""
 
 
 func play():
-	Sounds.play(sound,global_position)
+	.play(sound,global_position)

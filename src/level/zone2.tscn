@@ -1,0 +1,97 @@
+[gd_scene load_steps=14 format=2]
+
+[ext_resource path="res://assets/shader/palette.gdshader" type="Shader" id=1]
+[ext_resource path="res://src/test/player/camera.gd" type="Script" id=2]
+[ext_resource path="res://src/test/player/player_controller.gd" type="Script" id=3]
+[ext_resource path="res://src/level/zone.gd" type="Script" id=4]
+[ext_resource path="res://src/characters/gerardo/gerardo.tscn" type="PackedScene" id=5]
+[ext_resource path="res://src/map/terrain.tscn" type="PackedScene" id=6]
+[ext_resource path="res://src/level/camera_boundaries.gd" type="Script" id=7]
+[ext_resource path="res://src/level/exit.gd" type="Script" id=8]
+
+[sub_resource type="Image" id=102]
+data = {
+"data": PoolByteArray( 255, 255, 0, 255, 126, 126, 1, 255, 60, 60, 2, 255, 255, 255, 255, 0 ),
+"format": "RGBA8",
+"height": 1,
+"mipmaps": false,
+"width": 4
+}
+
+[sub_resource type="ImageTexture" id=98]
+flags = 0
+flags = 0
+image = SubResource( 102 )
+size = Vector2( 4, 1 )
+
+[sub_resource type="ShaderMaterial" id=96]
+resource_local_to_scene = true
+shader = ExtResource( 1 )
+shader_param/palette_size = 4
+shader_param/offset = 0.0
+shader_param/blue_index_offset = 0.0
+shader_param/palette = SubResource( 98 )
+
+[sub_resource type="RectangleShape2D" id=99]
+extents = Vector2( 4, 6.5 )
+
+[sub_resource type="RectangleShape2D" id=101]
+extents = Vector2( 3, 88 )
+
+[node name="zone" type="Node2D"]
+script = ExtResource( 4 )
+
+[node name="main_terrain" parent="." instance=ExtResource( 6 )]
+tile_data = PoolIntArray( 1310818, 7, 8, 1310819, 7, 10, 1310820, 7, 10, 1310821, 7, 10, 1310822, 7, 10, 1310823, 7, 10, 1310824, 7, 10, 1310825, 7, 10, 1310826, 7, 11, 1376354, 7, 65544, 1376355, 7, 131081, 1376356, 7, 131081, 1376357, 7, 131081, 1376358, 7, 131081, 1376359, 7, 131081, 1376360, 7, 131081, 1376361, 7, 131081, 1376362, 7, 65542, 1376363, 7, 10, 1376364, 7, 10, 1376365, 7, 10, 1376366, 7, 11, 1441890, 7, 196616, 1441891, 7, 196617, 1441892, 7, 196617, 1441893, 7, 196617, 1441894, 7, 196617, 1441895, 7, 196617, 1441896, 7, 196617, 1441897, 7, 196617, 1441898, 7, 196617, 1441899, 7, 196617, 1441900, 7, 196617, 1441901, 7, 196617, 1441902, 7, 196614, 1441903, 7, 2, 1441904, 7, 2, 1441905, 7, 2, 1441906, 7, 2, 1441907, 7, 2, 1441908, 7, 2, 1441909, 7, 2, 1441910, 7, 2, 1441911, 7, 2, 1441912, 7, 2, 1441913, 7, 2, 1441914, 7, 2, 1441915, 7, 2, 1441916, 7, 2, 1441917, 7, 2, 1441918, 7, 2, 1441919, 7, 2, 1441920, 7, 2, 1441921, 7, 2, 1441922, 7, 2, 1441923, 7, 2, 1441924, 7, 2, 1441925, 7, 2, 1441926, 7, 2, 1441927, 7, 2, 1441928, 7, 2, 1441929, 7, 2, 1441930, 7, 2, 1441931, 7, 2, 1441932, 7, 2, 1441933, 7, 2, 1441934, 7, 2, 1441935, 7, 2, 1441936, 7, 2, 1441937, 7, 2, 1441938, 7, 2, 1441939, 7, 2, 1441940, 7, 2, 1441941, 7, 2, 1441942, 7, 2, 1441943, 7, 2, 1441944, 7, 2, 1441945, 7, 2, 1441946, 7, 2, 1441947, 7, 2, 1441948, 7, 2, 1441949, 7, 2, 1441950, 7, 2, 1441951, 7, 2, 1441952, 7, 2, 1441953, 7, 2, 1441954, 7, 2, 1441955, 7, 2, 1441956, 7, 2, 1441957, 7, 2, 1441958, 7, 2, 1441959, 7, 2, 1441960, 7, 3 )
+
+[node name="camera_boundaries" type="ReferenceRect" parent="."]
+margin_left = 808.0
+margin_right = 1612.0
+margin_bottom = 176.0
+script = ExtResource( 7 )
+
+[node name="player" parent="." instance=ExtResource( 5 )]
+material = SubResource( 96 )
+position = Vector2( 816, 152 )
+speed = 75.0
+horizontal_air_acceleration = 150.0
+max_health = 3
+
+[node name="Timer" type="Timer" parent="player"]
+process_mode = 0
+wait_time = 5.0
+autostart = true
+
+[node name="player_area" type="Area2D" parent="player"]
+collision_layer = 16
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="player/player_area"]
+position = Vector2( 0, 1.5 )
+shape = SubResource( 99 )
+
+[node name="player_controller" type="Node" parent="player"]
+pause_mode = 2
+process_priority = -1000
+script = ExtResource( 3 )
+
+[node name="camera" type="Camera2D" parent="player" groups=["player_camera"]]
+current = true
+process_mode = 0
+script = ExtResource( 2 )
+horizontal_extent = 0
+vertical_extent = 32
+vertical_lerp_target = 64
+
+[node name="exit" type="Area2D" parent="."]
+position = Vector2( 916, 84 )
+collision_layer = 0
+collision_mask = 16
+script = ExtResource( 8 )
+to_zone = "res://src/level/zone.tscn"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="exit"]
+position = Vector2( -113, 4 )
+shape = SubResource( 101 )
+
+[connection signal="area_entered" from="exit" to="exit" method="_on_exit_area_entered"]

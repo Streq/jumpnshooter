@@ -22,11 +22,11 @@ func _process(delta):
 	var v_dir := sign(parent.look_up_dir)
 
 
-	var target_x = h_dir*horizontal_lerp_target if h_dir else sign(offset.x)*(horizontal_extent-horizontal_lerp_target)
-	var target_y = v_dir*vertical_lerp_target if v_dir else sign(offset.y)*(vertical_extent-vertical_lerp_target)
+	var target_x = h_dir*horizontal_lerp_target if h_dir else sign(position.x)*(horizontal_extent-horizontal_lerp_target)
+	var target_y = v_dir*vertical_lerp_target if v_dir else sign(position.y)*(vertical_extent-vertical_lerp_target)
 
-	offset.x = clamp(lerp(offset.x, target_x, delta*lerp_speed), -horizontal_extent, horizontal_extent)
-	offset.y = clamp(lerp(offset.y, target_y, delta*lerp_speed), -vertical_extent, 0)
+	position.x = clamp(lerp(position.x, target_x, delta*lerp_speed), -horizontal_extent, horizontal_extent)
+	position.y = clamp(lerp(position.y, target_y, delta*lerp_speed), -vertical_extent, 0)
 
 #	global_position = get_parent().global_position.floor()
 	
