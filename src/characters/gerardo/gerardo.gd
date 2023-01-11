@@ -166,6 +166,11 @@ func set_health(value):
 	health = clamp(value,0,max_health)
 	emit_signal("health_changed",health,max_health)
 
+func set_max_health(value):
+	max_health = value
+	set_health(health)
+	emit_signal("health_changed",health,max_health)
+
 func start_hurt():
 	hurt_animation.play("hurt")
 	invulnerable = true

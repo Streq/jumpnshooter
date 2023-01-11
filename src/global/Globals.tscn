@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://src/global/Globals.gd" type="Script" id=1]
+[ext_resource path="res://src/characters/gerardo/gerardo.tscn" type="PackedScene" id=2]
 
 [node name="Globals" type="Node"]
 script = ExtResource( 1 )
+PLAYER = ExtResource( 2 )

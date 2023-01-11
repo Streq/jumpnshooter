@@ -1,5 +1,6 @@
 extends Node
-
+export var PLAYER : PackedScene
+var spawned_player := false
 var weapons := []
 var max_health := 3
 var current_health := 3

@@ -46,7 +46,7 @@
 [ext_resource path="res://src/visuals/blackout.tscn" type="PackedScene" id=44]
 [ext_resource path="res://assets/theme/eurostyle.tres" type="Theme" id=45]
 
-[sub_resource type="Image" id=103]
+[sub_resource type="Image" id=100]
 data = {
 "data": PoolByteArray( 255, 255, 0, 255, 126, 126, 1, 255, 60, 60, 2, 255, 255, 255, 255, 0 ),
 "format": "RGBA8",
@@ -55,10 +55,10 @@ data = {
 "width": 4
 }
 
-[sub_resource type="ImageTexture" id=98]
+[sub_resource type="ImageTexture" id=95]
 flags = 0
 flags = 0
-image = SubResource( 103 )
+image = SubResource( 100 )
 size = Vector2( 4, 1 )
 
 [sub_resource type="ShaderMaterial" id=96]
@@ -67,7 +67,7 @@ shader = ExtResource( 4 )
 shader_param/palette_size = 4
 shader_param/offset = 0.0
 shader_param/blue_index_offset = 0.0
-shader_param/palette = SubResource( 98 )
+shader_param/palette = SubResource( 95 )
 
 [sub_resource type="AtlasTexture" id=28]
 resource_local_to_scene = true
@@ -83,7 +83,7 @@ flags = 2
 atlas = ExtResource( 22 )
 region = Rect2( 0, 0, 128, 8 )
 
-[sub_resource type="Image" id=104]
+[sub_resource type="Image" id=101]
 data = {
 "data": PoolByteArray( 255, 255, 0, 255, 126, 126, 1, 255, 60, 60, 2, 255, 0, 0, 3, 255 ),
 "format": "RGBA8",
@@ -92,10 +92,10 @@ data = {
 "width": 4
 }
 
-[sub_resource type="ImageTexture" id=102]
+[sub_resource type="ImageTexture" id=98]
 flags = 0
 flags = 0
-image = SubResource( 104 )
+image = SubResource( 101 )
 size = Vector2( 4, 1 )
 
 [sub_resource type="ShaderMaterial" id=99]
@@ -104,7 +104,7 @@ shader = ExtResource( 4 )
 shader_param/palette_size = 4
 shader_param/offset = 0
 shader_param/blue_index_offset = 0.0
-shader_param/palette = SubResource( 102 )
+shader_param/palette = SubResource( 98 )
 
 [sub_resource type="ConvexPolygonShape2D" id=32]
 points = PoolVector2Array( 8, 8, 0, 8, 0, 0, 8, 0 )
@@ -842,6 +842,7 @@ material = SubResource( 96 )
 position = Vector2( 2296, 32 )
 
 [node name="rabid_baby" parent="." instance=ExtResource( 16 )]
+material = SubResource( 96 )
 position = Vector2( 2768, 96 )
 facing_dir = -1.0
 
@@ -1051,6 +1052,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 
 [node name="blackout" parent="teleport_sequence/CanvasLayer/Control" instance=ExtResource( 44 )]
+width = 320
+height = 180
 
 [node name="fin" type="Label" parent="teleport_sequence/CanvasLayer/Control"]
 visible = false

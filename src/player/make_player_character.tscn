@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://src/test/player/camera.gd" type="Script" id=1]
+[ext_resource path="res://src/test/player/player_controller.gd" type="Script" id=2]
+[ext_resource path="res://src/player/make_player_character.gd" type="Script" id=3]
+
+[sub_resource type="RectangleShape2D" id=99]
+extents = Vector2( 4, 6.5 )
+
+[node name="make_player_character" type="Node"]
+script = ExtResource( 3 )
+
+[node name="player_area" type="Area2D" parent="."]
+collision_layer = 16
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="player_area"]
+position = Vector2( 0, 1.5 )
+shape = SubResource( 99 )
+
+[node name="player_controller" type="Node" parent="."]
+pause_mode = 2
+process_priority = -1000
+script = ExtResource( 2 )
+
+[node name="camera" type="Camera2D" parent="." groups=["player_camera"]]
+current = true
+process_mode = 0
+script = ExtResource( 1 )
+horizontal_extent = 0
+vertical_extent = 32
+vertical_lerp_target = 64
