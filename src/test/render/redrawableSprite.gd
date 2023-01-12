@@ -4,8 +4,8 @@ signal finished
 
 onready var animation_player: AnimationPlayer = $AnimationPlayer
 
-export var width := 320/8
-export var height := 180/8
+export var width := 320
+export var height := 180
 
 func trigger():
 	animation_player.play("blackout")

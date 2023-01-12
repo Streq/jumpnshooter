@@ -164,6 +164,8 @@ __meta__ = {
 "source": "res://assets/aseprite/blackout.aseprite"
 }
 }
+width = 40
+height = 22
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 playback_process_mode = 0

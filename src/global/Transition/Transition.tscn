@@ -7,3 +7,9 @@
 pause_mode = 2
 script = ExtResource( 1 )
 BLACKOUT = ExtResource( 2 )
+
+[node name="pivot" type="Control" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5

@@ -1057,8 +1057,6 @@ __meta__ = {
 "source": "res://assets/aseprite/blackout.aseprite"
 }
 }
-width = 320
-height = 180
 
 [node name="fin" type="Label" parent="teleport_sequence/CanvasLayer/Control"]
 visible = false
