@@ -17,6 +17,7 @@ func _ready() -> void:
 	if player:
 		player.global_position = spawn_pos
 		player.facing_dir = Globals.facing_dir
-	Transition.clear()
+	var side = Globals.transition_side
+	Transition.clear(side)
 	yield(Transition,"finished")
 	

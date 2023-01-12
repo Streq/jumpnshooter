@@ -8,7 +8,7 @@ export var width := 320/8
 export var height := 180/8
 
 func trigger():
-	animation_player.play("default")
+	animation_player.play("blackout")
 	yield(animation_player,"animation_finished")
 	emit_signal("finished")
 func _draw() -> void:
@@ -25,6 +25,6 @@ func _draw() -> void:
 func reset():
 	animation_player.play("RESET")
 func clear():
-	animation_player.play_backwards("default")
+	animation_player.play("clear")
 	yield(animation_player,"animation_finished")
 	emit_signal("finished")

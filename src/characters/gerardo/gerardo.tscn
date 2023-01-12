@@ -14,7 +14,7 @@
 [ext_resource path="res://assets/texture/shooter_body.png" type="Texture" id=13]
 [ext_resource path="res://assets/texture/shooter_legs.png" type="Texture" id=14]
 
-[sub_resource type="Image" id=99]
+[sub_resource type="Image" id=97]
 data = {
 "data": PoolByteArray( 255, 255, 0, 255, 126, 126, 1, 255, 60, 60, 2, 255, 255, 255, 255, 0 ),
 "format": "RGBA8",
@@ -23,10 +23,10 @@ data = {
 "width": 4
 }
 
-[sub_resource type="ImageTexture" id=98]
+[sub_resource type="ImageTexture" id=95]
 flags = 0
 flags = 0
-image = SubResource( 99 )
+image = SubResource( 97 )
 size = Vector2( 4, 1 )
 
 [sub_resource type="ShaderMaterial" id=96]
@@ -35,12 +35,12 @@ shader = ExtResource( 11 )
 shader_param/palette_size = 4
 shader_param/offset = 0.0
 shader_param/blue_index_offset = 0.0
-shader_param/palette = SubResource( 98 )
+shader_param/palette = SubResource( 95 )
 
 [sub_resource type="RectangleShape2D" id=13]
 extents = Vector2( 4, 6.5 )
 
-[sub_resource type="Image" id=100]
+[sub_resource type="Image" id=98]
 data = {
 "data": PoolByteArray( 255, 255, 0, 255, 126, 126, 1, 255, 60, 60, 2, 255, 0, 0, 3, 255 ),
 "format": "RGBA8",
@@ -52,7 +52,7 @@ data = {
 [sub_resource type="ImageTexture" id=25]
 flags = 0
 flags = 0
-image = SubResource( 100 )
+image = SubResource( 98 )
 size = Vector2( 4, 1 )
 
 [sub_resource type="ShaderMaterial" id=26]
@@ -1141,7 +1141,6 @@ tracks/1/keys = {
 material = SubResource( 96 )
 collision_mask = 2
 script = ExtResource( 3 )
-speed = 100.0
 horizontal_acceleration = 400.0
 max_health = 8
 

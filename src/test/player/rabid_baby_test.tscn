@@ -686,9 +686,7 @@ material = SubResource( 96 )
 position = Vector2( 1776, 0 )
 
 [node name="player" parent="." instance=ExtResource( 1 )]
-material = SubResource( 96 )
 position = Vector2( 2640, 112 )
-speed = 75.0
 horizontal_air_acceleration = 150.0
 max_health = 3
 
@@ -741,7 +739,6 @@ show_profile = false
 text = "Estás despedido"
 
 [node name="funguy" parent="." instance=ExtResource( 7 )]
-material = SubResource( 96 )
 position = Vector2( 564, 95 )
 speed = 30.0
 horizontal_acceleration = 100.0
@@ -749,7 +746,6 @@ horizontal_acceleration = 100.0
 [node name="controller" parent="funguy" instance=ExtResource( 39 )]
 
 [node name="funguy2" parent="." instance=ExtResource( 7 )]
-material = SubResource( 96 )
 position = Vector2( 845, 77 )
 speed = 30.0
 horizontal_acceleration = 100.0
@@ -757,7 +753,6 @@ horizontal_acceleration = 100.0
 [node name="controller" parent="funguy2" instance=ExtResource( 39 )]
 
 [node name="funguy3" parent="." instance=ExtResource( 7 )]
-material = SubResource( 96 )
 position = Vector2( 721, 6 )
 speed = 30.0
 horizontal_acceleration = 100.0
@@ -765,7 +760,6 @@ horizontal_acceleration = 100.0
 [node name="controller" parent="funguy3" instance=ExtResource( 39 )]
 
 [node name="funguy4" parent="." instance=ExtResource( 7 )]
-material = SubResource( 96 )
 position = Vector2( 1451, 62 )
 speed = 30.0
 horizontal_acceleration = 100.0
@@ -773,7 +767,6 @@ horizontal_acceleration = 100.0
 [node name="controller" parent="funguy4" instance=ExtResource( 39 )]
 
 [node name="funguy5" parent="." instance=ExtResource( 7 )]
-material = SubResource( 96 )
 position = Vector2( 1761, 61 )
 speed = 30.0
 horizontal_acceleration = 100.0
@@ -1052,6 +1045,18 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 
 [node name="blackout" parent="teleport_sequence/CanvasLayer/Control" instance=ExtResource( 44 )]
+__meta__ = {
+"_aseprite_wizard_config_": {
+"layer": "",
+"o_ex_p": "",
+"o_folder": "",
+"o_name": "",
+"only_visible": false,
+"op_exp": false,
+"player": "AnimationPlayer",
+"source": "res://assets/aseprite/blackout.aseprite"
+}
+}
 width = 320
 height = 180
 
