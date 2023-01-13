@@ -39,7 +39,7 @@ var last_anim = ANIMATION.CLEAR
 func fade(
 	animation_index := ANIMATION.BLACKOUT, 
 	side := SIDE.CENTER, 
-	anim_speed := 120.0, 
+	anim_speed := 1.0, 
 	spread_speed := 0.5/60.0
 ):
 	
@@ -59,7 +59,7 @@ func fade(
 	var last_index = 0 if orientation<0 else -1
 	if !orientation:
 		for blackout in blackouts:
-			blackout.play(animation, anim_speed)
+			blackout.play(animation, 1.0/(1.0+spread_speed*blackouts.size()))
 	else:
 		var offset = min(0, orientation)
 		
