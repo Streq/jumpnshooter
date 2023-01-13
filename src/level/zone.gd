@@ -18,6 +18,6 @@ func _ready() -> void:
 		player.global_position = spawn_pos
 		player.facing_dir = Globals.facing_dir
 	var side = Globals.transition_side
-	Transition.clear(side)
+	Transition.fade(Transition.ANIMATION.CLEAR,Globals.transition_side)
 	yield(Transition,"finished")
 	

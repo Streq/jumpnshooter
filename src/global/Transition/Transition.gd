@@ -3,15 +3,12 @@ signal finished()
 export var BLACKOUT : PackedScene
 onready var pivot: Control = $pivot
 
-enum SIDE_H {
+enum SIDE {
+	UP = -2,
 	LEFT = -1,
 	CENTER = 0,
 	RIGHT = 1,
-}
-enum SIDE_V {
-	UP = -1,
-	CENTER = 0,
-	DOWN = 1,
+	DOWN = 2
 }
 
 enum ANIMATION {
@@ -38,29 +35,44 @@ func _ready() -> void:
 		blackout.animation_player.playback_speed = 120.0
 		blackouts.append(blackout)
 		
-#	pivot.rect_rotation = -90.0
-var last_anim = ANIMATION.BLACKOUT
+var last_anim = ANIMATION.CLEAR
 func fade(
-	animation := ANIMATION.BLACKOUT, 
-	horizontal := true,
-	side := SIDE_H.CENTER, 
+	animation_index := ANIMATION.BLACKOUT, 
+	side := SIDE.CENTER, 
 	anim_speed := 120.0, 
 	spread_speed := 0.5/60.0
 ):
-	if last_anim == animation:
+	
+	if last_anim == animation_index:
 		return
+	last_anim = animation_index
+	var animation = animation_map[animation_index]
+	var horizontal = abs(side)<=1
 	if horizontal:
 		pivot.rect_rotation = 0.0
 	else:
 		pivot.rect_rotation = 90.0
+	
 	get_tree().paused = true
-	last_anim = animation
-	var children = get_children()
-	var offset = min(0, side)
-	if !side:
-		children[0]
 	
+	var orientation = sign(side)
+	var last_index = 0 if orientation<0 else -1
+	if !orientation:
+		for blackout in blackouts:
+			blackout.play(animation, anim_speed)
+	else:
+		var offset = min(0, orientation)
+		
+		for i in blackouts.size():
+			yield(PhysicsTimer.create_timer(spread_speed, self),"finished")
+			var index = orientation*i+offset
+			var blackout = blackouts[index]
+			blackout.play(animation, anim_speed)
+			
+	yield(blackouts[last_index],"finished")
+	emit_signal("finished")
 	
+	get_tree().paused = false
 	pass
 
 	
@@ -71,7 +83,7 @@ func blackout(side: int):
 	for i in blackouts.size():
 		var index = side*i+offset
 		var blackout = blackouts[index]
-		yield(get_tree().create_timer(0.5/60.0),"timeout")
+		yield(PhysicsTimer.create_timer(0.5/60.0, self),"finished")
 		blackout.trigger()
 		
 	var last_one = 0 if side < 0 else -1
@@ -89,7 +101,7 @@ func clear(side: int):
 	for i in blackouts.size():
 		var index = side*i+offset
 		var blackout = blackouts[index]
-		yield(get_tree().create_timer(0.5/60.0),"timeout")
+		yield(PhysicsTimer.create_timer(0.5/60.0, self),"finished")
 		blackout.clear()
 		
 	var last_one = 0 if side < 0 else -1

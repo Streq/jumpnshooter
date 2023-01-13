@@ -740,35 +740,30 @@ text = "Estás despedido"
 
 [node name="funguy" parent="." instance=ExtResource( 7 )]
 position = Vector2( 564, 95 )
-speed = 30.0
 horizontal_acceleration = 100.0
 
 [node name="controller" parent="funguy" instance=ExtResource( 39 )]
 
 [node name="funguy2" parent="." instance=ExtResource( 7 )]
 position = Vector2( 845, 77 )
-speed = 30.0
 horizontal_acceleration = 100.0
 
 [node name="controller" parent="funguy2" instance=ExtResource( 39 )]
 
 [node name="funguy3" parent="." instance=ExtResource( 7 )]
 position = Vector2( 721, 6 )
-speed = 30.0
 horizontal_acceleration = 100.0
 
 [node name="controller" parent="funguy3" instance=ExtResource( 39 )]
 
 [node name="funguy4" parent="." instance=ExtResource( 7 )]
 position = Vector2( 1451, 62 )
-speed = 30.0
 horizontal_acceleration = 100.0
 
 [node name="controller" parent="funguy4" instance=ExtResource( 39 )]
 
 [node name="funguy5" parent="." instance=ExtResource( 7 )]
 position = Vector2( 1761, 61 )
-speed = 30.0
 horizontal_acceleration = 100.0
 
 [node name="controller" parent="funguy5" instance=ExtResource( 39 )]
@@ -835,7 +830,6 @@ material = SubResource( 96 )
 position = Vector2( 2296, 32 )
 
 [node name="rabid_baby" parent="." instance=ExtResource( 16 )]
-material = SubResource( 96 )
 position = Vector2( 2768, 96 )
 facing_dir = -1.0
 
@@ -1034,6 +1028,7 @@ anims/open = SubResource( 90 )
 visible = false
 material = SubResource( 96 )
 position = Vector2( 2676, 112 )
+speed = 60.0
 
 [node name="teleport_sequence" type="Node2D" parent="."]
 script = ExtResource( 43 )

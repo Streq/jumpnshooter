@@ -7,6 +7,14 @@ onready var animation_player: AnimationPlayer = $AnimationPlayer
 export var width := 320
 export var height := 180
 
+
+func play(anim:="blackout", anim_speed := 1.0):
+	animation_player.playback_speed = anim_speed
+	animation_player.play(anim)
+	yield(animation_player,"animation_finished")
+	emit_signal("finished")
+
+
 func trigger():
 	animation_player.play("blackout")
 	yield(animation_player,"animation_finished")

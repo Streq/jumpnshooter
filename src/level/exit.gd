@@ -1,13 +1,13 @@
 extends Area2D
 
-export (float, -1, 1, 2) var side := 1.0 
 export (String, FILE, "*.tscn") var to_zone := ""
+export (Transition.SIDE) var side := Transition.SIDE.RIGHT
 export var player_spawn_point := 0
 
 
 
 func _on_exit_area_entered(area: Area2D) -> void:
-	Transition.blackout(side)
+	Transition.fade(Transition.ANIMATION.BLACKOUT, side)
 	yield(Transition,"finished")
 	Globals.transition_side = side
 	var facing_dir = area.get_parent().facing_dir
